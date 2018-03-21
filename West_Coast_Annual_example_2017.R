@@ -23,6 +23,8 @@ if (!any(installed.packages()[, 1] %in% "pander"))
 
 require(TMB)
 require(VAST)
+library(maps)
+library(mapdata)
 
 # Lingcod
 Data_Set <- JRWToolBox::WCGBTS_Combo_Catch_Wt(Species = "Ophiodon elongatus", YearRange = c(2003, 2015))
