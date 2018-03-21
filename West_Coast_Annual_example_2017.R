@@ -206,12 +206,14 @@ pander::pandoc.table( Opt$diagnostics[,c('Param','Lower','MLE','Upper','final_gr
 Enc_prob = SpatialDeltaGLMM::Check_encounter_prob( Report=Report, Data_Geostat=Data_Geostat, DirName=DateFile)
 
 # QQ plot
-Q = SpatialDeltaGLMM::QQ_Fn( TmbData=TmbData, Report=Report, FileName_PP=paste0(DateFile,"Posterior_Predictive.jpg"), FileName_Phist=paste0(DateFile,"Posterior_Predictive-Histogram.jpg"),
-                  FileName_QQ=paste0(DateFile,"Q-Q_plot.jpg"), FileName_Qhist=paste0(DateFile,"Q-Q_hist.jpg"))
+Q <- SpatialDeltaGLMM::QQ_Fn(TmbData = TmbData, Report = Report, 
+  save_dir = DateFile, 
+  FileName_PP = "Posterior_Predictive", FileName_Phist = "Posterior_Predictive-Histogram",
+  FileName_QQ = "Q-Q_plot", FileName_Qhist = "Q-Q_hist")
 
 
 # Residuals
-SpatialDeltaGLMM::plot_residuals(Lat_i=Data_Geostat[,'Lat'], Lon_i=Data_Geostat[,'Lon'], TmbData=TmbData, Report=Report, Q=Q, savedir=DateFile, MappingDetails=MapDetails_List[["MappingDetails"]],
+SpatialDeltaGLMM::plot_residuals(Lat_i=Data_Geostat[,'Lat'], Lon_i=Data_Geostat[,'Lon'], TmbData=TmbData, Report=Report, Q=Q[[1]], savedir=DateFile, MappingDetails=MapDetails_List[["MappingDetails"]],
            PlotDF=MapDetails_List[["PlotDF"]], MapSizeRatio=MapDetails_List[["MapSizeRatio"]], Xlim=MapDetails_List[["Xlim"]], Ylim=MapDetails_List[["Ylim"]], FileName=DateFile,
            Year_Set=Year_Set, Years2Include=Years2Include, Rotate=MapDetails_List[["Rotate"]], Cex=MapDetails_List[["Cex"]], Legend=MapDetails_List[["Legend"]],
            zone=MapDetails_List[["Zone"]], mar=c(0,0,2,0), oma=c(3.5,3.5,0,0), cex=1.8)
