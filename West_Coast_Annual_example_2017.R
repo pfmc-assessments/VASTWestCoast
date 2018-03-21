@@ -93,7 +93,9 @@ dir.create(DateFile)
 #set up data frame from data set
 #creates data geostat...need this data format
 # Vessel has a unique value for each boat-licence and calendar year (i.e., its a "Vessel-Year" effect)
-Data_Geostat = data.frame(Catch_KG = Data_Set$Wt_kg, Year = Data_Set$Year, Vessel = paste(Data_Set$Vessel,Data_Set$Year,sep="_"),
+Data_Geostat = data.frame(
+  Catch_KG = Data_Set[, grep("kg", colnames(Data_Set))], 
+  Year = Data_Set$Year, Vessel = paste(Data_Set$Vessel,Data_Set$Year,sep="_"),
              AreaSwept_km2 = Data_Set$Area_Swept_ha/100, Lat =Data_Set$Latitude_dd,
              Lon = Data_Set$Longitude_dd, Pass = Data_Set$Pass - 1.5)
 
