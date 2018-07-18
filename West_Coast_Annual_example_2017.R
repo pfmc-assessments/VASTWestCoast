@@ -35,8 +35,9 @@ JRWToolBox::Table(Data_Set$Year, Data_Set$Pass)
 
 # Versions of VAST you can use:
 list.files(R.home(file.path("library", "VAST", "executables")))
-# This gives the latest version available. (Up to v10_0_0 - then broken.)
-(Version <- substr(list.files(R.home(file.path("library", "VAST", "executables")))[length(list.files(R.home(file.path("library", "VAST", "executables"))))], 1, 11))
+(Version <- gsub("\\.cpp", "", tail(list.files(R.home(
+  file.path("library", "VAST", "executables"))), 1)))
+
 
 #define the spatial resolution for the model, and whether to use a grid or mesh approximation
 #mesh is default recommendation, number of knots need to be specified
