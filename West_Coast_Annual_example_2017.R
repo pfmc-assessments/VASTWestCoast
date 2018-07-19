@@ -78,8 +78,7 @@ OverdispersionConfig = c("Delta1"=1, "Delta2"=1)
 
 #outputs calculated after model runs, essentially reports to create
 Options =  c("SD_site_density"=0, "SD_site_logdensity"=0, "Calculate_Range"=0, "Calculate_evenness"=0, "Calculate_effective_area"=0, "Calculate_Cov_SE"=0,
-             'Calculate_Synchrony'=0, 'Calculate_Coherence'=0)
-
+             "Calculate_Synchrony"=0, "Calculate_Coherence"=0)
 
 setwd(HomeDir)  # Make sure that the working directory is back where it started
 
@@ -103,7 +102,7 @@ dir.create(DateFile)
 #creates data geostat...need this data format
 # Vessel has a unique value for each boat-licence and calendar year (i.e., its a "Vessel-Year" effect)
 Data_Geostat = data.frame(
-  Catch_KG = Data_Set[, grep("kg", colnames(Data_Set))], 
+  Catch_KG = Data_Set[, grep("kg", colnames(Data_Set))],
   Year = Data_Set$Year, Vessel = paste(Data_Set$Vessel,Data_Set$Year,sep="_"),
              AreaSwept_km2 = Data_Set$Area_Swept_ha/100, Lat =Data_Set$Latitude_dd,
              Lon = Data_Set$Longitude_dd, Pass = Data_Set$Pass - 1.5)
@@ -120,7 +119,7 @@ pander::pandoc.table( Data_Geostat[1:6,], digits=3 )
 Extrapolation_List = SpatialDeltaGLMM::Prepare_Extrapolation_Data_Fn( Region=Region, strata.limits=strata.limits )
 
 #derived objects for spatio-temporal estiamtion
-Spatial_List = SpatialDeltaGLMM::Spatial_Information_Fn( grid_size_km=grid_size_km, n_x=n_x, Method=Method, Lon=Data_Geostat[,'Lon'], Lat=Data_Geostat[,'Lat'],
+Spatial_List = SpatialDeltaGLMM::Spatial_Information_Fn( grid_size_km=grid_size_km, n_x=n_x, Method=Method, Lon=Data_Geostat[,"Lon"], Lat=Data_Geostat[,"Lat"],
                          Extrapolation_List=Extrapolation_List, randomseed=Kmeans_Config[["randomseed"]], nstart=Kmeans_Config[["nstart"]], iter.max=Kmeans_Config[["iter.max"]],
                          DirPath=DateFile, Save_Results=FALSE )
 
@@ -131,19 +130,19 @@ head(Data_Geostat)
 #build model, this is where you could specify new covariates using Data_Fn...read more on this
 # No Pass included
 TmbData = VAST::Data_Fn("Version"=Version, "FieldConfig"=FieldConfig, "OverdispersionConfig"=OverdispersionConfig, "RhoConfig"=RhoConfig, "ObsModel"=ObsModel,
-                   "c_i"=rep(0,nrow(Data_Geostat)), "b_i"=Data_Geostat[,'Catch_KG'], "a_i"=Data_Geostat[,'AreaSwept_km2'], "v_i"=as.numeric(Data_Geostat[,'Vessel'])-1,
-                   "s_i"=Data_Geostat[,'knot_i']-1, "t_i"=Data_Geostat[,'Year'], "a_xl"=Spatial_List$a_xl, "MeshList"=Spatial_List$MeshList, "GridList"=Spatial_List$GridList,
+                   "c_i"=rep(0,nrow(Data_Geostat)), "b_i"=Data_Geostat[,"Catch_KG"], "a_i"=Data_Geostat[,"AreaSwept_km2"], "v_i"=as.numeric(Data_Geostat[,"Vessel"])-1,
+                   "s_i"=Data_Geostat[,"knot_i"]-1, "t_i"=Data_Geostat[,"Year"], "a_xl"=Spatial_List$a_xl, "MeshList"=Spatial_List$MeshList, "GridList"=Spatial_List$GridList,
                    "Method"=Spatial_List$Method, "Options"=Options )
 
 # todo: Change this to use an ifelse statement in the previous calls to the
 # DateFile and the TmbData so that you don't have to maintain both calls
 # Rerun using this link if you want to include pass as a catchability covariate
-  Q_ik <- as.matrix(Data_Geostat[, 'Pass', drop=F])
 if(in_usepass){
   DateFile <- gsub("nx", "Pass_nx", DateFile)
+  Q_ik <- as.matrix(Data_Geostat[, "Pass", drop=F])
   TmbData = VAST::Data_Fn("Version"=Version, "FieldConfig"=FieldConfig, "OverdispersionConfig"=OverdispersionConfig, "RhoConfig"=RhoConfig, "ObsModel"=ObsModel,
-                    "c_i"=rep(0,nrow(Data_Geostat)), "b_i"=Data_Geostat[,'Catch_KG'], "a_i"=Data_Geostat[,'AreaSwept_km2'], "v_i"=as.numeric(Data_Geostat[,'Vessel'])-1,
-                    "s_i"=Data_Geostat[,'knot_i']-1, "t_i"=Data_Geostat[,'Year'], "a_xl"=Spatial_List$a_xl, Q_ik = Q_ik, "MeshList"=Spatial_List$MeshList, "GridList"=Spatial_List$GridList,
+                    "c_i"=rep(0,nrow(Data_Geostat)), "b_i"=Data_Geostat[,"Catch_KG"], "a_i"=Data_Geostat[,"AreaSwept_km2"], "v_i"=as.numeric(Data_Geostat[,"Vessel"])-1,
+                    "s_i"=Data_Geostat[,"knot_i"]-1, "t_i"=Data_Geostat[,"Year"], "a_xl"=Spatial_List$a_xl, Q_ik = Q_ik, "MeshList"=Spatial_List$MeshList, "GridList"=Spatial_List$GridList,
                     "Method"=Spatial_List$Method, "Options"=Options )
 }
 
@@ -169,7 +168,7 @@ Save = list("Opt"=Opt, "Report"=Report, "ParHat"=Obj$env$parList(Opt$par), "TmbD
 save(Save, file=paste0(DateFile,"Save.RData"))
 
 # Check convergence via gradient (should be TRUE)
-all( abs(Opt$diagnostics[,'final_gradient'])<1e-6 )
+all( abs(Opt$diagnostics[,"final_gradient"])<1e-6 )
 # Check convergence via Hessian (should be TRUE)
 all( eigen(Opt$SD$cov.fixed)$values>0 )
 
@@ -180,9 +179,9 @@ setwd(HomeDir)
 ################
 
 # Decide which years to plot
-Year_Set = seq(min(Data_Geostat[,'Year']),max(Data_Geostat[,'Year']))
-Years2Include = which( Year_Set %in% sort(unique(Data_Geostat[,'Year'])))
-#Years2Include = which( Year_Set %in% sort(unique(Data_Geostat[,'Year'])))[-c(3:5)]
+Year_Set = seq(min(Data_Geostat[,"Year"]),max(Data_Geostat[,"Year"]))
+Years2Include = which( Year_Set %in% sort(unique(Data_Geostat[,"Year"])))
+#Years2Include = which( Year_Set %in% sort(unique(Data_Geostat[,"Year"])))[-c(3:5)]
 
 # Get region-specific settings for plots
 MapDetails_List = SpatialDeltaGLMM::MapDetails_Fn( Region = Region, NN_Extrap = Spatial_List$PolygonList$NN_Extrap,  Extrapolation_List = Extrapolation_List )
@@ -212,14 +211,14 @@ SpatialDeltaGLMM::Plot_range_shifts(Report=Report, TmbData=TmbData, Sdreport=Opt
 SpatialDeltaGLMM::Plot_data_and_knots(Extrapolation_List=Extrapolation_List, Spatial_List=Spatial_List, Data_Geostat=Data_Geostat, PlotDir=DateFile )
 
 #convergence
-pander::pandoc.table( Opt$diagnostics[,c('Param','Lower','MLE','Upper','final_gradient')] )
+pander::pandoc.table( Opt$diagnostics[,c("Param","Lower","MLE","Upper","final_gradient")] )
 
 # Plot encounter probability diagnostics p/a
 Enc_prob = SpatialDeltaGLMM::Check_encounter_prob( Report=Report, Data_Geostat=Data_Geostat, DirName=DateFile)
 
 # QQ plot
-Q <- SpatialDeltaGLMM::QQ_Fn(TmbData = TmbData, Report = Report, 
-  save_dir = DateFile, 
+Q <- SpatialDeltaGLMM::QQ_Fn(TmbData = TmbData, Report = Report,
+  save_dir = DateFile,
   FileName_PP = "Posterior_Predictive", FileName_Phist = "Posterior_Predictive-Histogram",
   FileName_QQ = "Q-Q_plot", FileName_Qhist = "Q-Q_hist")
 
