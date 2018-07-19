@@ -224,10 +224,18 @@ Q <- SpatialDeltaGLMM::QQ_Fn(TmbData = TmbData, Report = Report,
 
 
 # Residuals
-SpatialDeltaGLMM::plot_residuals(Lat_i=Data_Geostat[,'Lat'], Lon_i=Data_Geostat[,'Lon'], TmbData=TmbData, Report=Report, Q=Q[[1]], savedir=DateFile, MappingDetails=MapDetails_List[["MappingDetails"]],
-           PlotDF=MapDetails_List[["PlotDF"]], MapSizeRatio=MapDetails_List[["MapSizeRatio"]], Xlim=MapDetails_List[["Xlim"]], Ylim=MapDetails_List[["Ylim"]], FileName=DateFile,
-           Year_Set=Year_Set, Years2Include=Years2Include, Rotate=MapDetails_List[["Rotate"]], Cex=MapDetails_List[["Cex"]], Legend=MapDetails_List[["Legend"]],
-           zone=MapDetails_List[["Zone"]], mar=c(0,0,2,0), oma=c(3.5,3.5,0,0), cex=1.8)
+FishStatsUtils::plot_residuals(
+  Lat_i = Data_Geostat[,"Lat"], Lon_i = Data_Geostat[,"Lon"],
+  TmbData = TmbData, Report = Report, Q = Q,
+  savedir = DateFile, MappingDetails = MapDetails_List[["MappingDetails"]],
+  PlotDF = MapDetails_List[["PlotDF"]],
+  MapSizeRatio = MapDetails_List[["MapSizeRatio"]],
+  Xlim = MapDetails_List[["Xlim"]], Ylim = MapDetails_List[["Ylim"]],
+  FileName = DateFile,
+  Year_Set = Year_Set, Years2Include = Years2Include,
+  Rotate = MapDetails_List[["Rotate"]], Cex = MapDetails_List[["Cex"]],
+  Legend = MapDetails_List[["Legend"]], zone = MapDetails_List[["Zone"]],
+  mar = c(0,0,2,0), oma = c(3.5,3.5,0,0), cex = 1.8)
 
 # Histogram of quantiles...should be a flat line for well behaved model; also can use the Q-Q plot
 
