@@ -157,7 +157,8 @@ Obj = TmbList[["Obj"]]
 # Run optimizer with Newton steps to improve convergence
 Opt = TMBhelper::Optimize( obj=Obj, lower=TmbList[["Lower"]], upper=TmbList[["Upper"]], getsd=TRUE,
     newtonsteps=2, savedir=DateFile, bias.correct=TRUE,
-    bias.correct.control=list(sd=FALSE, split=NULL, nsplit=1))
+    bias.correct.control = list(sd = FALSE, split = NULL, nsplit = 1,
+      vars_to_correct = "Index_cyl"))
 
 # Create the report
 Report = Obj$report()
