@@ -1,7 +1,27 @@
 # VAST will often leave you in the subdirectory of the current run. Using HomeDir helps get you back where you started.
 # Only do this once per R session, after you are in the your main working directory:
 
+#### Set inputs
+in_species <- "Ophiodon elongatus"
+in_maxyear <- 2015
+# Logical if you want pass as catchability covariate
+in_usepass <- FALSE
+#strata limits, run model but then calculate area specific indices
+(strata.limits <- data.frame(
+  "STRATA" = c("Coastwide","CA","OR","WA"),
+  "north_border" = c(49.0, 42.0, 46.0, 49.0),
+  "south_border" = c(32.0, 32.0, 42.0, 46.0),
+  "shallow_border" = c(55, 55, 55, 55),
+  "deep_border" = c(1280, 1280, 1280, 1280)
+  ))
+
+#### Inputs you might want to change
+# VAST used to leave you in the run subdirectory, HomeDir helps get you back.
 HomeDir <- getwd()
+# Number of "knots" used when Method="Mesh"
+n_x <- 250
+# Distribution specification
+ObsModel <- c(2, 0)
 
 # =============================================
 
@@ -26,8 +46,9 @@ require(VAST)
 library(maps)
 library(mapdata)
 
-# Lingcod
-Data_Set <- JRWToolBox::WCGBTS_Combo_Catch_Wt(Species = "Ophiodon elongatus", YearRange = c(2003, 2015))
+# todo: change to JRWToolBox::dataWareHouseTrawlCatch()
+Data_Set <- JRWToolBox::WCGBTS_Combo_Catch_Wt(Species = in_species,
+  YearRange = c(2003, in_maxyear))
 
 # Look at the data by year and pass - showing 'NA's if any via JRWToolBox::Table function.
 JRWToolBox::Table(Data_Set$Year, Data_Set$Pass)
@@ -44,7 +65,6 @@ list.files(R.home(file.path("library", "VAST", "executables")))
 #do not modify Kmeans set up
 Method = c("Grid", "Mesh", "Spherical_mesh")[2]
 grid_size_km = 25     # Value only matters if Method="Grid"
-n_x = 250  # Number of "knots" used when Method="Mesh"
 Kmeans_Config = list( "randomseed"=1, "nstart"=100, "iter.max"=1e3 )   # Controls K-means algorithm to define location of knots when Method="Mesh"
 
 # Model settings
@@ -68,14 +88,6 @@ ObsModel = c(2,0)
 Options =  c("SD_site_density"=0, "SD_site_logdensity"=0, "Calculate_Range"=0, "Calculate_evenness"=0, "Calculate_effective_area"=0, "Calculate_Cov_SE"=0,
              'Calculate_Synchrony'=0, 'Calculate_Coherence'=0)
 
-#strata limits, run model but then calculate area specific indices
-  (strata.limits <- data.frame(
-    'STRATA' = c("Coastwide","CA","OR","WA"),
-    'north_border' = c(49.0, 42.0, 46.0, 49.0),
-    'south_border' = c(32.0, 32.0, 42.0, 46.0),
-    'shallow_border' = c(55, 55, 55, 55),
-    'deep_border' = c(1280, 1280, 1280, 1280)
-    ))
 
 setwd(HomeDir)  # Make sure that the working directory is back where it started
 
@@ -84,8 +96,10 @@ Region = "California_current"
 
 #save files setting
 
-# DateFile = paste0(getwd(),'/VAST_output/')  # Simple, but requires manually changing the directory to save different runs
-(DateFile <- paste0(getwd(),'/VAST_output_', Sys.Date(), '_LingCod_nx=', n_x, '/')) # Change '_LingCod_nx=' for different runs, e.g. '_LingCod_Pass_nx=' for including pass
+# DateFile = paste0(getwd(),"/VAST_output/")  # Simple, but requires manually changing the directory to save different runs
+(DateFile <- file.path(HomeDir,
+  paste0("VAST_output_", Sys.Date(), "_", gsub(" ", "", in_species),
+    "_nx=", n_x, .Platform$file.sep)))
 dir.create(DateFile)
 
 #save all settings
@@ -129,9 +143,11 @@ TmbData = VAST::Data_Fn("Version"=Version, "FieldConfig"=FieldConfig, "Overdispe
                    "s_i"=Data_Geostat[,'knot_i']-1, "t_i"=Data_Geostat[,'Year'], "a_xl"=Spatial_List$a_xl, "MeshList"=Spatial_List$MeshList, "GridList"=Spatial_List$GridList,
                    "Method"=Spatial_List$Method, "Options"=Options )
 
+# todo: Change this to use an ifelse statement in the previous calls to the
+# DateFile and the TmbData so that you don't have to maintain both calls
 # Rerun using this link if you want to include pass as a catchability covariate
-if(FALSE){
   Q_ik <- as.matrix(Data_Geostat[, 'Pass', drop=F])
+if(in_usepass){
   TmbData = VAST::Data_Fn("Version"=Version, "FieldConfig"=FieldConfig, "OverdispersionConfig"=OverdispersionConfig, "RhoConfig"=RhoConfig, "ObsModel"=ObsModel,
                     "c_i"=rep(0,nrow(Data_Geostat)), "b_i"=Data_Geostat[,'Catch_KG'], "a_i"=Data_Geostat[,'AreaSwept_km2'], "v_i"=as.numeric(Data_Geostat[,'Vessel'])-1,
                     "s_i"=Data_Geostat[,'knot_i']-1, "t_i"=Data_Geostat[,'Year'], "a_xl"=Spatial_List$a_xl, Q_ik = Q_ik, "MeshList"=Spatial_List$MeshList, "GridList"=Spatial_List$GridList,
