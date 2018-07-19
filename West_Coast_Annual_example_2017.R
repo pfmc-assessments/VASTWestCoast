@@ -24,7 +24,9 @@ ObsModel <- c(2, 0)
 # =============================================
 if (!any(installed.packages()[, 1] %in% "JRWToolBox"))
      devtools::install_github("John-R-Wallace/R-ToolBox")
-
+if (!"SpatialDeltaGLMM" %in% installed.packages() |
+  substring(packageDescription("SpatialDeltaGLMM")$Version, 1, 3) < 3.5)
+  devtools::install_github("nwfsc-assess/geostatistical_delta-GLMM")
 if (!any(installed.packages()[, 1] %in% "VAST"))
     devtools::install_github("james-thorson/VAST")
 
