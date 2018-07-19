@@ -1,5 +1,3 @@
-# VAST will often leave you in the subdirectory of the current run. Using HomeDir helps get you back where you started.
-# Only do this once per R session, after you are in the your main working directory:
 
 #### Set inputs
 in_species <- "Ophiodon elongatus"
@@ -24,14 +22,6 @@ n_x <- 250
 ObsModel <- c(2, 0)
 
 # =============================================
-
-#Test run of single species spatial delta glmm
-#Test, canary data; implimentation, Lingcod groundfish survey data
-# Based on single-species example
-# Revised by M. Haltuch, Feb 2017
-# Revised by J. Wallace Mar 2017
-# Revised by James Thorson April 2017
-
 if (!any(installed.packages()[, 1] %in% "JRWToolBox"))
      devtools::install_github("John-R-Wallace/R-ToolBox")
 
@@ -81,8 +71,8 @@ Kmeans_Config = list( "randomseed"=1, "nstart"=100, "iter.max"=1e3 )   # Control
 # obs model - distribution for errors and which model to run (e.g. default is delta model with standard link functions)
 FieldConfig = c("Omega1"=1, "Epsilon1"=1, "Omega2"=1, "Epsilon2"=1)
 RhoConfig = c("Beta1"=0, "Beta2"=0, "Epsilon1"=0, "Epsilon2"=0)
-OverdispersionConfig = c("Delta1"=1, "Delta2"=1)  # Turn on vessel-year effects for both components if using WCGBTS
-ObsModel = c(2,0)
+# Turn on vessel-year effects for both components if using WCGBTS
+OverdispersionConfig = c("Delta1"=1, "Delta2"=1)
 
 #outputs calculated after model runs, essentially reports to create
 Options =  c("SD_site_density"=0, "SD_site_logdensity"=0, "Calculate_Range"=0, "Calculate_evenness"=0, "Calculate_effective_area"=0, "Calculate_Cov_SE"=0,
