@@ -72,6 +72,8 @@ Kmeans_Config = list( "randomseed"=1, "nstart"=100, "iter.max"=1e3 )   # Control
 # settings can be on or off; 0,1
 # obs model - distribution for errors and which model to run (e.g. default is delta model with standard link functions)
 FieldConfig = c("Omega1"=1, "Epsilon1"=1, "Omega2"=1, "Epsilon2"=1)
+# Structure for beta or epsilon over time:
+# 0=None (default); 1=WhiteNoise; 2=RandomWalk; 3=Constant
 RhoConfig = c("Beta1"=0, "Beta2"=0, "Epsilon1"=0, "Epsilon2"=0)
 # Turn on vessel-year effects for both components if using WCGBTS
 OverdispersionConfig = c("Delta1"=1, "Delta2"=1)
