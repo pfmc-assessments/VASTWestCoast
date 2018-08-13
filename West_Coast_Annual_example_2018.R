@@ -141,6 +141,7 @@ TmbData = VAST::Data_Fn("Version"=Version, "FieldConfig"=FieldConfig, "Overdispe
 # Rerun using this link if you want to include pass as a catchability covariate
 if(in_usepass){
   DateFile <- gsub("nx", "Pass_nx", DateFile)
+  dir.create(DateFile)
   Q_ik <- as.matrix(Data_Geostat[, "Pass", drop=F])
   TmbData = VAST::Data_Fn("Version"=Version, "FieldConfig"=FieldConfig, "OverdispersionConfig"=OverdispersionConfig, "RhoConfig"=RhoConfig, "ObsModel"=ObsModel,
                     "c_i"=rep(0,nrow(Data_Geostat)), "b_i"=Data_Geostat[,"Catch_KG"], "a_i"=Data_Geostat[,"AreaSwept_km2"], "v_i"=as.numeric(Data_Geostat[,"Vessel"])-1,
