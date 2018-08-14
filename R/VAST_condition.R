@@ -77,7 +77,6 @@ VAST_condition <- function(conditiondir, settings, spp,
       # Database$Lat <- Database$Latitude_dd
       # Database$Catch_KG <- Database$Total_sp_wt_kg
       # Database$AreaSwept_km2 <- Database$Area_Swept_ha / 100
-      save(Database, file = file.path(conditiondir, "DatabaseSave.RData"))
     }
     # Make the vessel column as a vessel-year entry
     if ("Vessel" %in% names(Database)) {
@@ -86,6 +85,7 @@ VAST_condition <- function(conditiondir, settings, spp,
     } else {
       Database <- cbind(Database, "Vessel" = 1)
     }
+    save(Database, file = file.path(conditiondir, "DatabaseSave.RData"))
     # WCGBTS and all AFSC surveys are in KG/Hectare
     # todo: check how i set this before, where I think I should have divided
     # Database <- cbind(Database, "AreaSwept_km2" = 0.01)
