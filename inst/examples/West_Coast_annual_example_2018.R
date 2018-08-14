@@ -1,9 +1,9 @@
 
 #### Set inputs
-in_species <- "Ophiodon elongatus"
-in_maxyear <- 2015
+in_species <- "Anoplopoma fimbria"
+in_maxyear <- 2017
 # Logical if you want pass as catchability covariate
-in_usepass <- FALSE
+in_usepass <- TRUE
 #strata limits, run model but then calculate area specific indices
 (strata.limits <- data.frame(
   "STRATA" = c("Coastwide","CA","OR","WA"),
@@ -15,7 +15,7 @@ in_usepass <- FALSE
 
 #### Inputs you might want to change
 # VAST used to leave you in the run subdirectory, HomeDir helps get you back.
-HomeDir <- getwd()
+HomeDir <- "d:/stockAssessment/VAST_sablefish"
 # Number of "knots" used when Method="Mesh"
 n_x <- 250
 # Distribution specification
@@ -25,8 +25,9 @@ ObsModel <- c(2, 0)
 if (!any(installed.packages()[, 1] %in% "JRWToolBox"))
      devtools::install_github("John-R-Wallace/R-ToolBox")
 if (!"SpatialDeltaGLMM" %in% installed.packages() |
-  substring(packageDescription("SpatialDeltaGLMM")$Version, 1, 3) < 3.5)
-  devtools::install_github("nwfsc-assess/geostatistical_delta-GLMM")
+  substring(packageDescription("SpatialDeltaGLMM")$Version, 1, 3) < 3.4)
+  devtools::install_github("nwfsc-assess/geostatistical_delta-GLMM",
+    ref = "da3a3badfd0c50cc805fc5439149fb3370c3791e")
 if (!any(installed.packages()[, 1] %in% "VAST"))
     devtools::install_github("james-thorson/VAST")
 
