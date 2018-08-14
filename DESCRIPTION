@@ -1,0 +1,21 @@
+Package: VASTWestCoast
+Version: 0.1
+Date: 2018-08-08
+Title: Estimation and simulation with VAST for the US West Coast
+Author: Kelli Faye Johnson <kelli.johnson@noaa.gov>
+Maintainer: Kelli Faye Johnson <kelli.johnson@noaa.gov>
+Description: Estimation and simulation code for those working on
+    the US West Coast needed to fit survey data to estimate an
+    index of abundance or perform compositional expansion.
+Depends:
+    R (>= 5.1)
+Imports:
+    doParallel
+Suggests:
+    knitr,
+    devtools,
+    roxygen2,
+    testthat
+License: MIT + file LICENSE
+URL:
+VignetteBuilder: knitr
