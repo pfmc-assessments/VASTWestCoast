@@ -67,16 +67,17 @@ VAST_condition <- function(conditiondir, settings, spp,
       Database$AreaSwept_km2 <- Database$Area_Swept_ha / 100
       Database$Lon <- Database$Longitude_dd
       Database$Lat <- Database$Latitude_dd
-      # todo: change  more column names or delete this
-      # Database <- JRWToolBox::dataWareHouseTrawlCatch(
-      #   YearRange = c(2003, 2017),
-      #   Species =  paste(strsplit(Sim_Settings$Species, "_")[[1]][2:3], collapse = " "),
-      #   project = "WCGBTS.Combo")
-      # Database$Sci <- Database$Scientific_Name
-      # Database$Lon <- Database$Longitude_dd
-      # Database$Lat <- Database$Latitude_dd
-      # Database$Catch_KG <- Database$Total_sp_wt_kg
-      # Database$AreaSwept_km2 <- Database$Area_Swept_ha / 100
+      #todo: change  more column names or delete this
+      Database <- JRWToolBox::dataWareHouseTrawlCatch(
+        YearRange = c(2003, 2017),
+        Species =  paste(strsplit(Sim_Settings$Species, "_")[[1]][2:3], collapse = " "),
+        project = "WCGBTS.Combo")
+      Database$Sci <- Database$Scientific_Name
+      Database$Lon <- Database$Longitude_dd
+      Database$Lat <- Database$Latitude_dd
+      Database$Catch_KG <- Database$Total_sp_wt_kg
+      Database$AreaSwept_km2 <- Database$Area_Swept_ha / 100
+      # return(Database)
     }
     # Make the vessel column as a vessel-year entry
     if ("Vessel" %in% names(Database)) {
