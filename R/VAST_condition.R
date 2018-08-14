@@ -53,7 +53,6 @@ VAST_condition <- function(conditiondir, settings, spp,
       species_set = gsub("_", " ", gsub("[A-Z]{3}BTS_", "", spp)),
       # species_set = 25,
       error_tol = 0.01, localdir = paste0(datadir, .Platform$file.sep))
-    Databaseold <- Database
     Database <- ThorsonUtilities::rename_columns(
       Database[, c("Sci", "Wt", "Year", "Long", "Lat", "Vessel")],
       newname = c("Sci", "Catch_KG", "Year", "Lon", "Lat", "Vessel"))
@@ -62,7 +61,7 @@ VAST_condition <- function(conditiondir, settings, spp,
     if (TRUE) {
       Database <- JRWToolBox::WCGBTS_Combo_Catch_Wt(
         Species =  paste(strsplit(settings$Species, "_")[[1]][2:3], collapse = " "),
-        YearRange = c(2003, 2015))
+        YearRange = c(2003, 2017))
       Database$Sci <- Database$Scientific_Name
       Database$Catch_KG <- Database$Total_sp_wt_kg
       Database$AreaSwept_km2 <- Database$Area_Swept_ha / 100
@@ -78,8 +77,7 @@ VAST_condition <- function(conditiondir, settings, spp,
       # Database$Lat <- Database$Latitude_dd
       # Database$Catch_KG <- Database$Total_sp_wt_kg
       # Database$AreaSwept_km2 <- Database$Area_Swept_ha / 100
-      save(Database, Databaseold, file = file.path(conditiondir, "DatabaseSave.RData"))
-      return(NULL)
+      save(Database, file = file.path(conditiondir, "DatabaseSave.RData"))
     }
     # Make the vessel column as a vessel-year entry
     if ("Vessel" %in% names(Database)) {
