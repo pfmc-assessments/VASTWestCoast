@@ -21,6 +21,7 @@ VAST_simulation <- function(maindir = getwd(), conditiondir = NULL,
 
   # todo: make the reps a vector so you can specify which reps to run
   # todo: make the check for the max a switch to turn on and off
+  globalsettings <- get_settings(globalsettings)
 
   # Make the dirs
   # Check which ones exist and add a single digit to the maximum value
@@ -142,7 +143,7 @@ VAST_simulation <- function(maindir = getwd(), conditiondir = NULL,
     needrep <- (maxrep + 1):(maxrep + 1 + conditioning$replicates - nn)
     VAST_OM(reps = needrep,
       dir = omdir, conditioning = conditioning, ncluster = n_cluster)
-    VAST_EMloop(reps = needrep, settings = conditioning,
+    VAST_EM(reps = needrep, settings = conditioning,
       directory = omdir, n_cluster = n_cluster, getdatafrom = datadir)
   }
 

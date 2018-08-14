@@ -20,6 +20,7 @@
 #'
 VAST_OM <- function(reps, dir = NULL, conditioning, ncluster = 2) {
   # Make the folder
+  conditioning <- get_settings(conditioning)
   if (is.null(dir)) {
     numbers <- dir(conditioning$folder, pattern = "OM")
     numbers <- ifelse(length(numbers) == 0, "00", numbers)
@@ -46,11 +47,15 @@ VAST_OM <- function(reps, dir = NULL, conditioning, ncluster = 2) {
     VAST_OMrepi(omdir = dir, rep = i, settings = conditioning)
   }
 }
+#' Run an individual replicate for the OM
 #'
 #' @param omdir A file path where the \code{rep} should be saved, which will
 #' lead to \code{file.path(omdir, rep)}.
 #' @param rep A single numerical value specifying the replicate number.
 #' @param settings A list of settings for the simulation.
+#' @param maxtries The maximum number of tries to find a data set that does not
+#' have all positive or zero proportions in a given year. A unique random number
+#' is used per try.
 #' @param plotindex A logical value specifying if the time-series trajectory
 #' of the simulated data should be plotted in the \code{omdir}.
 #'
@@ -64,7 +69,7 @@ VAST_OMrepi <- function(omdir, rep, settings,
   maxtries = 10, plotindex = TRUE) {
 
   if (length(rep) != 1 | !is.numeric(rep)) stop("rep must be a single numeric value")
-  # todo: check that settings has all of the appropriate names that are needed.
+  settings <- get_settings(settings)
 
   repdir <- file.path(omdir, rep)
   dir.create(repdir, showWarnings = FALSE, recursive = TRUE)

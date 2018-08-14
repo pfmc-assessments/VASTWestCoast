@@ -16,17 +16,21 @@
 #' to perform. If a single integer of zero or one is given then this value will be used
 #' for all eight calculations. Zero turns them off and one turns them on.
 #' @param strata Strata specifications for calculating the index of abundance.
+#' @param pass A logical value specifying if Pass should be include to estimate
+#' catchability in the model. The default is to not use pass, i.e., \code{pass = FALSE}.
 #' @param savefile The file name that you want the results saved to. A full path can
 #' be specified, else the \code{.RData} file will be saved in the current directory.
 #'
 #' @return
+#'
+#' @import TMB
 #'
 #' @author Kelli Faye Johnson
 #' @export
 VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   overdispersion, obsmodel, rundir,
   Version = NULL, calcs = rep(0, 8),
-  strata, savefile) {
+  strata, pass = FALSE, savefile) {
 
   if (is.null(Version)) Version <- gsub("\\.cpp", "",
     tail(list.files(R.home(
@@ -53,6 +57,15 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
     squared = datalist$X_xtp,
     linear = array(data = datalist$X_xtp[, , 1],
       dim = c(dim(datalist$X_xtp)[1:2], 1)))
+
+  if (pass) {
+    if (!"Pass" %in% colnames(datalist$data)) {
+      stop("Pass is not in the data frame passed to TMB",
+        " but the settings say to use Pass.")
+    } else {
+      qdatahere <- as.matrix(datalist$data[, "Pass", drop = FALSE])
+    }
+  } else {qdatahere <- NULL}
 
   # Make TMB data list
   TmbData <- VAST::Data_Fn(
@@ -83,7 +96,7 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
     # columns equal to the number of variables you want to include
     # resulting in a design matrix with 0 for the reference case.
     # The default is NULL
-    # "Q_ik" = as.matrix(datalist$data[, "Pass", drop = FALSE])
+    "Q_ik" = qdatahere,
     "MeshList" = datalist$Spatial_List$MeshList,
     "GridList" = datalist$Spatial_List$GridList,
     "Method" = datalist$Spatial_List$Method,
@@ -122,11 +135,15 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
     AIC <- Opt$AIC
     sdreport <- Opt[["SD"]]
 
-    Index <- SpatialDeltaGLMM::PlotIndex_Fn(
-      DirName = dirname(savefile), TmbData = TmbData,
-      Sdreport = Opt[["SD"]],
-      Year_Set = seq(min(datalist$data[, "Year"]), max(datalist$data[, "Year"])),
-      strata_names = strata[, 1], use_biascorr = TRUE)
+    if (!is.null(Opt[["SD"]])) {
+      Index <- SpatialDeltaGLMM::PlotIndex_Fn(
+        DirName = dirname(savefile), TmbData = TmbData,
+        Sdreport = Opt[["SD"]],
+        Year_Set = seq(min(datalist$data[, "Year"]), max(datalist$data[, "Year"])),
+        strata_names = strata[, 1], use_biascorr = TRUE)
+    } else {
+      Index <- NULL
+    }
   } else {
     Index <- NULL
     ParHat <- NULL

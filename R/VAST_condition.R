@@ -24,12 +24,14 @@
 #' @return Nothing is returned by the function, but the function saves two \code{.RData}
 #' structures to the disk in the code{conditiondir}.
 #' @author Kelli Faye Johnson
+#' @importFrom JRWToolBox WCGBTS_Combo_Catch_Wt
 #' @export
 #'
 VAST_condition <- function(conditiondir, settings, spp,
-  datadir, overdisperion = NULL) {
+  datadir, overdisperion = NULL, data = NULL) {
   # Start the OM
   if (!is.list(settings)) stop("settings must be a list")
+  settings <- get_settings(settings)
   survey <- strsplit(spp, "_")[[1]][1]
   if (!survey %in% c("EBSBTS", "WCGBTS")) stop("Survey must be EBSBTS or WCGBTS")
   if (!file.exists(datadir)) stop("The datadir, ", datadir, ", doesn't exist.")
@@ -45,24 +47,54 @@ VAST_condition <- function(conditiondir, settings, spp,
   dir.create(kmeandir, showWarnings = FALSE, recursive = TRUE)
 
   # Make the data work for VAST
-  Database <- FishData::download_catch_rates(
-    survey = survey,
-    species_set = gsub("_", " ", gsub("[A-Z]{3}BTS_", "", spp)),
-    # species_set = 25,
-    error_tol = 0.01, localdir = paste0(datadir, .Platform$file.sep))
-  # Make the vessel column as a vessel-year entry
-  if ("Vessel" %in% names(Database)) {
-    Database$Vessel <- as.factor(
-      paste(Database$Vessel, Database$Year, sep = "_"))
+  if (is.null(data)) {
+    Database <- FishData::download_catch_rates(
+      survey = survey,
+      species_set = gsub("_", " ", gsub("[A-Z]{3}BTS_", "", spp)),
+      # species_set = 25,
+      error_tol = 0.01, localdir = paste0(datadir, .Platform$file.sep))
+    Databaseold <- Database
+    Database <- ThorsonUtilities::rename_columns(
+      Database[, c("Sci", "Wt", "Year", "Long", "Lat", "Vessel")],
+      newname = c("Sci", "Catch_KG", "Year", "Lon", "Lat", "Vessel"))
+    # another way to download the data
+    # todo: don't hardwire the years
+    if (TRUE) {
+      Database <- JRWToolBox::WCGBTS_Combo_Catch_Wt(
+        Species =  paste(strsplit(settings$Species, "_")[[1]][2:3], collapse = " "),
+        YearRange = c(2003, 2015))
+      Database$Sci <- Database$Scientific_Name
+      Database$Catch_KG <- Database$Total_sp_wt_kg
+      Database$AreaSwept_km2 <- Database$Area_Swept_ha / 100
+      Database$Lon <- Database$Longitude_dd
+      Database$Lat <- Database$Latitude_dd
+      # todo: change  more column names or delete this
+      # Database <- JRWToolBox::dataWareHouseTrawlCatch(
+      #   YearRange = c(2003, 2017),
+      #   Species =  paste(strsplit(Sim_Settings$Species, "_")[[1]][2:3], collapse = " "),
+      #   project = "WCGBTS.Combo")
+      # Database$Sci <- Database$Scientific_Name
+      # Database$Lon <- Database$Longitude_dd
+      # Database$Lat <- Database$Latitude_dd
+      # Database$Catch_KG <- Database$Total_sp_wt_kg
+      # Database$AreaSwept_km2 <- Database$Area_Swept_ha / 100
+      save(Database, Databaseold, file = file.path(conditiondir, "DatabaseSave.RData"))
+      return(NULL)
+    }
+    # Make the vessel column as a vessel-year entry
+    if ("Vessel" %in% names(Database)) {
+      Database$Vessel <- as.factor(
+        paste(Database$Vessel, Database$Year, sep = "_"))
+    } else {
+      Database <- cbind(Database, "Vessel" = 1)
+    }
+    # WCGBTS and all AFSC surveys are in KG/Hectare
+    # todo: check how i set this before, where I think I should have divided
+    # Database <- cbind(Database, "AreaSwept_km2" = 0.01)
+    Database <- na.omit(Database)
   } else {
-    Database <- cbind(Database, "Vessel" = 1)
+    Database <- data
   }
-  Database <- ThorsonUtilities::rename_columns(
-    Database[, c("Sci", "Wt", "Year", "Long", "Lat", "Vessel")],
-    newname = c("Sci", "Catch_KG", "Year", "Lon", "Lat", "Vessel"))
-  # WCGBTS and all AFSC surveys are in KG/Hectare
-  Database <- cbind(Database, "AreaSwept_km2" = 0.01)
-  Database <- na.omit(Database)
   save(Database, file = file.path(conditiondir, "DatabaseSave.RData"))
 
   info <- VAST_setup(data = Database,
@@ -73,18 +105,14 @@ VAST_condition <- function(conditiondir, settings, spp,
   save(info, conditiondir, settings, spp, datadir, overdisperion, Database,
     file = file.path(conditiondir, "setup.RData"))
 
-  # todo: I don't think I need these here, but the code is useful for other functions
-  # Plot settings
-  # Year_Set <- seq(min(Database[, "Year"]), max(Database[, "Year"]))
-  # Years2Include <- which(Year_Set %in% sort(unique(Database[, "Year"])))
-
   VAST_run(datalist = info, depth = settings$depth,
     # Need to change the next three args
     overdispersion = overdispersion,
-    obsmodel = settings$ObsModel,
+    obsmodel = settings$ObsModelcondition,
     rundir = datadir,
     Version = settings$version, calcs = rep(0, 8),
     strata = settings$strata,
+    pass = settings$Passcondition,
     savefile = file.path(conditiondir, "Save.RData"))
 
 }

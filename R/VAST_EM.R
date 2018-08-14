@@ -9,6 +9,7 @@
 #' @return Saves information to the disk.
 #'
 #' @import doParallel
+#' @import TMB
 #' @importFrom foreach %dopar%
 #'
 #' @author Kelli Faye Johnson
@@ -17,6 +18,7 @@
 VAST_EM <- function(reps, settings, directory, n_cluster, getdatafrom) {
   # todo: write code that will determine which type of models to run and
   # defines the settings
+  settings <- get_settings(settings)
   settingsa <- settingsb <- settingsc <- settings
   settingsa$depth <- FALSE
   settingsb$depth <- "linear"
@@ -46,17 +48,22 @@ VAST_EM <- function(reps, settings, directory, n_cluster, getdatafrom) {
 #' Run the estimation method for a given set of "settings"
 #'
 #' @param settings A list of settings.
-#' @param data
+#' @param data A matrix of data
 #' @param datadir A directory where the kmeans information is housed.
-#' @param emdir
-#' @param overdispersion
+#' @param emdir A directory where the EM information will be saved.
+#' @param overdispersion A vector of values specifying if a vessel_year
+#' effect should be included. The default \code{c("eta1" = 0, "eta2" = 0)}
+#' does not estimate an effect.
 #'
 #' @return Saves information to the disk.
+#'
+#' @import TMB
 #'
 #' @author Kelli Faye Johnson
 #'
 VAST_EMrepi <- function(settings, data, datadir, emdir,
   overdispersion = c("eta1" = 0, "eta2" = 0)) {
+  settings <- get_settings(settings)
   survey <- strsplit(settings$Species, "_")[[1]][1]
 
   dir.create(emdir, showWarnings = FALSE, recursive = TRUE)
