@@ -1,4 +1,8 @@
+install_github("nwfsc-assess/VAST_WestCoast")
+devtools::install_github("nwfsc-assess/geostatistical_delta-GLMM",
+  ref = "da3a3badfd0c50cc805fc5439149fb3370c3791e")
 library(VASTWestCoast)
+library(TMB)
 Sim_Settings <- list(
   "Species" = "WCGBTS_Anoplopoma_fimbria",
   "ObsModelcondition" = c(2, 1),
