@@ -138,11 +138,12 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
     sdreport <- Opt[["SD"]]
 
     if (!is.null(Opt[["SD"]])) {
-      Index <- SpatialDeltaGLMM::PlotIndex_Fn(
+      Index <- tryCatch(SpatialDeltaGLMM::PlotIndex_Fn(
         DirName = dirname(savefile), TmbData = TmbData,
         Sdreport = Opt[["SD"]],
         Year_Set = seq(min(datalist$data[, "Year"]), max(datalist$data[, "Year"])),
-        strata_names = strata[, 1], use_biascorr = TRUE)
+        strata_names = strata[, 1], use_biascorr = TRUE),
+      error = function(e) e)
     } else {
       Index <- NULL
     }
