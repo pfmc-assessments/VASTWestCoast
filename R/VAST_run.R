@@ -24,9 +24,11 @@
 #' @return
 #'
 #' @import TMB
+#' @import VAST
 #'
 #' @author Kelli Faye Johnson
 #' @export
+#'
 VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   overdispersion, obsmodel, rundir,
   Version = NULL, calcs = rep(0, 8),

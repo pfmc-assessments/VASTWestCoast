@@ -59,14 +59,14 @@ VAST_condition <- function(conditiondir, settings, spp,
     # another way to download the data
     # todo: don't hardwire the years
     if (TRUE) {
-      Database <- JRWToolBox::WCGBTS_Combo_Catch_Wt(
-        Species =  paste(strsplit(settings$Species, "_")[[1]][2:3], collapse = " "),
-        YearRange = c(2003, 2017))
-      Database$Sci <- Database$Scientific_Name
-      Database$Catch_KG <- Database$Total_sp_wt_kg
-      Database$AreaSwept_km2 <- Database$Area_Swept_ha / 100
-      Database$Lon <- Database$Longitude_dd
-      Database$Lat <- Database$Latitude_dd
+      # Database <- JRWToolBox::WCGBTS_Combo_Catch_Wt(
+      #   Species =  paste(strsplit(settings$Species, "_")[[1]][2:3], collapse = " "),
+      #   YearRange = c(2003, 2017))
+      # Database$Sci <- Database$Scientific_Name
+      # Database$Catch_KG <- Database$Total_sp_wt_kg
+      # Database$AreaSwept_km2 <- Database$Area_Swept_ha / 100
+      # Database$Lon <- Database$Longitude_dd
+      # Database$Lat <- Database$Latitude_dd
       #todo: change  more column names or delete this
       Database <- JRWToolBox::dataWareHouseTrawlCatch(
         YearRange = c(2003, 2017),
@@ -77,7 +77,6 @@ VAST_condition <- function(conditiondir, settings, spp,
       Database$Lat <- Database$Latitude_dd
       Database$Catch_KG <- Database$Total_sp_wt_kg
       Database$AreaSwept_km2 <- Database$Area_Swept_ha / 100
-      # return(Database)
     }
     # Make the vessel column as a vessel-year entry
     if ("Vessel" %in% names(Database)) {
@@ -86,11 +85,10 @@ VAST_condition <- function(conditiondir, settings, spp,
     } else {
       Database <- cbind(Database, "Vessel" = 1)
     }
-    save(Database, file = file.path(conditiondir, "DatabaseSave.RData"))
     # WCGBTS and all AFSC surveys are in KG/Hectare
     # todo: check how i set this before, where I think I should have divided
     # Database <- cbind(Database, "AreaSwept_km2" = 0.01)
-    Database <- na.omit(Database)
+    # Database <- na.omit(Database)
   } else {
     Database <- data
   }
