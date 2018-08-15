@@ -7,8 +7,6 @@ Maintainer: Kelli Faye Johnson <kelli.johnson@noaa.gov>
 Description: Estimation and simulation code for those working on
     the US West Coast needed to fit survey data to estimate an
     index of abundance or perform compositional expansion.
-Depends:
-    R (>= 5.1)
 Imports:
     doParallel
 Suggests:
