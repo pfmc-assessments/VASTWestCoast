@@ -10,8 +10,8 @@ Sim_Settings <- list(
 
 downloaddir <- getwd()
 
-VAST_condition(
-  conditiondir = "d:/stockAssessment/VAST_sablefish",
+test <- VAST_condition(
+  conditiondir = downloaddir,
   settings = Sim_Settings, spp = Sim_Settings$Species,
   datadir = downloaddir,
   overdisperion = NULL)
