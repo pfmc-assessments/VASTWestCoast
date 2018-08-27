@@ -26,6 +26,10 @@ get_OM <- function(file) {
   sets$om_depth <- ifelse(all(
      Sim$Sim_Settings[grep("Depth", names(Sim$Sim_Settings))] == 0),
      "nodepth", "depth")
+  sets$om_depthtype <- ifelse(sets$om_depth == "nodepth",
+    "no depth in OM",
+    ifelse(all(Sim$Sim_Settings[grep("_km2",
+      names(Sim$Sim_Settings))] == 0), "linear", "quadratic"))
   sets$n_t <- length(index)
   temp <- lm(log(index) ~ 1 + I(seq_along(index)))$coef
   names(temp) <- NULL
@@ -34,6 +38,9 @@ get_OM <- function(file) {
   OM <- gsub(
     paste0(".+\\", .Platform$file.sep, "([0-9]+)OM.+"),
     "\\1", file)
+  sim <- gsub(
+    paste0(".+\\", .Platform$file.sep, "([0-9]+)_VAST_simulation.+"),
+    "\\1", file)
   rep <- gsub(
     paste0(".+OM\\", .Platform$file.sep, "([0-9]+).+"),
     "\\1", file)
@@ -41,6 +48,7 @@ get_OM <- function(file) {
     index,
     sets,
     "rep" = rep,
+    "sim" = sim,
     "OM" = OM,
     "om_logratio" = logratio))
   return(finalinfo)

@@ -18,7 +18,7 @@ re_all <- function(data, bind = TRUE, type = c("re", "ae")) {
   names <- gsub("om_", "", grep("om_", colnames(data), value = TRUE))
   names <- names[!(names %in% c("type"))]
   names <- names[!(names %in% c("logratio"))]
-  names <- names[!grepl("depth$|linear|logratio", names)]
+  names <- names[!grepl("depth$|linear|logratio|depthtype", names)]
   res <- mapply(re, names, MoreArgs = list(data = data))
   colnames(res) <- paste0(type, "_", colnames(res))
   res <- data.frame(res,
@@ -43,6 +43,14 @@ re_all <- function(data, bind = TRUE, type = c("re", "ae")) {
 
 }
 
+get_long <- function(data, names) {
+  out <- gather(data = data,
+             key = item,
+             value = value,
+             which(colnames(data) %in% names))
+  return(out)
+}
+
 ggplotre <- function(data, x, y, print = TRUE, gradient = FALSE,
   facetx = c("emname", "em_depth"), facety = "omname",
   labels = NULL, type = "box", scales = c("fixed", "free"),
@@ -64,7 +72,7 @@ ggplotre <- function(data, x, y, print = TRUE, gradient = FALSE,
   data$omname <- paste("OM =", data$om_type)
   data$emname <- paste("EM =", data$em_type)
 
-  if (x != "em_depth") data[, x] <- as.numeric(data[, x])
+  if (x != "em_depth" & x != "item") data[, x] <- as.numeric(data[, x])
   data[, y] <- as.numeric(data[, y])
 
   gg <- ggplot(data)
@@ -117,19 +125,19 @@ ggplotre <- function(data, x, y, print = TRUE, gradient = FALSE,
 
 getrdata <- function(file){
   ne <- new.env()
-  load(file, env = ne)
+  load(file, envir = ne)
 
   out <- data.frame(
     "par" = names(
-      get("parameter_estimates", env = ne)$SD[c("par.fixed")][[1]]),
-    "val" = get("parameter_estimates", env = ne)$SD[c("par.fixed")],
+      get("parameter_estimates", envir = ne)$SD[c("par.fixed")][[1]]),
+    "val" = get("parameter_estimates", envir = ne)$SD[c("par.fixed")],
     "se" = sqrt(diag(
-      get("parameter_estimates", env = ne)$SD[c("cov.fixed")][[1]])))
+      get("parameter_estimates", envir = ne)$SD[c("cov.fixed")][[1]])))
   colnames(out)[2] <- "val"
   report <- data.frame(
-    "par" = names(get("parameter_estimates", env = ne)$SD$value),
-    "val" = get("parameter_estimates", env = ne)$SD$value,
-    "se" = sqrt(diag(get("parameter_estimates", env = ne)$SD$cov)))
+    "par" = names(get("parameter_estimates", envir = ne)$SD$value),
+    "val" = get("parameter_estimates", envir = ne)$SD$value,
+    "se" = sqrt(diag(get("parameter_estimates", envir = ne)$SD$cov)))
 out$par <- make.unique(as.character(out$par))
 report$par <- make.unique(as.character(report$par))
 
@@ -138,7 +146,7 @@ report$par <- make.unique(as.character(report$par))
   # depth <- data.frame(
   #   "par" = c("gamma1_ctp", "gamma2_ctp"),
   #   "val" = sapply(get("Save",
-  #     env = ne2)$ParHat[c("gamma1_ctp", "gamma2_ctp")], mean),
+  #     envir = ne2)$ParHat[c("gamma1_ctp", "gamma2_ctp")], mean),
   #   "se" = NA)
   # report <- rbind(report, depth)
 
@@ -187,18 +195,16 @@ scaleFUN <- function(x) sprintf("%.0f", x)
 getcompare <- function(file) {
   load(file)
   aic <- AIC
-  temp <- gsub("VAST_simulation_depth_", "",
-    basename(dirname(dirname(file))))
-  temp <- strsplit(temp, "_")[[1]]
+  temp <- strsplit(basename(dirname(file)), "_")[[1]]
   nx <- temp[4]
   species <- paste(temp[2:3], collapse = " ")
   area <- ifelse(grepl("EBSBTS", temp[1]), "EBS", "WC")
-  type <- ifelse(grepl("nodepth", file), "FALSE", "TRUE")
-  depth <- EmSave$Sdreport$par.fixed[
-    grep("gamma", names(EmSave$Sdreport$par.fixed))]
+  type <- ifelse(grep("nodepth", file), "nodepth", "depth")
+  depth <- sdreport$par.fixed[
+    grep("gamma", names(sdreport$par.fixed))]
   if (length(depth) == 0) depth <- rep(0, 4)
   if (length(depth) == 2) depth <- c(depth[1], 0, depth[2], 0)
-  returnme <- c(area, species, type, nx,  unlist(aic), unlist(depth))
+  returnme <- c(area, species, nx, type, unlist(aic), unlist(depth))
 return(returnme)
 }
 

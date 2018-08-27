@@ -32,10 +32,14 @@ Alasksa (i.e., EBSBTS) then overdispersion will be based on the default value in
 \code{\link[VAST]{Data_Fn}}of \code{c("eta1" = 0, "eta2" = 0)}. If the survey occurs
 of the US West Coast, then overdispersion will be modelled for both components using a
 vessel-year effect labeled delta.}
+
+\item{data}{A data frame that can be passed to the conditioning function
+such that no data will be downloaded and the passed data frame will be used
+instead. todo: document the columns that are needed.}
 }
 \value{
 Nothing is returned by the function, but the function saves two \code{.RData}
-structures to the disk in the code{conditiondir}.
+structures to the disk in the \code{conditiondir}.
 }
 \description{
 Condition an operating model based on fits to empirical data

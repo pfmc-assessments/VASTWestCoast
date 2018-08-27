@@ -4,13 +4,13 @@
 #' @param plot A logical value specifying whether or not to
 #' plot the data
 #'
-#' @return
+#' @return A vector of information regarding the coverage for the data
+#' that was provided in the argument \code{data}. One value will be returned
+#' for each row of data.
 #'
 #' @import ggplot2
 #' @author Kelli Faye Johnson
 #' @export
-#'
-#' @examples
 #'
 get_coverage <- function(data, plot = FALSE) {
   # todo: Fix the data if the input is a named vector
@@ -48,7 +48,7 @@ get_coverage <- function(data, plot = FALSE) {
     theme(strip.background = element_blank(),
     panel.border = element_rect(colour = "black"))
     ggsave(plot = gg, filename = file.path(file, "coverage.jpeg"),
-      dev = "jpeg")
+      device = "jpeg")
   }
 
   return(coveragea)

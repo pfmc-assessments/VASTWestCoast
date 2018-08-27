@@ -40,10 +40,12 @@ VAST_OM <- function(reps, dir = NULL, conditioning, ncluster = 2) {
   clin <- makeCluster(ncluster)
   on.exit(stopCluster(clin))
   registerDoParallel(clin)
+  # Check for reps with OM data already generated
+  reps <- reps[!reps %in% dir(dir)]
+  if (length(reps) == 0) return()
   ignore <- foreach::foreach(
     i = reps,
-    .export = ls(pattern = "VAST_", envir = .GlobalEnv),
-    .packages = c("SpatialDeltaGLMM")) %dopar% {
+    .packages = c("SpatialDeltaGLMM", "VASTWestCoast")) %dopar% {
     VAST_OMrepi(omdir = dir, rep = i, settings = conditioning)
   }
 }

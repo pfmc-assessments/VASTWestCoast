@@ -21,7 +21,7 @@
 #' @param savefile The file name that you want the results saved to. A full path can
 #' be specified, else the \code{.RData} file will be saved in the current directory.
 #'
-#' @return
+#' @return Nothing is returned directly, instead files are saved to the disk.
 #'
 #' @import TMB
 #' @import VAST

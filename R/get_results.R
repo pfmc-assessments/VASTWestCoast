@@ -26,7 +26,7 @@ get_results <- function(omdir, write2disk = TRUE) {
   allframe$delta <- get_coefficient(allframe)
 
   # 06 Write the results to the disk
-  file <- file.path(dirname(omdir), "results.csv")
+  file <- file.path(omdir, "results.csv")
   if (write2disk){
     if (file.exists(file)) {
       readin <- read.csv(file, header = TRUE)

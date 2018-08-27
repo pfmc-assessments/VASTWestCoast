@@ -8,7 +8,13 @@ Description: Estimation and simulation code for those working on
     the US West Coast needed to fit survey data to estimate an
     index of abundance or perform compositional expansion.
 Imports:
-    doParallel
+    doParallel,
+    foreach,
+    ggplot2,
+    JRWToolBox,
+    parallel,
+    TMB,
+    VAST
 Suggests:
     knitr,
     devtools,

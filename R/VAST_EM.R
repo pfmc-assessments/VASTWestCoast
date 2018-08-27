@@ -33,8 +33,10 @@ VAST_EM <- function(reps, settings, directory, n_cluster, getdatafrom) {
   registerDoParallel(clem)
   ignore <- foreach::foreach(
     i = replicates,
-    .export = c(ls(pattern = "VAST_", envir = .GlobalEnv), "get_depth"),
-    .packages = c("SpatialDeltaGLMM", "VAST", "ThorsonUtilities", "TMB", "TMBhelper")) %dopar% {
+    .packages = c("SpatialDeltaGLMM",
+      "VAST", "ThorsonUtilities",
+      "TMB", "TMBhelper",
+      "VASTWestCoast")) %dopar% {
     load(dir(i, pattern = "Sim.R", full.names = TRUE))
     simdata <- Sim$Data_Geostat
     VAST_EMrepi(settings = settingsa, data = simdata, datadir = getdatafrom,
@@ -54,6 +56,8 @@ VAST_EM <- function(reps, settings, directory, n_cluster, getdatafrom) {
 #' @param overdispersion A vector of values specifying if a vessel_year
 #' effect should be included. The default \code{c("eta1" = 0, "eta2" = 0)}
 #' does not estimate an effect.
+#' @param rerun A logical value specifying if the EM should be overwritten
+#' with a new estimation process.
 #'
 #' @return Saves information to the disk.
 #'
@@ -62,11 +66,16 @@ VAST_EM <- function(reps, settings, directory, n_cluster, getdatafrom) {
 #' @author Kelli Faye Johnson
 #'
 VAST_EMrepi <- function(settings, data, datadir, emdir,
-  overdispersion = c("eta1" = 0, "eta2" = 0)) {
+  overdispersion = c("eta1" = 0, "eta2" = 0),
+  rerun = FALSE) {
   settings <- get_settings(settings)
   survey <- strsplit(settings$Species, "_")[[1]][1]
 
   dir.create(emdir, showWarnings = FALSE, recursive = TRUE)
+
+  # Check to see if the model has already been tried, i.e., there
+  # will be a EMspecs.RData file
+  if(file.exists(file.path(emdir, "EMspecs.RData")) & !rerun) return()
 
   kmeandir <- file.path(datadir, survey)
   info <- VAST_setup(data = data,

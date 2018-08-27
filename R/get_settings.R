@@ -55,5 +55,8 @@ get_settings <- function(settings = NULL, verbose = FALSE) {
       appendLF = TRUE)
   }
   Settings_all <- c(settings, Settings_all[need])
+  if (!"replicatesneeded" %in% names(Settings_all)) {
+    Settings_all$replicatesneeded <- max(Settings_all$replicates)
+  }
   return(Settings_all)
 }

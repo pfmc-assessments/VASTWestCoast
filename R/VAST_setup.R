@@ -1,7 +1,18 @@
 #' Set up the spatial information for a \link{[VAST]} run.
 #'
+#' @param data A data frame with columns for Latitude and Longitude labeled using
+#' abbreviations "Lat" and "Lon" and column labeled "Year".
 #' @param dir A directory where you want to save the kmeans information to. The
 #' character value can be a full path or relative to your current working directory.
+#' @param regionacronym A character value supplying the region acronym. Currently,
+#' only "EBSTS" and "WCGBTS" are supported.
+#' @param strata A data frame specifying the strata.
+#' @param nknots The number of knots you want in your spatial field.
+#'
+#' @return A list of spatial information used to run the model.
+#'
+#' @author Kelli Faye Johnson
+#' @export
 #'
 VAST_setup <- function(data, dir, regionacronym, strata, nknots) {
   Extrapolation_List <- switch(regionacronym,

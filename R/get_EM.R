@@ -46,6 +46,7 @@ get_EM <- function(file) {
 
   em$em_type <- ifelse(TmbData$ObsModel_ez[2] == 0,
     "Conventional delta", "Poisson-process link")
+  em$nknots <- TmbData$n_x
   if ("unbiased" %in% names(sdreport)) {
     SD <- TMB::summary.sdreport(sdreport)
     index <- c(SD[grep("^Index_cyl", rownames(SD)), 3])
@@ -99,7 +100,17 @@ get_EM <- function(file) {
 
 #' Create full path to estimation model
 #'
+#' @param simnum The simulation number
+#' @param omnum The number for the operating model
+#' @param repnum The replicate number
+#' @param emnum The estimation method number
 #' @param basedir A file path of your base directory
+#'
+#' @return A character value specifying the full or relative
+#' path to the directory.
+#'
+#' @author Kelli Faye Johnson
+#' @export
 #'
 #' @examples
 #' get_EMpath(simnum = 1, omnum = 1, repnum = 1, emnum = 1)
