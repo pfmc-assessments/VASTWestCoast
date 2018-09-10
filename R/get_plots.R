@@ -199,7 +199,7 @@ getcompare <- function(file) {
   nx <- temp[4]
   species <- paste(temp[2:3], collapse = " ")
   area <- ifelse(grepl("EBSBTS", temp[1]), "EBS", "WC")
-  type <- ifelse(grep("nodepth", file), "nodepth", "depth")
+  type <- ifelse(grepl("nodepth", file), "nodepth", "depth")
   depth <- sdreport$par.fixed[
     grep("gamma", names(sdreport$par.fixed))]
   if (length(depth) == 0) depth <- rep(0, 4)
