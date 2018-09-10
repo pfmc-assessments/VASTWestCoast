@@ -1,4 +1,4 @@
-install_github("nwfsc-assess/VAST_WestCoast")
+devtools::install_github("nwfsc-assess/VASTWestCoast")
 devtools::install_github("nwfsc-assess/geostatistical_delta-GLMM",
   ref = "da3a3badfd0c50cc805fc5439149fb3370c3791e")
 library(VASTWestCoast)
@@ -19,4 +19,3 @@ test <- VAST_condition(
   settings = Sim_Settings, spp = Sim_Settings$Species,
   datadir = downloaddir,
   overdisperion = NULL)
-
