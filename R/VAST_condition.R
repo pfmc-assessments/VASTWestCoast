@@ -100,7 +100,7 @@ VAST_condition <- function(conditiondir, settings, spp,
   info <- VAST_setup(data = Database,
     dir = kmeandir,
     regionacronym = survey,
-    strata = settings$strata.limits,
+    strata = settings$strata,
     nknots = settings$nknots)
   save(info, conditiondir, settings, spp, datadir, overdisperion, Database,
     file = file.path(conditiondir, "setup.RData"))
