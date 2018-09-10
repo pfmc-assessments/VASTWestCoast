@@ -81,7 +81,7 @@ VAST_EMrepi <- function(settings, data, datadir, emdir,
   info <- VAST_setup(data = data,
     dir = kmeandir,
     regionacronym = survey,
-    strata = settings$strata.limits,
+    strata = settings$strata,
     nknots = settings$nknots)
   save(info, settings, kmeandir,data, emdir, datadir,
     file = file.path(emdir, "EMspecs.RData"))

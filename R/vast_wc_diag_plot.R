@@ -44,15 +44,17 @@ vast_wc_diag_plot <- function(data, rep, TmbData, Opt,
 
   n_x <- TmbData$n_x
 
-  e_list <- SpatialDeltaGLMM::Prepare_Extrapolation_Data_Fn(
-    Region = "California_current",
-    strata.limits = data.frame(
+  strata2use <- data.frame(
       "STRATA" = c("Coastwide","CA","OR","WA"),
       "north_border" = c(49.0, 42.0, 46.0, 49.0),
       "south_border" = c(32.0, 32.0, 42.0, 46.0),
       "shallow_border" = c(55, 55, 55, 55),
       "deep_border" = c(1280, 1280, 1280, 1280)
     )
+
+  e_list <- SpatialDeltaGLMM::Prepare_Extrapolation_Data_Fn(
+    Region = "California_current",
+    strata.limits = strata2use
   )
 
   Spatial_List <- SpatialDeltaGLMM::Spatial_Information_Fn(
@@ -97,7 +99,7 @@ vast_wc_diag_plot <- function(data, rep, TmbData, Opt,
     DirName = dir,
     TmbData = TmbData, Sdreport = Opt[["SD"]],
     Year_Set = Year_Set, Years2Include = Years2Include,
-    strata_names = strata.limits[, 1], use_biascorr = TRUE)
+    strata_names = strata2use[, 1], use_biascorr = TRUE)
   # Creates a table of index values same as what is output from the above code
   # pander::pandoc.table(
   #   Index$Table[, c("Year","Fleet","Estimate_metric_tons","SD_log","SD_mt")])
