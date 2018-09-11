@@ -14,7 +14,7 @@
 #' @author Kelli Faye Johnson
 #' @export
 #'
-VAST_setup <- function(data, dir, regionacronym, strata, nknots) {
+VAST_setup <- function(data, dir, regionacronym, strata = NULL, nknots) {
   Extrapolation_List <- switch(regionacronym,
     EBSTS = "eastern_bering_sea",
     WCGBTS = "California_current")
