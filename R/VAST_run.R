@@ -110,7 +110,9 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
     "RhoConfig" = c("Beta1" = 0, "Beta2" = 0, "Epsilon1" = 0, "Epsilon2" = 0),
     "loc_x" = datalist$Spatial_List$loc_x)
   # TmbList$Parameters$L1_z <- 0
+   # TmbList$Parameters$logSigmaM[1] <- log(0.25)
   # TmbList$Map$L1_z <- factor(NA)
+  # TmbList$Map$logSigmaM <- factor(rep(NA, 3))
   # TmbList = VAST::Build_TMB_Fn("TmbData" = TmbData, "RunDir" = rundir,
   #   "Version" = Version,
   #   "Parameters" = TmbList$Parameters,
