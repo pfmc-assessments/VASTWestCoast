@@ -87,9 +87,19 @@ VAST_OMrepi <- function(omdir, rep, settings,
     # Confirmed here that I am simulating data specific to the locations
     # in the empirical data and not to the larger grid, which you can do
     # by not supplying an argument to Data_Geostat.
+    # The default is to have Nyears and Nsamp_per_year as NULL values
+    # and then the simulation will be based on the data.
+    # todo: make it where you can sample from the simulated data rather
+    # than sending the entire output to the EM
+    if (!is.null(settings$Nyears) && !is.null(settings$Nsamp_per_year)){
+      havedata <- NULL
+    } else {
+      havedata <- settings$data
+    }
     Sim <- SpatialDeltaGLMM::Geostat_Sim(Sim_Settings = settings,
       Extrapolation_List = settings$extrapolation,
-      Data_Geostat = settings$data)
+      Data_Geostat = havedata)
+    Sim$usedempirical <- ifelse(is.null(havedata[1]), FALSE, TRUE)
     Prop_t <- tapply(Sim$Data_Geostat[, "Catch_KG"],
       INDEX = Sim$Data_Geostat[, "Year"], FUN = function(vec){mean(vec>0)})
   }
