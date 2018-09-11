@@ -19,7 +19,8 @@ VAST_setup <- function(data, dir, regionacronym, strata = NULL, nknots) {
     EBSTS = "eastern_bering_sea",
     WCGBTS = "California_current")
   if (length(Extrapolation_List) == 0) stop("Survey not recognized.")
-  Extrapolation_List <- suppressMessages(SpatialDeltaGLMM::Prepare_Extrapolation_Data_Fn(
+
+  Extrapolation_List <- suppressMessages(FishStatsUtils::make_extrapolation_info(
     Region = Extrapolation_List,
     strata.limits = strata))
   if (regionacronym == "EBSBTS") {
@@ -34,8 +35,8 @@ VAST_setup <- function(data, dir, regionacronym, strata = NULL, nknots) {
     (Extrapolation_List$Data_Extrap[, "Depth_km"] -
      mean(Extrapolation_List$Data_Extrap[, "Depth_km"])
     ) / sd(Extrapolation_List$Data_Extrap[, "Depth_km"])
-  Spatial_List <- suppressMessages(SpatialDeltaGLMM::Spatial_Information_Fn(
     grid_size_km = 25,
+  Spatial_List <- suppressMessages(FishStatsUtils::make_spatial_info(
     n_x = nknots,
     Method = "Mesh",
     Lon = data[, "Lon"], Lat = data[, "Lat"],
