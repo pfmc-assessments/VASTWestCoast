@@ -30,7 +30,6 @@ get_settings <- function(settings = NULL, verbose = FALSE) {
     "SigmaV1"=0, "SigmaV2"=0, "SigmaVY1"=0, "SigmaVY2"=0,
     "Range1"=1000, "Range2"=500,
     "SigmaM"=1,
-    "ObsModel"=c(2,0),
     "Nages"=1, "M"=Inf, "K"=Inf, "Linf"=1,
     "W_alpha"=1, "W_beta"=3,
     "Selex_A50_mean"=0, "Selex_A50_sd"=0, "Selex_Aslope"=Inf )
