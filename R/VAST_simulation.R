@@ -76,14 +76,40 @@ VAST_simulation <- function(maindir = getwd(), conditiondir = NULL,
   conditioning$beta2_sd <- sd(pars[grep("beta2", names(pars))])
   # Get observation error
   conditioning$SigmaM <- exp(pars[grep("logSigmaM", names(pars))])
-  # Get linear covariate
-  conditioning$Depth1_km <- mean(allpar$gamma1_ctp[, , 1])
-  conditioning$Depth2_km <- mean(allpar$gamma2_ctp[, , 1])
-  # Set the depth-squared term if it was conditioned for or a second covariate
-  if (dim(allpar$gamma1_ctp)[3] > 1) {
-    conditioning$Depth1_km2 <- mean(allpar$gamma1_ctp[, , 2])
-    conditioning$Depth2_km2 <- mean(allpar$gamma2_ctp[, , 2])
+
+  # If a parameter name is present in \code{changepar} then the
+  # parameter will be set according to the conditioned values,
+  # else the parameter will be set to the value in the \code{globalsettings}.
+
+  # Habitat covariate - right now this only pertains to depth
+  # Old code used for thesis and OH
+  # conditioning$Depth1_km <- mean(allpar$gamma1_ctp[, , 1])
+  # conditioning$Depth2_km <- mean(allpar$gamma2_ctp[, , 1])
+  # if (dim(allpar$gamma1_ctp)[3] > 1) {
+  #   conditioning$Depth1_km2 <- mean(allpar$gamma1_ctp[, , 2])
+  #   conditioning$Depth2_km2 <- mean(allpar$gamma2_ctp[, , 2])
+  # }
+  # First component
+  conditioning[["Depth1_km"]] <- ifelse("Depth1_km" %in% globalsettings$changepar,
+    mean(allpar$gamma1_ctp[,, 1]), globalsettings[["Depth1_km"]])
+  if("Depth1_km2" %in% globalsettings$changepar & dim(allpar$gamma1_ctp)[3] < 2) {
+    stop("You specified that the squared habitat variable for the first model be set to\n",
+      "a value estimated in the conditioning process, but Depth1_km2 was\n",
+      "not estimated")
   }
+  conditioning[["Depth1_km2"]] <- ifelse("Depth1_km2" %in% globalsettings$changepar,
+    mean(allpar$gamma1_ctp[,, 2]), globalsettings[["Depth1_km2"]])
+  # Second component
+  conditioning[["Depth2_km"]] <- ifelse("Depth2_km" %in% globalsettings$changepar,
+    mean(allpar$gamma2_ctp[,, 1]), globalsettings[["Depth2_km"]])
+  if("Depth2_km2" %in% globalsettings$changepar & dim(allpar$gamma2_ctp)[3] < 2) {
+    stop("You specified that the squared habitat variable for the first model be set to\n",
+      "a value estimated in the conditioning process, but Depth2_km2 was\n",
+      "not estimated")
+  }
+  conditioning[["Depth2_km2"]] <- ifelse("Depth2_km2" %in% globalsettings$changepar,
+    mean(allpar$gamma2_ctp[,, 2]), globalsettings[["Depth2_km2"]])
+
   # Define spatial and spatio-temporal variation
   # I'm using lower values than observed so that its less likely to have replicates with 0% or 100% encounter rates
   conditioning[["SigmaO1"]] <-
