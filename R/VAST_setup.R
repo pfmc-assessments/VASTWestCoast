@@ -35,16 +35,16 @@ VAST_setup <- function(data, dir, regionacronym, strata = NULL, nknots) {
     (Extrapolation_List$Data_Extrap[, "Depth_km"] -
      mean(Extrapolation_List$Data_Extrap[, "Depth_km"])
     ) / sd(Extrapolation_List$Data_Extrap[, "Depth_km"])
-    grid_size_km = 25,
   Spatial_List <- suppressMessages(FishStatsUtils::make_spatial_info(
     n_x = nknots,
     Method = "Mesh",
-    Lon = data[, "Lon"], Lat = data[, "Lat"],
+    Lon_i = data[, "Lon"], Lat_i = data[, "Lat"],
     Extrapolation_List = Extrapolation_List,
    # Do K-means on trawl locs; Domain: Do K-means on extrapolation grid
     randomseed = 1,
     nstart = 100,
     iter.max = 1e3,
+    # Argument passed to Calc_Kmeans
     DirPath = dir))
   data <- cbind(data, "knot_i" = Spatial_List$knot_i)
 
