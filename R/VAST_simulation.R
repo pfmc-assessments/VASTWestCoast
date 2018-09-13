@@ -43,8 +43,13 @@ VAST_simulation <- function(maindir = getwd(), conditiondir = NULL,
   }
   dir.create (conditiondir, showWarnings = FALSE, recursive = TRUE)
   datadir <- dir(maindir, "/data|\\data|downloads$", full.names = TRUE)
-  if (length(datadir) != 1) stop("The data directory cannot be found",
-    " or multiple directories exist.")
+  if (length(datadir) == 0) {
+    dir.create(file.path(maindir, "downloads"), recursive = TRUE)
+  } else {
+    if (length(datadir) > 1) stop("The data directory was not distinguished",
+      "\n and the following directories were found:\n",
+      paste(datadir, collapse = "\n"), call. = FALSE)
+  }
 
   # 01 Condition
   if (!file.exists(file.path(conditiondir, "parameter_estimates.txt"))) {
