@@ -69,6 +69,14 @@ VAST_setup <- function(data, dir, regionacronym, strata = NULL, nknots) {
     Year_Set = Year_Set,
     na.omit = "time-average"))
   # Code to square after calculating for a mean per knot
+  get_depth <- function(a, b, n, squared = TRUE) {
+    xx <- tapply(a[, "Depth_km"], INDEX = b, FUN = mean)
+    X_xtp = xx %o% rep(1, n) %o% 1
+    if (squared) {
+      X_xtp <- array(c(X_xtp, X_xtp^2), dim = c(dim(X_xtp)[1:2], 2))
+    }
+    X_xtp
+  }
   # X_xtp <- get_depth(Extrapolation_List$Data_Extrap,
   #   Spatial_List$PolygonList$NN_Extrap$nn.idx,
   #   max(which(Year_Set %in% sort(unique(data[, "Year"])))))
