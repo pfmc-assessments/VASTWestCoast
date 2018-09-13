@@ -33,12 +33,13 @@ VAST_setup <- function(data, dir, regionacronym, strata = NULL, nknots) {
   unstandarddepth <- Extrapolation_List$Data_Extrap[, "Depth_km"]
   Extrapolation_List$Data_Extrap$indkm <- Extrapolation_List$Data_Extrap[, "Depth_km"]
   Extrapolation_List$Data_Extrap$indkms <- Extrapolation_List$Data_Extrap[, "Depth_km2"]
-  Extrapolation_List$Data_Extrap[, "Depth_km"] <-
-    (Extrapolation_List$Data_Extrap[, "Depth_km"] -
-     mean(Extrapolation_List$Data_Extrap[, "Depth_km"])
-    ) / sd(Extrapolation_List$Data_Extrap[, "Depth_km"])
-  Extrapolation_List$Data_Extrap[, "Depth_km2"] <-
-    Extrapolation_List$Data_Extrap[, "Depth_km"]^2
+  # Before I standardized and then took the mean
+  # Extrapolation_List$Data_Extrap[, "Depth_km"] <-
+  #   (Extrapolation_List$Data_Extrap[, "Depth_km"] -
+  #    mean(Extrapolation_List$Data_Extrap[, "Depth_km"])
+  #   ) / sd(Extrapolation_List$Data_Extrap[, "Depth_km"])
+  # Extrapolation_List$Data_Extrap[, "Depth_km2"] <-
+  #   Extrapolation_List$Data_Extrap[, "Depth_km"]^2
   Spatial_List <- suppressMessages(FishStatsUtils::make_spatial_info(
     n_x = nknots,
     Method = "Mesh",
@@ -53,8 +54,9 @@ VAST_setup <- function(data, dir, regionacronym, strata = NULL, nknots) {
   data <- cbind(data, "knot_i" = Spatial_List$knot_i)
 
   # Generate covariate
-  # Yields an array where the mean is taken per knot of the
-  # input data, thus squaring happens before taking the mean.
+  # 1. Mean is taken per knot of the input data.
+  # 2. The mean per knot is standardized to have a mean of zero and sd of 1
+  # 3. The standardized mean is squared
   Year_Set <- seq(min(data[, "Year"]), max(data[, "Year"]))
   depthperknot <- suppressMessages(FishStatsUtils::format_covariates(
     Lat_e = Extrapolation_List$Data_Extrap$Lat,
@@ -68,19 +70,22 @@ VAST_setup <- function(data, dir, regionacronym, strata = NULL, nknots) {
     FUN = mean,
     Year_Set = Year_Set,
     na.omit = "time-average"))
-  # Code to square after calculating for a mean per knot
-  get_depth <- function(a, b, n, squared = TRUE) {
-    xx <- tapply(a[, "Depth_km"], INDEX = b, FUN = mean)
-    X_xtp = xx %o% rep(1, n) %o% 1
-    if (squared) {
-      X_xtp <- array(c(X_xtp, X_xtp^2), dim = c(dim(X_xtp)[1:2], 2))
-    }
-    X_xtp
-  }
+  X_xtp <- apply(depthperknot$Cov_xtp, 2:3, scale)
+  X_xtp[, , 2] <- X_xtp[, , 1]^2
+  dimnames(X_xtp)[[1]] <- dimnames(depthperknot$Cov_xtp)[[1]]
+  # Old code to square after calculating for a mean per knot
+  # get_depth <- function(a, b, n, squared = TRUE) {
+  #   xx <- tapply(a[, "Depth_km"], INDEX = b, FUN = mean)
+  #   X_xtp = xx %o% rep(1, n) %o% 1
+  #   if (squared) {
+  #     X_xtp <- array(c(X_xtp, X_xtp^2), dim = c(dim(X_xtp)[1:2], 2))
+  #   }
+  #   X_xtp
+  # }
   # X_xtp <- get_depth(Extrapolation_List$Data_Extrap,
   #   Spatial_List$PolygonList$NN_Extrap$nn.idx,
   #   max(which(Year_Set %in% sort(unique(data[, "Year"])))))
-  X_xtp <- depthperknot$Cov_xtp
+
   # Change depth in Extrapolation_List so that it matches EM
   Extrapolation_List$Data_Extrap[, "Depth_km"] <-
     X_xtp[, 1, 1][Spatial_List$PolygonList$NN_Extrap$nn.idx]
