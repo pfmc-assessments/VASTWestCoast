@@ -19,6 +19,7 @@
 #' @export
 #'
 #' @examples
+#' #todo: fix this example so it doesn't rely on Sim_Settings
 #' VAST_simulation(globalsettings = Sim_Settings, n_cluster = 1)
 #'
 VAST_simulation <- function(maindir = getwd(), conditiondir = NULL,

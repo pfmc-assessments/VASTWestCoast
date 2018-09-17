@@ -73,7 +73,7 @@ VAST_condition <- function(conditiondir, settings, spp,
       #todo: change  more column names or delete this
       Database <- JRWToolBox::dataWareHouseTrawlCatch(
         YearRange = c(2003, 2017),
-        Species =  paste(strsplit(Sim_Settings$Species, "_")[[1]][2:3], collapse = " "),
+        Species =  paste(strsplit(settings$Species, "_")[[1]][2:3], collapse = " "),
         project = "WCGBTS.Combo")
       Database$Sci <- Database$Scientific_Name
       Database$Lon <- Database$Longitude_dd
