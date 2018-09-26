@@ -145,7 +145,10 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
         Sdreport = Opt[["SD"]],
         Year_Set = seq(min(datalist$data[, "Year"]), max(datalist$data[, "Year"])),
         strata_names = strata[, 1], use_biascorr = TRUE),
-      error = function(e) e)
+	    error = function(e) e)
+	  sdinfo <- TMB::sdreport(Obj)
+	  tables <- FishStatsUtils::summary_nwfsc(obj = Obj, sdreport = sdinfo,
+	  	savedir = dirname(savefile))
     } else {
       Index <- NULL
     }
@@ -154,8 +157,10 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
     ParHat <- NULL
     AIC <- NULL
     sdreport <- NULL
+    tables <- NULL
   }
 
   save(AIC, Index, Obj, Opt, ParHat, Report, sdreport, TmbData, TmbList,
+    tables,
     file = savefile)
 }
