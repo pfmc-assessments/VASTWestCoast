@@ -52,12 +52,12 @@ vast_wc_diag_plot <- function(data, rep, TmbData, Opt,
       "deep_border" = c(1280, 1280, 1280, 1280)
     )
 
-  e_list <- SpatialDeltaGLMM::Prepare_Extrapolation_Data_Fn(
+  e_list <- FishStatsUtils::make_extrapolation_info(
     Region = "California_current",
     strata.limits = strata2use
   )
 
-  Spatial_List <- SpatialDeltaGLMM::Spatial_Information_Fn(
+  Spatial_List <- FishStatsUtils::make_spatial_info.R(
     grid_size_km = grid_size_km,
     n_x = n_x,
     Method = Method,
@@ -69,18 +69,18 @@ vast_wc_diag_plot <- function(data, rep, TmbData, Opt,
     DirPath = dir, Save_Results = FALSE)
 
   # Get region-specific settings for plots
-  MapDetails_List <- SpatialDeltaGLMM::MapDetails_Fn(
+  MapDetails_List <- FishStatsUtils::make_map_info(
     Region = "California_current",
     NN_Extrap = Spatial_List$PolygonList$NN_Extrap,
     Extrapolation_List = e_list)
 
   #Plot Anisotropy
-  SpatialDeltaGLMM::PlotAniso_Fn(
+  FishStatsUtils::plot_anisotropy(
     FileName = file.path(dir, "Aniso.png"),
     Report = rep, TmbData = TmbData)
 
   # Annual density surface, use plot_set = 3 to start and then do plot_set=c(3:10) to see more output on a good working model
-  SpatialDeltaGLMM::PlotResultsOnMap_Fn(plot_set = 3,
+  FishStatsUtils::plot_maps(plot_set = 3,
     MappingDetails = MapDetails_List[["MappingDetails"]],
     Report = rep, Sdreport = Opt$SD,
     PlotDF = MapDetails_List[["PlotDF"]],
@@ -95,7 +95,7 @@ vast_wc_diag_plot <- function(data, rep, TmbData, Opt,
     cex = 1.8, plot_legend_fig = FALSE)
 
   #index of abundance
-  Index <- SpatialDeltaGLMM::PlotIndex_Fn(
+  Index <- FishStatsUtils::plot_biomass_index(
     DirName = dir,
     TmbData = TmbData, Sdreport = Opt[["SD"]],
     Year_Set = Year_Set, Years2Include = Years2Include,
@@ -105,7 +105,7 @@ vast_wc_diag_plot <- function(data, rep, TmbData, Opt,
   #   Index$Table[, c("Year","Fleet","Estimate_metric_tons","SD_log","SD_mt")])
 
   # center of gravity / range expansion
-  SpatialDeltaGLMM::Plot_range_shifts(
+  FishStatsUtils::plot_range_index(
     Report = rep, TmbData = TmbData, Sdreport = Opt[["SD"]],
     Znames = colnames(TmbData$Z_xm), PlotDir = dir, Year_Set = Year_Set)
 
@@ -113,7 +113,7 @@ vast_wc_diag_plot <- function(data, rep, TmbData, Opt,
   # Make diagnostic plots
   ################
 
-  SpatialDeltaGLMM::Plot_data_and_knots(
+  FishStatsUtils::plot_data(
     Extrapolation_List = e_list,
     Spatial_List = Spatial_List, Data_Geostat = data, PlotDir = dir)
 
@@ -125,18 +125,18 @@ vast_wc_diag_plot <- function(data, rep, TmbData, Opt,
     row.names = FALSE, sep = ",")
 
   # Plot encounter probability diagnostics p/a
-  Enc_prob <- SpatialDeltaGLMM::Check_encounter_prob(
+  Enc_prob <- FishStatsUtils::plot_encounter_diagnostic(
     Report = rep, Data_Geostat = data, DirName = dir)
 
   # QQ plot
-  Q <- SpatialDeltaGLMM::QQ_Fn(
+  Q <- FishStatsUtils::plot_quantile_diagnostic(
     TmbData = TmbData, Report = rep, save_dir = dir,
     FileName_PP = "Posterior_Predictive",
     FileName_Phist = "Posterior_Predictive-Histogram",
     FileName_QQ = "Q-Q_plot", FileName_Qhist="Q-Q_hist")[[1]]
 
   # Residuals
-  SpatialDeltaGLMM::plot_residuals(Lat_i = data[,"Lat"], Lon_i = data[,"Lon"], TmbData = TmbData, Report = rep, Q = Q, savedir = dir,
+  FishStatsUtils::plot_residuals(Lat_i = data[,"Lat"], Lon_i = data[,"Lon"], TmbData = TmbData, Report = rep, Q = Q, savedir = dir,
     MappingDetails = MapDetails_List[["MappingDetails"]],
     PlotDF = MapDetails_List[["PlotDF"]],
     MapSizeRatio = MapDetails_List[["MapSizeRatio"]],

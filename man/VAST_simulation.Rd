@@ -5,7 +5,7 @@
 \title{Run a complete simulation using \link{VAST}}
 \usage{
 VAST_simulation(maindir = getwd(), conditiondir = NULL, globalsettings,
-  n_cluster)
+  n_cluster, OMdir = NULL)
 }
 \arguments{
 \item{maindir}{The main directory that will house all of the results using a
@@ -15,17 +15,24 @@ model results will all be housed in this directory.}
 \item{conditiondir}{A directory for the conditioning. Only specify if the
 conditioning has already been ran or you want to name the directory.}
 
-\item{globalsettings}{A list of settings for the simulation.}
+\item{globalsettings}{A list of settings for the simulation.
+The full settings need not be supplied. Any settings not included in the list will
+be added using \code{\link{get_settings}}.}
 
 \item{n_cluster}{The number of clusters you want to use for parallel computing.}
+
+\item{OMdir}{A relative path from the conditiondir for the directory for the OM,
+so that you can run more iterations if you so wish.}
 }
 \value{
-
+A data frame of results are returned that contains
+information about the operating models and estimation methods.
 }
 \description{
 Run a complete simulation using \link{VAST}
 }
 \examples{
+#todo: fix this example so it doesn't rely on Sim_Settings
 VAST_simulation(globalsettings = Sim_Settings, n_cluster = 1)
 
 }

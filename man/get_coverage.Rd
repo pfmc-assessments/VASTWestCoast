@@ -13,13 +13,12 @@ get_coverage(data, plot = FALSE)
 plot the data}
 }
 \value{
-
+A vector of information regarding the coverage for the data
+that was provided in the argument \code{data}. One value will be returned
+for each row of data.
 }
 \description{
 Calculate coverage of an index
-}
-\examples{
-
 }
 \author{
 Kelli Faye Johnson

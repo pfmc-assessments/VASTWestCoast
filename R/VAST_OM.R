@@ -45,7 +45,7 @@ VAST_OM <- function(reps, dir = NULL, conditioning, ncluster = 2) {
   if (length(reps) == 0) return()
   ignore <- foreach::foreach(
     i = reps,
-    .packages = c("SpatialDeltaGLMM", "VASTWestCoast")) %dopar% {
+    .packages = c("VASTWestCoast")) %dopar% {
     VAST_OMrepi(omdir = dir, rep = i, settings = conditioning)
   }
 }
@@ -96,7 +96,7 @@ VAST_OMrepi <- function(omdir, rep, settings,
     } else {
       havedata <- settings$data
     }
-    Sim <- SpatialDeltaGLMM::Geostat_Sim(Sim_Settings = settings,
+    Sim <- get_sim(Sim_Settings = settings,
       Extrapolation_List = settings$extrapolation,
       Data_Geostat = havedata)
     Sim$usedempirical <- ifelse(is.null(havedata[1]), FALSE, TRUE)

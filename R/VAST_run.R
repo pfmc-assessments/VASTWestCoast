@@ -140,7 +140,7 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
     sdreport <- Opt[["SD"]]
 
     if (!is.null(Opt[["SD"]])) {
-      Index <- tryCatch(SpatialDeltaGLMM::PlotIndex_Fn(
+      Index <- tryCatch(FishStatsUtils::plot_biomass_index(
         DirName = dirname(savefile), TmbData = TmbData,
         Sdreport = Opt[["SD"]],
         Year_Set = seq(min(datalist$data[, "Year"]), max(datalist$data[, "Year"])),

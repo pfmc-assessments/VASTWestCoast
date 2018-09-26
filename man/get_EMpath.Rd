@@ -8,11 +8,26 @@ get_EMpath(simnum, omnum, repnum, emnum, basedir = getwd(),
   simname = "_VAST_simulation", check = FALSE, make = FALSE)
 }
 \arguments{
+\item{simnum}{The simulation number}
+
+\item{omnum}{The number for the operating model}
+
+\item{repnum}{The replicate number}
+
+\item{emnum}{The estimation method number}
+
 \item{basedir}{A file path of your base directory}
+}
+\value{
+A character value specifying the full or relative
+path to the directory.
 }
 \description{
 Create full path to estimation model
 }
 \examples{
 get_EMpath(simnum = 1, omnum = 1, repnum = 1, emnum = 1)
+}
+\author{
+Kelli Faye Johnson
 }

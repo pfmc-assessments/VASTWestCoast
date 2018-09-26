@@ -33,7 +33,7 @@ VAST_EM <- function(reps, settings, directory, n_cluster, getdatafrom) {
   registerDoParallel(clem)
   ignore <- foreach::foreach(
     i = replicates,
-    .packages = c("SpatialDeltaGLMM",
+    .packages = c(
       "VAST", "ThorsonUtilities",
       "TMB", "TMBhelper",
       "VASTWestCoast")) %dopar% {

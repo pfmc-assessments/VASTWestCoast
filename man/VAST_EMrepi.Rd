@@ -5,7 +5,7 @@
 \title{Run the estimation method for a given set of "settings"}
 \usage{
 VAST_EMrepi(settings, data, datadir, emdir, overdispersion = c(eta1 = 0, eta2
-  = 0))
+  = 0), rerun = FALSE)
 }
 \arguments{
 \item{settings}{A list of settings.}
@@ -19,6 +19,9 @@ VAST_EMrepi(settings, data, datadir, emdir, overdispersion = c(eta1 = 0, eta2
 \item{overdispersion}{A vector of values specifying if a vessel_year
 effect should be included. The default \code{c("eta1" = 0, "eta2" = 0)}
 does not estimate an effect.}
+
+\item{rerun}{A logical value specifying if the EM should be overwritten
+with a new estimation process.}
 }
 \value{
 Saves information to the disk.

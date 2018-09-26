@@ -40,7 +40,7 @@ catchability in the model. The default is to not use pass, i.e., \code{pass = FA
 be specified, else the \code{.RData} file will be saved in the current directory.}
 }
 \value{
-
+Nothing is returned directly, instead files are saved to the disk.
 }
 \description{
 Estimate parameters from a spatiotemporal index-standardization model
