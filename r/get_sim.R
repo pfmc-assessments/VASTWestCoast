@@ -305,4 +305,3 @@ get_sim <- function(Sim_Settings = NULL, Extrapolation_List, Data_Geostat = NULL
   if (exists("b1_i")) Return = c(Return, list("b1_i"=b1_i, "b2_i"=b2_i))
   return(Return)
 }
-test <- get_sim(Extrapolation_List = info$Extrapolation_List)
