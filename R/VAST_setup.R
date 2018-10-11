@@ -15,15 +15,15 @@
 #' @export
 #'
 VAST_setup <- function(data, dir, regionacronym, strata = NULL, nknots) {
-  Extrapolation_List <- switch(regionacronym,
+  determinedregion <- switch(regionacronym,
     EBSBTS = "eastern_bering_sea",
     WCGBTS = "California_current",
     NULL)
-  if (is.null(Extrapolation_List)) stop("The survey,",
+  if (is.null(determinedregion)) stop("The survey,",
     regionacronym, ", was not recognized.")
 
   Extrapolation_List <- suppressMessages(FishStatsUtils::make_extrapolation_info(
-    Region = Extrapolation_List,
+    Region = determinedregion,
     strata.limits = strata))
   if (regionacronym == "EBSBTS") {
     ignore <- which(colnames(Extrapolation_List$Data_Extrap) == "Mid_Depth")
@@ -100,5 +100,6 @@ VAST_setup <- function(data, dir, regionacronym, strata = NULL, nknots) {
     "unstandarddepth" = unstandarddepth,
     "depthperknot" = depthperknot,
     "Spatial_List" = Spatial_List,
-    "X_xtp" = X_xtp))
+    "X_xtp" = X_xtp,
+    "region" = determinedregion))
 }
