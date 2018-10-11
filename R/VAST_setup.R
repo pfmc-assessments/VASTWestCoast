@@ -16,16 +16,19 @@
 #'
 VAST_setup <- function(data, dir, regionacronym, strata = NULL, nknots) {
   Extrapolation_List <- switch(regionacronym,
-    EBSTS = "eastern_bering_sea",
-    WCGBTS = "California_current")
-  if (length(Extrapolation_List) == 0) stop("Survey not recognized.")
+    EBSBTS = "eastern_bering_sea",
+    WCGBTS = "California_current",
+    NULL)
+  if (is.null(Extrapolation_List)) stop("The survey,",
+    regionacronym, ", was not recognized.")
 
   Extrapolation_List <- suppressMessages(FishStatsUtils::make_extrapolation_info(
     Region = Extrapolation_List,
     strata.limits = strata))
   if (regionacronym == "EBSBTS") {
-    ignore <- which(colnames(Extrapolation_List$Data_Extrap)) == "Mid_Depth"
+    ignore <- which(colnames(Extrapolation_List$Data_Extrap) == "Mid_Depth")
     if (length(ignore) == 1) colnames(Extrapolation_List$Data_Extrap)[ignore] <- "Depth_km"
+    Extrapolation_List$Data_Extrap$Depth_km2 <- Extrapolation_List$Data_Extrap$Depth_km^2
   }
   # Standardize the depth data
   # White paper that advocates for standardizing before squaring for a quadratic

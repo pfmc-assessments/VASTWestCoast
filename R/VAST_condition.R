@@ -51,25 +51,21 @@ VAST_condition <- function(conditiondir, settings, spp,
 
   # Make the data work for VAST
   if (is.null(data)) {
-    # Database <- FishData::download_catch_rates(
-    #   survey = survey,
-    #   species_set = gsub("_", " ", gsub("[A-Z]{3}BTS_", "", spp)),
-    #   # species_set = 25,
-    #   error_tol = 0.01, localdir = paste0(datadir, .Platform$file.sep))
-    # Database <- ThorsonUtilities::rename_columns(
-    #   Database[, c("Sci", "Wt", "Year", "Long", "Lat", "Vessel")],
-    #   newname = c("Sci", "Catch_KG", "Year", "Lon", "Lat", "Vessel"))
-    # another way to download the data
     # todo: don't hardwire the years
-    if (TRUE) {
+    if (survey == "EBSBTS") {
+      Database <- FishData::download_catch_rates(
+        survey = survey,
+        species_set = gsub("_", " ", gsub("[A-Z]{3}BTS_", "", spp)),
+        # species_set = 25,
+        error_tol = 0.01, localdir = paste0(datadir, .Platform$file.sep))
+      Database <- ThorsonUtilities::rename_columns(
+        Database[, c("Sci", "Wt", "Year", "Long", "Lat", "TowID")],
+        newname = c("Sci", "Catch_KG", "Year", "Lon", "Lat", "TowID"))
+    }
+    if (survey == "WCGBTS") {
       # Database <- JRWToolBox::WCGBTS_Combo_Catch_Wt(
       #   Species =  paste(strsplit(settings$Species, "_")[[1]][2:3], collapse = " "),
       #   YearRange = c(2003, 2017))
-      # Database$Sci <- Database$Scientific_Name
-      # Database$Catch_KG <- Database$Total_sp_wt_kg
-      # Database$AreaSwept_km2 <- Database$Area_Swept_ha / 100
-      # Database$Lon <- Database$Longitude_dd
-      # Database$Lat <- Database$Latitude_dd
       #todo: change  more column names or delete this
       Database <- JRWToolBox::dataWareHouseTrawlCatch(
         YearRange = c(2003, 2017),
