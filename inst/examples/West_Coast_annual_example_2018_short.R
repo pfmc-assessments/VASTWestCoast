@@ -1,3 +1,4 @@
+devtools::install_github("James-Thorson/FishStatsUtils")
 devtools::install_github("nwfsc-assess/VASTWestCoast")
 library(VASTWestCoast)
 library(TMB)
@@ -17,3 +18,4 @@ test <- VAST_condition(
   settings = Sim_Settings, spp = Sim_Settings$Species,
   datadir = downloaddir,
   overdisperion = NULL)
+VAST_diagnostics(downloaddir)
