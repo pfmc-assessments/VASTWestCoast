@@ -27,11 +27,8 @@ directory should not have a trailing separator.}
 
 \item{overdisperion}{A vector of overdispersion parameters to include
 in the conditioning. The default is \code{NULL} and will enable the determination
-of overdispersion from the \code{spp} based on its survey. If the survey occurs in
-Alasksa (i.e., EBSBTS) then overdispersion will be based on the default value in
-\code{\link[VAST]{Data_Fn}}of \code{c("eta1" = 0, "eta2" = 0)}. If the survey occurs
-of the US West Coast, then overdispersion will be modelled for both components using a
-vessel-year effect labeled delta.}
+of overdispersion from the \code{spp} based on its survey.
+See the section below on Overdispersion above for more details.}
 
 \item{data}{A data frame that can be passed to the conditioning function
 such that no data will be downloaded and the passed data frame will be used
@@ -42,8 +39,40 @@ Nothing is returned by the function, but the function saves two \code{.RData}
 structures to the disk in the \code{conditiondir}.
 }
 \description{
-Condition an operating model based on fits to empirical data
+Fits \code{data} stored on your computer or from the cloud
+to a \code{\link[VAST]{Build_TMB_Fn}} model using
+\code{\link[TMBhelper]{Optimize}} as specified using the available
+arguments.
+The function was specifically written as a wrapper for
+\code{\link[VAST]{Data_Fn}} and \code{\link[VAST]{Build_TMB_Fn}}
+to be used by scientists at the Northwest Fisheries Science Center.
+For more details on how \code{\link[VAST]{Build_TMB_Fn}}
+is configured see the sections below.
 }
+\section{Overdispersion}{
+
+Overdispersion controls the number of catchability factor for each
+model component. The default is to ignore catchability, but for the
+US West Coast we assume a vessel-year effect.
+\enumerate{
+  \item Alaska (i.e., EBSBTS) where overdispersion will be the default
+value in \code{\link[VAST]{Data_Fn}}of \code{c("eta1" = 0, "eta2" = 0)}.
+  \item US West Coast (i.e., WCGBTS) where overdispersion will be modelled
+for both components using a vessel-year effect labeled delta
+(i.e., \code{c("Delta1" = 1, "Delta2" = 1)}).
+}
+}
+
+\section{Pass}{
+
+The US West Coast has operated using two passes of the survey area, where
+each pass is done during a different time of year. If you think that migration
+happens temporally and this migration will affect spatial density, then you
+should include pass as a covariate. The default is to ignore pass, but I
+presume that many US West Coast users will want to change this using the
+\code{settings} argument.
+}
+
 \author{
 Kelli Faye Johnson
 }
