@@ -63,13 +63,19 @@ VAST_condition <- function(conditiondir, settings, spp,
   if (!is.list(settings)) stop("settings must be a list")
   settings <- get_settings(settings)
   survey <- strsplit(spp, "_")[[1]][1]
-  if (!survey %in% c("EBSBTS", "WCGBTS")) stop("Survey must be EBSBTS or WCGBTS")
+  if (!survey %in% c("EBSBTS", "WCGBTS", "WCGOP")) {
+    stop("Survey must be EBSBTS or WCGBTS")
+  }
+  if (survey == "WCGOP" & is.null(data)) {
+    stop("Must supply data when the survey is WCGOP")
+  }
   if (!file.exists(datadir)) stop("The datadir, ", datadir, ", doesn't exist.")
 
   if (is.null(overdisperion)) {
     overdispersion <- switch(survey,
       EBSBTS = c("eta1" = 0, "eta2" = 0),
-      WCGBTS = c("Delta1" = 1, "Delta2" = 1))
+      WCGBTS = c("Delta1" = 1, "Delta2" = 1),
+      WCGOP = c("eta1" = 0, "eta2" = 0))
   }
 
   dir.create(conditiondir, showWarnings = FALSE, recursive = TRUE)

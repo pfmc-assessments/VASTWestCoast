@@ -18,6 +18,7 @@ VAST_setup <- function(data, dir, regionacronym, strata = NULL, nknots) {
   determinedregion <- switch(regionacronym,
     EBSBTS = "eastern_bering_sea",
     WCGBTS = "California_current",
+    WCGOP = "California_current",
     NULL)
   if (is.null(determinedregion)) stop("The survey,",
     regionacronym, ", was not recognized.")
