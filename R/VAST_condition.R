@@ -101,8 +101,8 @@ VAST_condition <- function(conditiondir, settings, spp,
       #   YearRange = c(2003, 2017))
       #todo: change  more column names or delete this
       Database <- JRWToolBox::dataWareHouseTrawlCatch(
-        YearRange = c(2003, 2017),
-        Species =  paste(strsplit(settings$Species, "_")[[1]][2:3], collapse = " "),
+        yearRange = c(2003, 2017),
+        species =  paste(strsplit(settings$Species, "_")[[1]][2:3], collapse = " "),
         project = "WCGBTS.Combo")
       Database$Sci <- Database$Scientific_Name
       Database$Lon <- Database$Longitude_dd
