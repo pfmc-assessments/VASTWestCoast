@@ -79,15 +79,21 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   } else {qdatahere <- NULL}
 
   # Make TMB data list
-  TmbData <- VAST::Data_Fn(
+  if (!"species" %in% tolower(colnames(datalist$data))) {
+    datalist$data <- cbind(datalist$data, "Species" = 1)
+  }
+
+  # nfactors <- length(unique(datalist$data[, "Species"]))
+  nfactors <- 1
+  TmbData <- suppressWarnings(VAST::Data_Fn(
     "Version" = Version,
     # An array
     "X_xtp" = depthdatahere,
     # 1=Presence-absence; 2=Density given presence;
     # Epsilon=Spatio-temporal; Omega=Spatial
     "FieldConfig" = c(
-      "Omega1" = 1, "Epsilon1" = 1,
-      "Omega2" = 1, "Epsilon2" = 1),
+      "Omega1" = nfactors, "Epsilon1" = nfactors,
+      "Omega2" = nfactors, "Epsilon2" = nfactors),
     # Vessel-year effects for
     # Default is c("eta1" = 0, "eta2" = 0)
     "OverdispersionConfig" = overdispersion,
@@ -95,8 +101,7 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
     # 0=None (default); 1=WhiteNoise; 2=RandomWalk; 3=Constant
     "RhoConfig" = RhoConfig,
     "ObsModel" = obsmodel,
-    # Don't need next line b/c it is for categories
-    "c_i" = rep(0, nrow(datalist$data)),
+    "c_i" = as.numeric(datalist$data[, "Species"]) - 1,
     "b_i" = datalist$data[, "Catch_KG"],
     "a_i" = datalist$data[, "AreaSwept_km2"],
     "v_i" = as.numeric(datalist$data[, "Vessel"]) - 1,
@@ -111,7 +116,8 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
     "MeshList" = datalist$Spatial_List$MeshList,
     "GridList" = datalist$Spatial_List$GridList,
     "Method" = datalist$Spatial_List$Method,
-    "Options" = Options)
+    "Options" = Options))
+
 
   # Make TMB object
   TmbList = VAST::Build_TMB_Fn("TmbData" = TmbData, "RunDir" = rundir,
@@ -131,14 +137,17 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   #   "loc_x" = datalist$Spatial_List$loc_x)
 
   # Run model
+  # todo: fix the bias corrected variable when there are categories
+  dobiason <- ifelse(length(unique(datalist$data[, "Species"])) > 1, 
+    "Index_xcyl", "Index_cyl")
   Obj <- TmbList[["Obj"]]
   Opt <- tryCatch(TMBhelper::Optimize(
     obj = Obj,
     lower = TmbList[["Lower"]], upper = TmbList[["Upper"]],
     getsd = TRUE, savedir = dirname(savefile), newtonsteps = 1,
-    bias.correct = TRUE,
+    bias.correct = ifelse(dobiason == "Index_xcyl", FALSE, TRUE),
     bias.correct.control = list(sd = FALSE, split = NULL,
-      nsplit = 1, vars_to_correct = "Index_cyl")
+      nsplit = 1, vars_to_correct = dobiason)
     ), error = function(e) e)
 
   Report <- Obj$report()
