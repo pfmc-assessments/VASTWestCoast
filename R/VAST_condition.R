@@ -139,7 +139,7 @@ VAST_condition <- function(conditiondir, settings, spp,
     overdispersion = overdispersion,
     obsmodel = settings$ObsModelcondition,
     rundir = datadir,
-    Version = settings$version, calcs = rep(0, 8),
+    Version = settings$version,
     strata = settings$strata,
     pass = settings$Passcondition,
     savefile = file.path(conditiondir, "Save.RData"))
