@@ -61,6 +61,7 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   Options[7] <- calcs[7]
   Options[8] <- calcs[8]
   Options[9] <- calcs[9]
+  RhoConfig <- c("Beta1" = 0, "Beta2" = 0, "Epsilon1" = 0, "Epsilon2" = 0)
 
   depthdatahere <- switch(as.character(depth),
     no = NULL,
@@ -92,7 +93,7 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
     "OverdispersionConfig" = overdispersion,
     # Structure for beta or epsilon over time:
     # 0=None (default); 1=WhiteNoise; 2=RandomWalk; 3=Constant
-    "RhoConfig" = c("Beta1" = 0, "Beta2" = 0, "Epsilon1" = 0, "Epsilon2" = 0),
+    "RhoConfig" = RhoConfig,
     "ObsModel" = obsmodel,
     # Don't need next line b/c it is for categories
     "c_i" = rep(0, nrow(datalist$data)),
@@ -115,8 +116,9 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   # Make TMB object
   TmbList = VAST::Build_TMB_Fn("TmbData" = TmbData, "RunDir" = rundir,
     "Version" = Version,
-    "RhoConfig" = c("Beta1" = 0, "Beta2" = 0, "Epsilon1" = 0, "Epsilon2" = 0),
-    "loc_x" = datalist$Spatial_List$loc_x)
+    "RhoConfig" = RhoConfig,
+    "loc_x" = datalist$Spatial_List$loc_x,
+    "Method" = datalist$Spatial_List$Method)
   # TmbList$Parameters$L1_z <- 0
    # TmbList$Parameters$logSigmaM[1] <- log(0.25)
   # TmbList$Map$L1_z <- factor(NA)
