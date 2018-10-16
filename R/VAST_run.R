@@ -151,6 +151,10 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
     ), error = function(e) e)
 
   Report <- Obj$report()
+  error <- NULL
+  if ("simpleError" %in% class(Opt)) {
+    error <- Opt$message
+  }
 
   # Plot index
   if (!grepl("likely not converged", Opt[[1]]["Convergence_check"])) {
@@ -170,6 +174,7 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
 	  	savedir = dirname(savefile))
     } else {
       Index <- NULL
+      tables <- NULL
     }
   } else {
     Index <- NULL
@@ -180,6 +185,6 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   }
 
   save(AIC, Index, Obj, Opt, ParHat, Report, sdreport, TmbData, TmbList,
-    tables,
+    tables, error,
     file = savefile)
 }
