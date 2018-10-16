@@ -12,7 +12,7 @@
 #' used on the US West Coast is \code{c(2, 0)}.
 #' @param rundir A directory where the \code{.cpp} file will be compiled to.
 #' @param Version The version of the \code{.cpp} file to use.
-#' @param calcs A vector of length one or length eight specifying which calculations
+#' @param calcs A vector of length one or nine specifying which calculations
 #' to perform. If a single integer of zero or one is given then this value will be used
 #' for all eight calculations. Zero turns them off and one turns them on.
 #' @param strata Strata specifications for calculating the index of abundance.
@@ -31,7 +31,7 @@
 #'
 VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   overdispersion, obsmodel, rundir,
-  Version = NULL, calcs = rep(0, 8),
+  Version = NULL, calcs = c(rep(1, 7), 0, 1),
   strata, pass = FALSE, savefile) {
 
   if (is.null(Version)) Version <- gsub("\\.cpp", "",
@@ -39,12 +39,19 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
     file.path("library", "VAST", "executables"))), 1))
   if (depth == "FALSE") depth <- "no"
   depth <- match.arg(depth)
-  if (length(calcs) == 1) calcs <- rep(calcs, 8)
+  if (length(calcs) == 1) calcs <- rep(calcs, 9)
 
   Options <- c(
-  SD_site_density = 0, SD_site_logdensity = 0,
-  Calculate_Range = 0, Calculate_evenness = 0, Calculate_effective_area = 0,
-  Calculate_Cov_SE = 0, Calculate_Synchrony = 0, Calculate_Coherence = 0)
+    "SD_site_density" = 0, 
+    "SD_site_logdensity" = 0, 
+    "Calculate_Range" = 0, 
+    "SD_observation_density" = 0, 
+    "Calculate_effective_area" = 0,
+    "Calculate_Cov_SE" = 0, 
+    "Calculate_Synchrony" = 0, 
+    "Calculate_Coherence" = 0, 
+    "Calculate_proportion" = 0, 
+    "normalize_GMRF_in_CPP" = TRUE)
   Options[1] <- calcs[1]
   Options[2] <- calcs[2]
   Options[3] <- calcs[3]
@@ -53,6 +60,7 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   Options[6] <- calcs[6]
   Options[7] <- calcs[7]
   Options[8] <- calcs[8]
+  Options[9] <- calcs[9]
 
   depthdatahere <- switch(as.character(depth),
     no = NULL,
