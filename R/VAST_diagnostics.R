@@ -20,7 +20,8 @@ VAST_diagnostics <- function(dir = getwd()) {
   base::load(datafile, envir = e1)
   base::load(setupfile, envir = e1)
 
-  if(is.null(get("info", envir = e1)$region)) {
+  region <- get("info", envir = e1)$region
+  if(is.null(region)) {
     region <- switch(
       strsplit(get("settings", envir = e1)$Species, "_")[[1]][1],
       EBSBTS = "eastern_bering_sea",
