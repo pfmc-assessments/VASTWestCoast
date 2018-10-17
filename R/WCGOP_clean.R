@@ -93,7 +93,7 @@ WCGOP_clean <- function(data, species, gear) {
     "AreaSwept_km2" = data$HAUL_DURATION,
     "Lat" = data$AVG_LAT,
     "Lon" = data$AVG_LONG,
-    "Species" = data$SCIENTIFIC_NAME)
+    "Sci" = data$SCIENTIFIC_NAME)
   data <- data[data$AreaSwept_km2 != 0, ]
   invisible(data)
 }

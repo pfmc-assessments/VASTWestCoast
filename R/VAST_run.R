@@ -25,6 +25,7 @@
 #'
 #' @import TMB
 #' @import VAST
+#' @importFrom TMB compile
 #'
 #' @author Kelli Faye Johnson
 #' @export
@@ -79,12 +80,15 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   } else {qdatahere <- NULL}
 
   # Make TMB data list
-  if (!"species" %in% tolower(colnames(datalist$data))) {
-    datalist$data <- cbind(datalist$data, "Species" = 1)
+  if (!"sci" %in% tolower(colnames(datalist$data))) {
+    datalist$data <- cbind(datalist$data, "Sci" = 1)
   }
 
-  # nfactors <- length(unique(datalist$data[, "Species"]))
+  # nfactors <- length(unique(datalist$data[, "Sci"]))
   nfactors <- 1
+  if (!is.factor(datalist$data$Sci)) {
+    datalist$data$Sci <- as.factor(datalist$data$Sci)
+  }
   TmbData <- suppressWarnings(VAST::Data_Fn(
     "Version" = Version,
     # An array
@@ -101,7 +105,7 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
     # 0=None (default); 1=WhiteNoise; 2=RandomWalk; 3=Constant
     "RhoConfig" = RhoConfig,
     "ObsModel" = obsmodel,
-    "c_i" = as.numeric(datalist$data[, "Species"]) - 1,
+    "c_i" = as.numeric(datalist$data[, "Sci"]) - 1,
     "b_i" = datalist$data[, "Catch_KG"],
     "a_i" = datalist$data[, "AreaSwept_km2"],
     "v_i" = as.numeric(datalist$data[, "Vessel"]) - 1,
@@ -138,14 +142,15 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
 
   # Run model
   # todo: fix the bias corrected variable when there are categories
-  dobiason <- ifelse(length(unique(datalist$data[, "Species"])) > 1, 
+  dobiason <- ifelse(length(unique(datalist$data[, "Sci"])) > 1, 
     "Index_xcyl", "Index_cyl")
+  dobias <- ifelse(dobiason == "Index_xcyl", FALSE, TRUE)
   Obj <- TmbList[["Obj"]]
   Opt <- tryCatch(TMBhelper::Optimize(
     obj = Obj,
     lower = TmbList[["Lower"]], upper = TmbList[["Upper"]],
     getsd = TRUE, savedir = dirname(savefile), newtonsteps = 1,
-    bias.correct = ifelse(dobiason == "Index_xcyl", FALSE, TRUE),
+    bias.correct = dobias,
     bias.correct.control = list(sd = FALSE, split = NULL,
       nsplit = 1, vars_to_correct = dobiason)
     ), error = function(e) e)
@@ -167,7 +172,7 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
         DirName = dirname(savefile), TmbData = TmbData,
         Sdreport = Opt[["SD"]],
         Year_Set = seq(min(datalist$data[, "Year"]), max(datalist$data[, "Year"])),
-        strata_names = strata[, 1], use_biascorr = TRUE),
+        strata_names = strata[, 1], use_biascorr = dobias),
 	    error = function(e) e)
 	  sdinfo <- TMB::sdreport(Obj)
 	  tables <- FishStatsUtils::summary_nwfsc(obj = Obj, sdreport = sdinfo,
