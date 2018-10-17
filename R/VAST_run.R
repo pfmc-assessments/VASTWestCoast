@@ -62,6 +62,7 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   Options[7] <- calcs[7]
   Options[8] <- calcs[8]
   Options[9] <- calcs[9]
+  if (Version == "VAST_v4_0_0") Options <- c("Calculate_Range" = 0)
   RhoConfig <- c("Beta1" = 0, "Beta2" = 0, "Epsilon1" = 0, "Epsilon2" = 0)
 
   depthdatahere <- switch(as.character(depth),
@@ -121,7 +122,6 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
     "GridList" = datalist$Spatial_List$GridList,
     "Method" = datalist$Spatial_List$Method,
     "Options" = Options))
-
 
   # Make TMB object
   TmbList = VAST::Build_TMB_Fn("TmbData" = TmbData, "RunDir" = rundir,
