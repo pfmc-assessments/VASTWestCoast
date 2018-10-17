@@ -84,7 +84,7 @@ VAST_condition <- function(conditiondir, settings, spp,
 
   # Make the data work for VAST
   if (is.null(data)) {
-    # todo: don't hardwire the years
+    # todo: add ability to subset the years
     if (survey == "EBSBTS") {
       Database <- FishData::download_catch_rates(
         survey = survey,
@@ -96,19 +96,20 @@ VAST_condition <- function(conditiondir, settings, spp,
         newname = c("Sci", "Catch_KG", "Year", "Lon", "Lat", "TowID"))
     }
     if (survey == "WCGBTS") {
-      # Database <- JRWToolBox::WCGBTS_Combo_Catch_Wt(
-      #   Species =  paste(strsplit(settings$Species, "_")[[1]][2:3], collapse = " "),
-      #   YearRange = c(2003, 2017))
-      #todo: change  more column names or delete this
       Database <- JRWToolBox::dataWareHouseTrawlCatch(
-        yearRange = c(2003, 2017),
         species =  paste(strsplit(settings$Species, "_")[[1]][2:3], collapse = " "),
-        project = "WCGBTS.Combo")
+        project = switch(survey, WCGBTS = "WCGBTS.Combo", AFSC = "AFSC.Shelf"), 
+        verbose = FALSE)
       Database$Sci <- Database$Scientific_Name
       Database$Lon <- Database$Longitude_dd
       Database$Lat <- Database$Latitude_dd
       Database$Catch_KG <- Database$Total_sp_wt_kg
       Database$AreaSwept_km2 <- Database$Area_Swept_ha / 100
+    }
+    # Groundfish Triennial Shelf Survey
+    if (survey == "AFSC") {
+      Test <- JRWToolBox::dataWareHouseTrawlCatch("Sebastes flavidus", 
+        verbose = TRUE, project = "AFSC.Shelf")
     }
     # Make the vessel column as a vessel-year entry
     if ("Vessel" %in% names(Database)) {
