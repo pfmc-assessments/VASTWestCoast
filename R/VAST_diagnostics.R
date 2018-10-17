@@ -1,11 +1,15 @@
-###############################################################################
-###############################################################################
-#### First attempt at some diagnostic plots
-#### Author: Kelli Faye Johnson
-#### Date: 2018-08-16
-###############################################################################
-###############################################################################
-
+#' Run Diagnostic Plots for VASTWestCoast Output
+#' 
+#' @param dir The directory where the output from 
+#' \code{\link{VAST_condition}} is saved. Can be a relative
+#' or an absolute path.
+#' 
+#' @export
+#' @author Kelli Faye Johnson
+#' 
+#' @return todo: Make a list of the tables and figures that are 
+#' saved to the disk from VAST_diagnostics
+#' 
 VAST_diagnostics <- function(dir = getwd()) {
   # Load the saved file
   e1 <- new.env()
@@ -129,9 +133,3 @@ VAST_diagnostics <- function(dir = getwd()) {
   }
   invisible()
 }
-
-
-
-
-
-

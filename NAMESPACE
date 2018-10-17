@@ -3,6 +3,7 @@
 export(VAST_EM)
 export(VAST_OM)
 export(VAST_condition)
+export(VAST_diagnostics)
 export(VAST_run)
 export(VAST_setup)
 export(VAST_simulation)

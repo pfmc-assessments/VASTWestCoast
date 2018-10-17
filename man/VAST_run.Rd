@@ -5,7 +5,7 @@
 \title{Estimate parameters from a spatiotemporal index-standardization model}
 \usage{
 VAST_run(datalist, depth = c("no", "linear", "squared"), overdispersion,
-  obsmodel, rundir, Version = NULL, calcs = rep(0, 8), strata,
+  obsmodel, rundir, Version = NULL, calcs = c(rep(1, 7), 0, 1), strata,
   pass = FALSE, savefile)
 }
 \arguments{
@@ -27,7 +27,7 @@ used on the US West Coast is \code{c(2, 0)}.}
 
 \item{Version}{The version of the \code{.cpp} file to use.}
 
-\item{calcs}{A vector of length one or length eight specifying which calculations
+\item{calcs}{A vector of length one or nine specifying which calculations
 to perform. If a single integer of zero or one is given then this value will be used
 for all eight calculations. Zero turns them off and one turns them on.}
 
