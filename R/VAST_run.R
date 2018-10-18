@@ -51,18 +51,18 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
     "Calculate_Cov_SE" = 0, 
     "Calculate_Synchrony" = 0, 
     "Calculate_Coherence" = 0, 
-    "Calculate_proportion" = 0, 
-    "normalize_GMRF_in_CPP" = TRUE)
+    "Calculate_proportion" = 0)
   Options[1] <- calcs[1]
   Options[2] <- calcs[2]
   Options[3] <- calcs[3]
   Options[4] <- calcs[4]
   Options[5] <- calcs[5]
   Options[6] <- calcs[6]
-  Options[7] <- calcs[7]
+  # Options[7] <- calcs[7]
   Options[8] <- calcs[8]
   Options[9] <- calcs[9]
-  if (Version == "VAST_v4_0_0") Options <- c("Calculate_Range" = 0)
+  if (grepl("_v4", Version)) Options <- c("Calculate_Range" = 0)
+
   RhoConfig <- c("Beta1" = 0, "Beta2" = 0, "Epsilon1" = 0, "Epsilon2" = 0)
 
   depthdatahere <- switch(as.character(depth),
@@ -154,7 +154,6 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
     bias.correct.control = list(sd = FALSE, split = NULL,
       nsplit = 1, vars_to_correct = dobiason)
     ), error = function(e) e)
-
   Report <- Obj$report()
   error <- NULL
   if ("simpleError" %in% class(Opt)) {
