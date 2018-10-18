@@ -34,3 +34,4 @@ Encoding: UTF-8
 URL:
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
+Remotes: github::John-R-Wallace/JRWToolBox, github::James-Thorson/VAST
