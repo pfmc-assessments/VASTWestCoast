@@ -126,6 +126,12 @@ VAST_condition <- function(conditiondir, settings, spp,
   }
   save(Database, file = file.path(conditiondir, "DatabaseSave.RData"))
 
+  # ugly hack because VAST doesn't import compile()
+  if (!exists("compile", where = globalenv()) &&
+      !any(grepl("^package:TMBdebug$", search())) &&
+      !any(grepl("^package:TMB$", search())))
+    assign("compile", TMB::compile, envir = globalenv())
+
   info <- VAST_setup(data = Database,
     dir = kmeandir,
     regionacronym = survey,
