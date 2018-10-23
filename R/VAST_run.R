@@ -86,7 +86,7 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   }
 
   # nfactors <- length(unique(datalist$data[, "Sci"]))
-  nfactors <- 1
+  nfactors <- length(unique(datalist$data$Sci))
   if (!is.factor(datalist$data$Sci)) {
     datalist$data$Sci <- as.factor(datalist$data$Sci)
   }
@@ -141,10 +141,9 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   #   "loc_x" = datalist$Spatial_List$loc_x)
 
   # Run model
-  # todo: fix the bias corrected variable when there are categories
-  dobiason <- ifelse(length(unique(datalist$data[, "Sci"])) > 1, 
+  dobiason <- ifelse(length(unique(datalist$data[, "Sci"])) > 1,
     "Index_xcyl", "Index_cyl")
-  dobias <- ifelse(dobiason == "Index_xcyl", FALSE, TRUE)
+  dobias <- TRUE
   Obj <- TmbList[["Obj"]]
   Opt <- tryCatch(TMBhelper::Optimize(
     obj = Obj,
