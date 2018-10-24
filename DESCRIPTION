@@ -9,11 +9,21 @@ Description: Estimation and simulation code for those working on
     index of abundance or perform compositional expansion.
 Imports:
     doParallel,
+    FishData,
+    FishStatsUtils,
     foreach,
     ggplot2,
+    grDevices,
     JRWToolBox,
+    pander,
     parallel,
+    RandomFields,
+    RANN,
+    tidyr,
     TMB,
+    TMBhelper,
+    ThorsonUtilities,
+    tweedie,
     VAST
 Suggests:
     knitr,
@@ -21,6 +31,7 @@ Suggests:
     roxygen2,
     testthat
 License: MIT + file LICENSE
+Encoding: UTF-8
 URL:
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0

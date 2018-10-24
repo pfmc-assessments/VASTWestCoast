@@ -2,6 +2,7 @@
 #'
 #' @param file An R file with information saved from \code{\link{VAST_EM}}.
 #'
+#' @importFrom stats lm setNames
 #' @return A data frame with parameter values. Parameter names will be
 #' prefixed with "em".
 #'
@@ -72,12 +73,12 @@ get_EM <- function(file) {
     names(index) <- paste0("em_index_", seq_along(index))
   }
   logratio <- get_logratio(data = index)
-  ci <- setNames(c(ci$low, ci$upp),
+  ci <- stats::setNames(c(ci$low, ci$upp),
     paste(ci$par, 1:NROW(ci), c(rep("low", NROW(ci)), rep("upp", NROW(ci))),
     sep = "_"))
   em <- c(em, ci)
   lnindex <- log(index)
-  linear <- lm(lnindex ~ 1 + seq_along(index))$coef
+  linear <- stats::lm(lnindex ~ 1 + seq_along(index))$coef
   names(linear) <- NULL
   em$em_linear <- linear[2]
   em$AIC <- AIC
@@ -105,6 +106,12 @@ get_EM <- function(file) {
 #' @param repnum The replicate number
 #' @param emnum The estimation method number
 #' @param basedir A file path of your base directory
+#' @param simname A character value defining how you want the
+#' simulation to be named
+#' @param check A logical value defining if the path should
+#' be checked
+#' @param make A logical value defining if the path should
+#' be created if it doesn't exist
 #'
 #' @return A character value specifying the full or relative
 #' path to the directory.

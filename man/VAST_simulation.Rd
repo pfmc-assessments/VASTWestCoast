@@ -32,8 +32,11 @@ information about the operating models and estimation methods.
 Run a complete simulation using \link{VAST}
 }
 \examples{
-#todo: fix this example so it doesn't rely on Sim_Settings
-VAST_simulation(globalsettings = Sim_Settings, n_cluster = 1)
+\dontrun{
+VAST_simulation(
+  globalsettings = list("Species" = "WCGBTS_Anoplopoma_fimbria"), 
+  n_cluster = 1)
+}
 
 }
 \author{

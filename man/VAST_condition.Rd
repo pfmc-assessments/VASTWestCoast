@@ -4,8 +4,8 @@
 \alias{VAST_condition}
 \title{Condition an operating model based on fits to empirical data}
 \usage{
-VAST_condition(conditiondir, settings, spp, datadir, overdisperion = NULL,
-  data = NULL)
+VAST_condition(conditiondir, settings, spp, datadir,
+  overdisperion = NULL, data = NULL)
 }
 \arguments{
 \item{conditiondir}{A \code{file.path}, either full or relative, that will be used

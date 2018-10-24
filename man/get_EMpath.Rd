@@ -17,6 +17,15 @@ get_EMpath(simnum, omnum, repnum, emnum, basedir = getwd(),
 \item{emnum}{The estimation method number}
 
 \item{basedir}{A file path of your base directory}
+
+\item{simname}{A character value defining how you want the
+simulation to be named}
+
+\item{check}{A logical value defining if the path should
+be checked}
+
+\item{make}{A logical value defining if the path should
+be created if it doesn't exist}
 }
 \value{
 A character value specifying the full or relative

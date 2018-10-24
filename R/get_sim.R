@@ -21,8 +21,6 @@
 #'   \item{Data_Geostat}{Simulated data for analysis}
 #'   \item{B_tl}{True biomass for each year and stratum}
 #' }
-#' @import maps
-#' @import mapdata
 #' @importFrom RandomFields RFsimulate RMgauss 
 #' @importFrom RANN nn2
 #' @importFrom tweedie rtweedie
@@ -73,10 +71,6 @@ get_sim <- function(Sim_Settings = NULL, Extrapolation_List, Data_Geostat = NULL
 
   # Attach stuff
   start_time <- Sys.time()
-  library(maps, quietly = TRUE, verbose = FALSE, warn.conflicts = FALSE)
-  library(mapdata, quietly = TRUE, verbose = FALSE, warn.conflicts = FALSE)
-  on.exit(detach(package:mapdata), add = TRUE)
-  on.exit(detach(package:maps), add = TRUE)
 
   # Local functions
   RFsim <- function(model, x, y, standardize = TRUE){

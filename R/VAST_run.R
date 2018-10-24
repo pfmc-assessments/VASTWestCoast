@@ -23,9 +23,11 @@
 #'
 #' @return Nothing is returned directly, instead files are saved to the disk.
 #'
+#' @import FishStatsUtils
 #' @import TMB
 #' @import VAST
-#' @importFrom TMB compile
+#' @importFrom TMBhelper Optimize
+#' @importFrom utils tail
 #'
 #' @author Kelli Faye Johnson
 #' @export
@@ -36,7 +38,7 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   strata, pass = FALSE, savefile) {
 
   if (is.null(Version)) Version <- gsub("\\.cpp", "",
-    tail(list.files(R.home(
+    utils::tail(list.files(R.home(
     file.path("library", "VAST", "executables"))), 1))
   if (depth == "FALSE") depth <- "no"
   depth <- match.arg(depth)

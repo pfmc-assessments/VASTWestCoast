@@ -43,8 +43,17 @@ re_all <- function(data, bind = TRUE, type = c("re", "ae")) {
 
 }
 
-get_long <- function(data, names) {
-  out <- gather(data = data,
+#' Wrapper for Gather function
+#' A wrapper function that plays a limited roll in this
+#' package.
+#' @param data A data frame
+#' @param names A vector of names
+#' @param item The key
+#' @param value The value
+#' todo: document better
+#' @importFrom tidyr gather
+get_long <- function(data, names, item, value) {
+  out <- tidyr::gather(data = data,
              key = item,
              value = value,
              which(colnames(data) %in% names))
@@ -159,7 +168,7 @@ report$par <- make.unique(as.character(report$par))
 
 #' Calculate the median absolute error over categories and add to a plot
 #'
-#' @param data The data used in the \code{\link{ggplot2}} plot
+#' @param data The data used in the plot
 #' @param y A character vector of length 2 that specifies the
 #' columns to summarize
 #' @param x A character value providing the right side of the
@@ -168,15 +177,17 @@ report$par <- make.unique(as.character(report$par))
 #' @param nsmall An integer value providing the number of digits you
 #' want after the decimal for the MAE
 #'
+#' @param importFrom stats aggregate
+#'
 addMAE <- function(data, y, x, gg = NULL, nsmall = 3) {
   if (grepl("em_depth", x)) {
     data$em_depth <- paste("depth in EM =", data$em_depth)
   }
-  agg1 <- aggregate(as.formula(paste(y[1], "~", x)),
+  agg1 <- stats::aggregate(as.formula(paste(y[1], "~", x)),
     data = data,
     function(xx) format(median(xx, na.rm = TRUE), nsmall = nsmall,
       digits = 1))
-  agg2 <- aggregate(as.formula(paste(y[2], "~", x)),
+  agg2 <- stats::aggregate(as.formula(paste(y[2], "~", x)),
     data = data,
     function(xx) format(median(xx, na.rm = TRUE), nsmall = nsmall,
       digits = 1))

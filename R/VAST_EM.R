@@ -11,6 +11,7 @@
 #' @import doParallel
 #' @import TMB
 #' @importFrom foreach %dopar%
+#' @importFrom parallel makeCluster stopCluster
 #'
 #' @author Kelli Faye Johnson
 #' @export
@@ -28,15 +29,17 @@ VAST_EM <- function(reps, settings, directory, n_cluster, getdatafrom) {
   replicates <- sapply(reps,
     function(x) dir(directory, pattern = paste0("^", x, "$"),
       full.names = TRUE))
-  clem <- makeCluster(n_cluster)
-  on.exit(stopCluster(clem))
+  clem <- parallel::makeCluster(n_cluster)
+  on.exit(parallel::stopCluster(clem))
   registerDoParallel(clem)
+  i <- NULL
   ignore <- foreach::foreach(
     i = replicates,
     .packages = c(
       "VAST", "ThorsonUtilities",
       "TMB", "TMBhelper",
       "VASTWestCoast")) %dopar% {
+    Sim <- NULL
     load(dir(i, pattern = "Sim.R", full.names = TRUE))
     simdata <- Sim$Data_Geostat
     VAST_EMrepi(settings = settingsa, data = simdata, datadir = getdatafrom,

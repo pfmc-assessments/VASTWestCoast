@@ -7,7 +7,7 @@
 addMAE(data, y, x, gg = NULL, nsmall = 3)
 }
 \arguments{
-\item{data}{The data used in the \code{\link{ggplot2}} plot}
+\item{data}{The data used in the plot}
 
 \item{y}{A character vector of length 2 that specifies the
 columns to summarize}
@@ -19,6 +19,8 @@ formula used for aggregation (e.g., \code{"depth + year"})}
 
 \item{nsmall}{An integer value providing the number of digits you
 want after the decimal for the MAE}
+
+\item{importFrom}{stats aggregate}
 }
 \description{
 Calculate the median absolute error over categories and add to a plot

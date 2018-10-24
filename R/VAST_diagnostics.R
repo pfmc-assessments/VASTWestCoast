@@ -6,6 +6,9 @@
 #' 
 #' @export
 #' @author Kelli Faye Johnson
+#' @import FishStatsUtils
+#' @importFrom pander pandoc.table
+#' @importFrom VAST Summarize_Covariance
 #' 
 #' @return todo: Make a list of the tables and figures that are 
 #' saved to the disk from VAST_diagnostics
@@ -35,7 +38,7 @@ VAST_diagnostics <- function(dir = getwd()) {
       c("Param","Lower","MLE","Upper","final_gradient")])
   sink()
   # Check encounter probability
-  encprob <- FishStatsUtils::plot_encounter_diagnostic(
+  FishStatsUtils::plot_encounter_diagnostic(
     Report = Report,
     Data_Geostat = Database,
     DirName = dir)
@@ -83,7 +86,7 @@ VAST_diagnostics <- function(dir = getwd()) {
   # Spatial and spatiotemporal covariance
   ncats <- length(unique(Database[, grep("Sci", colnames(Database))[1]]))
   if (ncats > 1){
-    Cov_List <- VAST::Summarize_Covariance(
+    VAST::Summarize_Covariance(
       Report = Report,
       ParHat = ParHat,
       Data = TmbData,

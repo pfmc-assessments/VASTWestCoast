@@ -12,6 +12,8 @@
 #' @param OMdir A relative path from the conditiondir for the directory for the OM,
 #' so that you can run more iterations if you so wish.
 #'
+#' @importFrom stats sd
+#' @importFrom utils tail
 #' @return A data frame of results are returned that contains
 #' information about the operating models and estimation methods.
 #'
@@ -19,8 +21,11 @@
 #' @export
 #'
 #' @examples
-#' #todo: fix this example so it doesn't rely on Sim_Settings
-#' VAST_simulation(globalsettings = Sim_Settings, n_cluster = 1)
+#' \dontrun{
+#' VAST_simulation(
+#'   globalsettings = list("Species" = "WCGBTS_Anoplopoma_fimbria"), 
+#'   n_cluster = 1)
+#' }
 #'
 VAST_simulation <- function(maindir = getwd(), conditiondir = NULL,
   globalsettings, n_cluster, OMdir = NULL) {
@@ -35,7 +40,7 @@ VAST_simulation <- function(maindir = getwd(), conditiondir = NULL,
     ffnames <- dir(maindir, "[[:digit:]]+_VAST_simulation")
     ffnames <- ifelse(length(ffnames) == 0, "01_VAST_simulation",
       paste(
-        formatC(as.numeric(strsplit(tail(ffnames, 1), "_")[[1]][1]) + 1,
+        formatC(as.numeric(strsplit(utils::tail(ffnames, 1), "_")[[1]][1]) + 1,
           flag = "0", width = 2),
         "VAST", "simulation", sep = "_"))
     conditiondir <- file.path(maindir,
@@ -78,8 +83,8 @@ VAST_simulation <- function(maindir = getwd(), conditiondir = NULL,
   # more checks.
   conditioning$beta1_mean <- mean(pars[grep("beta1", names(pars))])
   conditioning$beta2_mean <- mean(pars[grep("beta2", names(pars))])
-  conditioning$beta1_sd <- sd(pars[grep("beta1", names(pars))])
-  conditioning$beta2_sd <- sd(pars[grep("beta2", names(pars))])
+  conditioning$beta1_sd <- stats::sd(pars[grep("beta1", names(pars))])
+  conditioning$beta2_sd <- stats::sd(pars[grep("beta2", names(pars))])
   # Get observation error
   conditioning$SigmaM <- exp(pars[grep("logSigmaM", names(pars))])
 

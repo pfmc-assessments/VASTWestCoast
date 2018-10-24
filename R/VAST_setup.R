@@ -1,4 +1,4 @@
-#' Set up the spatial information for a \link{[VAST]} run.
+#' Set up the spatial information for a \code{VAST} run.
 #'
 #' @param data A data frame with columns for Latitude and Longitude labeled using
 #' abbreviations "Lat" and "Lon" and column labeled "Year".
@@ -10,6 +10,7 @@
 #' @param nknots The number of knots you want in your spatial field.
 #'
 #' @return A list of spatial information used to run the model.
+#' @import FishStatsUtils
 #'
 #' @author Kelli Faye Johnson
 #' @export

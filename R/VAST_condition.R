@@ -55,6 +55,8 @@
 #' structures to the disk in the \code{conditiondir}.
 #' @author Kelli Faye Johnson
 #' @importFrom JRWToolBox dataWareHouseTrawlCatch
+#' @importFrom FishData download_catch_rates
+#' @importFrom ThorsonUtilities rename_columns
 #' @export
 #'
 VAST_condition <- function(conditiondir, settings, spp,

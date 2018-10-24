@@ -12,6 +12,9 @@
 #'
 #' @import doParallel
 #' @importFrom foreach %dopar%
+#' @importFrom graphics plot
+#' @importFrom grDevices dev.off png
+#' @importFrom parallel makeCluster stopCluster
 #' @return Nothing is returned from the function. Objects are saved
 #' to the disk within the \code{\link{VAST_OMrepi}} function.
 #'
@@ -37,12 +40,13 @@ VAST_OM <- function(reps, dir = NULL, conditioning, ncluster = 2) {
   conditioning$data <- get("info", envir = e1)$data
   conditioning$extrapolation <- get("info", envir = e1)$Extrapolation_List
 
-  clin <- makeCluster(ncluster)
-  on.exit(stopCluster(clin))
-  registerDoParallel(clin)
+  clin <- parallel::makeCluster(ncluster)
+  on.exit(parallel::stopCluster(clin))
+  doParallel::registerDoParallel(clin)
   # Check for reps with OM data already generated
   reps <- reps[!reps %in% dir(dir)]
   if (length(reps) == 0) return()
+  i <- NULL
   ignore <- foreach::foreach(
     i = reps,
     .packages = c("VASTWestCoast")) %dopar% {
@@ -106,13 +110,13 @@ VAST_OMrepi <- function(omdir, rep, settings,
   save(Sim, file = file.path(repdir, "Sim.RData"))
 
   if (plotindex) {
-    png(filename = file.path(repdir, "Index-Sim.png"),
+    grDevices::png(filename = file.path(repdir, "Index-Sim.png"),
       width = 5, height = 5, res = 200, units = "in")
-      plot(
+      graphics::plot(
         x = seq(min(Sim$Data_Geostat[, "Year"]), max(Sim$Data_Geostat[, "Year"])),
         y = Sim$B_tl[, 1]/1000,
         type = "b", ylim = c(0, max(Sim$B_tl[, 1]/1000)),
         xlab = "year", ylab = "index")
-    dev.off()
+    grDevices::dev.off()
   }
 }

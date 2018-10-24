@@ -1,14 +1,19 @@
 
 .onAttach <- function(libname, pkgname) {
-  if (!"devtools" %in% utils::installed.packages()[, 1]){
+  test <- function(pkg) {
+    thetest <- tryCatch(find.package(pkg), 
+      error = function(e) e)
+    ifelse("error" %in% class(thetest), TRUE, FALSE)
+  }
+  if (test("devtools")){
     # packageStartupMessage("Installing package: ")
     utils::install.packages("devtools", 
       repos = getOption("repos"), dependencies = TRUE)
   }
-  if (!"JRWToolBox" %in% utils::installed.packages()[, 1]){
+  if (test("JRWToolBox")){
    devtools::install_github("John-R-Wallace/JRWToolBox")
   }
-  if (!"VAST" %in% utils::installed.packages()[, 1]){
+  if (test("VAST")){
    devtools::install_github("James-Thorson/VAST")
   }
 }

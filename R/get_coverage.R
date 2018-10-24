@@ -4,6 +4,7 @@
 #' @param plot A logical value specifying whether or not to
 #' plot the data
 #'
+#' @importFrom stats reshape
 #' @return A vector of information regarding the coverage for the data
 #' that was provided in the argument \code{data}. One value will be returned
 #' for each row of data.
@@ -34,7 +35,7 @@ get_coverage <- function(data, plot = FALSE) {
     function(xxx) sum(ifelse(xxx == 1, 1, 0)) / length(xxx))
 
   if (plot) {
-    ci <- reshape(data = temp, v.names = c("low", "upp"),
+    ci <- stats::reshape(data = temp, v.names = c("low", "upp"),
       sep = "_", direction = "long",
       varying = lapply(c("low", "upp"), grep, colnames(temp)),
       timevar = "year")    # todo: Add the ability to pull the file name out

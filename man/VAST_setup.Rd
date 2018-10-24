@@ -2,7 +2,7 @@
 % Please edit documentation in R/VAST_setup.R
 \name{VAST_setup}
 \alias{VAST_setup}
-\title{Set up the spatial information for a \link{[VAST]} run.}
+\title{Set up the spatial information for a \code{VAST} run.}
 \usage{
 VAST_setup(data, dir, regionacronym, strata = NULL, nknots)
 }
@@ -24,7 +24,7 @@ only "EBSTS" and "WCGBTS" are supported.}
 A list of spatial information used to run the model.
 }
 \description{
-Set up the spatial information for a \link{[VAST]} run.
+Set up the spatial information for a \code{VAST} run.
 }
 \author{
 Kelli Faye Johnson
