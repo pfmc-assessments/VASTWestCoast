@@ -54,7 +54,7 @@
 #' @return Nothing is returned by the function, but the function saves two \code{.RData}
 #' structures to the disk in the \code{conditiondir}.
 #' @author Kelli Faye Johnson
-#' @importFrom JRWToolBox dataWareHouseTrawlCatch
+#' @importFrom nwfscSurvey PullCatch.fn
 #' @importFrom FishData download_catch_rates
 #' @importFrom ThorsonUtilities rename_columns
 #' @export
@@ -98,20 +98,31 @@ VAST_condition <- function(conditiondir, settings, spp,
         newname = c("Sci", "Catch_KG", "Year", "Lon", "Lat", "TowID"))
     }
     if (survey == "WCGBTS") {
-      Database <- JRWToolBox::dataWareHouseTrawlCatch(
-        species =  paste(strsplit(settings$Species, "_")[[1]][2:3], collapse = " "),
-        project = switch(survey, WCGBTS = "WCGBTS.Combo", AFSC = "AFSC.Shelf"), 
-        verbose = FALSE)
-      Database$Sci <- Database$Scientific_Name
-      Database$Lon <- Database$Longitude_dd
-      Database$Lat <- Database$Latitude_dd
-      Database$Catch_KG <- Database$Total_sp_wt_kg
-      Database$AreaSwept_km2 <- Database$Area_Swept_ha / 100
+      Database <- nwfscSurvey::PullCatch.fn(
+        SciName = paste(strsplit(settings$Species, "_")[[1]][2:3], collapse = " "),
+        SurveyName = switch(survey, WCGBTS = "NWFSC.Combo", AFSC = "AFSC.Shelf"),
+        SaveFile = FALSE, Dir = NULL, verbose = FALSE)
     }
     # Groundfish Triennial Shelf Survey
     if (survey == "AFSC") {
-      Test <- JRWToolBox::dataWareHouseTrawlCatch("Sebastes flavidus", 
-        verbose = TRUE, project = "AFSC.Shelf")
+      Database <- nwfscSurvey::PullCatch.fn(
+        SciName = paste(strsplit(settings$Species, "_")[[1]][2:3], collapse = " "), 
+        SurveyName = "AFSC.Slope",
+        SaveFile = FALSE, Dir = NULL, verbose = FALSE)
+    }
+    cols <- colnames(Database)
+    if ("Scientific_name" %in% cols) {
+      Database$Sci <- Database$Scientific_name
+    }
+    if ("Longitude_dd" %in% cols) {
+      Database$Lon <- Database$Longitude_dd
+      Database$Lat <- Database$Latitude_dd 
+    }
+    if ("total_catch_wt_kg" %in% cols) {
+      Database$Catch_KG <- Database$total_catch_wt_kg
+    }
+    if ("Area_Swept_ha" %in% cols) {
+      Database$AreaSwept_km2 <- Database$Area_Swept_ha / 100
     }
     # Make the vessel column as a vessel-year entry
     if ("Vessel" %in% names(Database)) {

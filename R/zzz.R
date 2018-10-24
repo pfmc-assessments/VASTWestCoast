@@ -10,8 +10,8 @@
     utils::install.packages("devtools", 
       repos = getOption("repos"), dependencies = TRUE)
   }
-  if (test("JRWToolBox")){
-   devtools::install_github("John-R-Wallace/JRWToolBox")
+  if (test("nwfscSurvey")){
+   devtools::install_github("nwfsc-assess/nwfscSurvey")
   }
   if (test("VAST")){
    devtools::install_github("James-Thorson/VAST")
