@@ -57,5 +57,23 @@ get_settings <- function(settings = NULL, verbose = FALSE) {
   if (!"replicatesneeded" %in% names(Settings_all)) {
     Settings_all$replicatesneeded <- max(Settings_all$replicates)
   }
+
+  # Pass
+  if (Settings_all$Passcondition %in% c("T", 1)) {
+    Settings_all$Passcondition <- TRUE
+  }
+  if (Settings_all$Passcondition %in% c("F", 0, F)) {
+    Settings_all$Passcondition <- FALSE
+  }
+  if (!Settings_all$Passcondition %in% c(TRUE, FALSE)) {
+    stop("Passcondition must be a logical value")
+  }
+
+  # Obs Model
+  if (length(Settings_all$ObsModelcondition) != 2 |
+      length(Settings_all$ObsModelcondition) != 2) {
+    stop("ObsModelEM and ObsModelcondition must be vectors of two numbers")
+  }
+
   return(Settings_all)
 }
