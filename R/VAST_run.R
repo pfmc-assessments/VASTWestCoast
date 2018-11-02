@@ -37,6 +37,13 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   Version = NULL, calcs = c(rep(1, 7), 0, 1),
   strata, pass = FALSE, savefile) {
 
+  if (!exists("compile", where = globalenv()) &&
+      !any(grepl("^package:TMB$|^package:TMBdebug$", search()))) {
+    e <- new.env()
+    e$compile <- TMB::compile
+    base::attach(e, name = "VASTWestCoast_shims", warn.conflicts = FALSE)
+  }
+
   if (is.null(Version)) Version <- gsub("\\.cpp", "",
     utils::tail(list.files(R.home(
     file.path("library", "VAST", "executables"))), 1))

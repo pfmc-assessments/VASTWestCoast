@@ -1,4 +1,3 @@
-library("TMB")
 library("testthat")
 library("VASTWestCoast")
 
