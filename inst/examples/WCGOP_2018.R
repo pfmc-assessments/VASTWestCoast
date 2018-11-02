@@ -25,7 +25,6 @@ Sim_Settings <- list(
   "nknots" = 50,
   "strata" = data.frame("STRATA" = "All_areas"),
   "depth" = c("no", "linear", "squared")[1],
-  "version" = "VAST_v5_2_0",
   "Passcondition" = FALSE)
 
 downloaddir <- getwd()

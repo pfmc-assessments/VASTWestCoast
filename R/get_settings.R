@@ -40,7 +40,7 @@ get_settings <- function(settings = NULL, verbose = FALSE) {
     "strata" = data.frame("STRATA" = "All_areas"),
     "depth" = c("no", "linear", "squared")[1],
     "Species" = "WCGBTS_Anoplopoma_fimbria",
-    "version" = "VAST_v4_0_0",
+    "version" = FishStatsUtils::get_latest_version(),
     "changepar" = c(
       "SigmaO1", "SigmaO2", "SigmaE1", "SigmaE2",
       "Range1", "Range2"),

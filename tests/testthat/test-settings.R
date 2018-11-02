@@ -6,7 +6,6 @@ master <- list(
   "nknots" = 250,
   "strata" = data.frame("STRATA" = "All_areas"),
   "depth" = c("no", "linear", "squared")[1],
-  "version" = FishStatsUtils::get_latest_version(),
   "Passcondition" = FALSE)
 
 test_that("Testing that pass must be a logical value", {
