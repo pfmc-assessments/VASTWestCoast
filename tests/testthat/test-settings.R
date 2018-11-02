@@ -14,6 +14,8 @@ test_that("Testing that pass must be a logical value", {
   testthat::expect_error(get_settings(aa))
   aa$Passcondition <- 0
   testthat::expect_false(get_settings(aa)$Passcondition)
+  aa$version <- "TEST.cpp"
+  testthat::expect_error(get_settings(aa))
 })
 
 rm(master)

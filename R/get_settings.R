@@ -75,5 +75,10 @@ get_settings <- function(settings = NULL, verbose = FALSE) {
     stop("ObsModelEM and ObsModelcondition must be vectors of two numbers")
   }
 
+  # Version
+  if (grepl("cpp", Settings_all$version)) {
+    stop("Must remove .cpp from the version number of VAST that you specify")
+  }
+
   return(Settings_all)
 }
