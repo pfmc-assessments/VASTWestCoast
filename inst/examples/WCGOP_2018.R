@@ -7,14 +7,16 @@ library(VASTWestCoast)
 load("VAST_SkateData.RData")
 specieslist <- list(
     "Raja rhina" = "Raja rhina",
-    "Raja binoculata" = "Raja binoculata",
-    "Other skate" = unique(VAST_fields$SCIENTIFIC_NAME[grep("^(?=.*skate)(?!.+nose.+)(?!big.+)",
+    "Other skate" = unique(VAST_fields$SCIENTIFIC_NAME[grep("^(?=.*skate)(?!.+nose.+)",
       VAST_fields$COMMON_NAME, ignore.case = TRUE, perl = TRUE)]))
-VAST_fields <- subset(VAST_fields,
-  SCIENTIFIC_NAME %in% unlist(specieslist[1:2]) &
-  DIS_MT > 0.15 & SET_YEAR < 2007)
+VAST_fields <- subset(VAST_fields, )
+VAST_fields <- subset(VAST_fields, SET_YEAR >= 2009)
+# Need a more biological-thinking method to subset the data
+VAST_fields <- subset(VAST_fields, 
+  SCIENTIFIC_NAME %in% unlist(specieslist) &
+  DIS_MT > 0.15)
 VAST_fields <- WCGOP_clean(VAST_fields,
-  species = specieslist[1:2],
+  species = specieslist,
   gear = "TRAWL")
 dim(VAST_fields); table(VAST_fields$Year)
 
