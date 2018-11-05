@@ -23,7 +23,7 @@ Imports:
     TMBhelper,
     ThorsonUtilities,
     tweedie,
-    VAST
+    VAST (>= 2.0.0)
 Suggests:
     knitr,
     devtools,

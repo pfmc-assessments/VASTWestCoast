@@ -1,7 +1,7 @@
+devtools::install_github("James-Thorson/VAST")
 devtools::install_github("James-Thorson/FishStatsUtils")
 devtools::install_github("nwfsc-assess/VASTWestCoast")
 library(VASTWestCoast)
-library(TMB)
 Sim_Settings <- list(
   "Species" = "WCGBTS_Anoplopoma_fimbria",
   "ObsModelcondition" = c(2, 1),

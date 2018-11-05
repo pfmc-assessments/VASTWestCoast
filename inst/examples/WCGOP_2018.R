@@ -1,8 +1,7 @@
-devtools::install_github("James-Thorson/VAST@development")
+devtools::install_github("James-Thorson/VAST")
 devtools::install_github("James-Thorson/FishStatsUtils")
 devtools::install_github("nwfsc-assess/VASTWestCoast")
 library(VASTWestCoast)
-library(TMB)
 # This example only works if you load your own data into
 # an object called VAST_fields
 load("VAST_SkateData.RData")
