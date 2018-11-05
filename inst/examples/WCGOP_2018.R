@@ -9,7 +9,6 @@ specieslist <- list(
     "Raja rhina" = "Raja rhina",
     "Other skate" = unique(VAST_fields$SCIENTIFIC_NAME[grep("^(?=.*skate)(?!.+nose.+)",
       VAST_fields$COMMON_NAME, ignore.case = TRUE, perl = TRUE)]))
-VAST_fields <- subset(VAST_fields, )
 VAST_fields <- subset(VAST_fields, SET_YEAR >= 2009)
 # Need a more biological-thinking method to subset the data
 VAST_fields <- subset(VAST_fields, 
