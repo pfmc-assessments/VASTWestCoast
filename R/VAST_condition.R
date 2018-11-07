@@ -161,6 +161,9 @@ VAST_condition <- function(conditiondir, settings, spp,
     Version = settings$version,
     strata = settings$strata,
     pass = settings$Passcondition,
-    savefile = file.path(conditiondir, "Save.RData"))
+    savefile = file.path(conditiondir, "Save.RData"),
+    field = switch(survey, WCGOP = "IID", NULL),
+    rho = settings$rho,
+    comp = settings$comp)
 
 }

@@ -6,7 +6,7 @@
 \usage{
 VAST_run(datalist, depth = c("no", "linear", "squared"), overdispersion,
   obsmodel, rundir, Version = NULL, calcs = c(rep(1, 7), 0, 1), strata,
-  pass = FALSE, savefile)
+  pass = FALSE, savefile, field = NULL, rho = NULL, comp = FALSE)
 }
 \arguments{
 \item{datalist}{A list of data used for the model.}
@@ -38,6 +38,32 @@ catchability in the model. The default is to not use pass, i.e., \code{pass = FA
 
 \item{savefile}{The file name that you want the results saved to. A full path can
 be specified, else the \code{.RData} file will be saved in the current directory.}
+
+\item{field}{A vector of length four or one, where the latter situation 
+will result in the value being repeated four times, 
+to specify the number of factors or structure for spatial and spatiotemporal
+effects for each model in turn, i.e.,
+Omega1, Epsilon1, Omega2, and Epsilon2. The vector need not be named because
+the names will be assigned in that order.
+The default is a single value of \code{NULL} that results in searching through
+the data for the appropriate configuration.
+todo: Place more details in 'Details' section.}
+
+\item{rho}{A vector of length four or one, where the latter situation 
+will result in the value being repeated four times, 
+to specify whether either intercepts (Beta1 and Beta2) and 
+spatio-temporal variation (Epsilon1 and Epsilon2) are structured among 
+time intervals. Options include \code{0:4}, where
+if 0, then each year is modelled as a fixed effect; 
+if 1, then each year is modelled as random following IID distribution; 
+if 2, then each year is modelled as random following a random walk; 
+if 3, then constant among years as fixed effect; and
+if 4, then each year is modelled as random following an AR1 process).
+todo: Place more details in 'Details' section.}
+
+\item{comp}{A logical value specifying if the data are composition data.
+The default is \code{FALSE}, where the data are assumed to be catch-rate data
+used for an index of abundance rather than composition data.}
 }
 \value{
 Nothing is returned directly, instead files are saved to the disk.

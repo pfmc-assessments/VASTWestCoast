@@ -20,7 +20,30 @@
 #' catchability in the model. The default is to not use pass, i.e., \code{pass = FALSE}.
 #' @param savefile The file name that you want the results saved to. A full path can
 #' be specified, else the \code{.RData} file will be saved in the current directory.
-#'
+#' @param field A vector of length four or one, where the latter situation 
+#' will result in the value being repeated four times, 
+#' to specify the number of factors or structure for spatial and spatiotemporal
+#' effects for each model in turn, i.e.,
+#' Omega1, Epsilon1, Omega2, and Epsilon2. The vector need not be named because
+#' the names will be assigned in that order.
+#' The default is a single value of \code{NULL} that results in searching through
+#' the data for the appropriate configuration.
+#' todo: Place more details in 'Details' section.
+#' @param rho A vector of length four or one, where the latter situation 
+#' will result in the value being repeated four times, 
+#' to specify whether either intercepts (Beta1 and Beta2) and 
+#' spatio-temporal variation (Epsilon1 and Epsilon2) are structured among 
+#' time intervals. Options include \code{0:4}, where
+#' if 0, then each year is modelled as a fixed effect; 
+#' if 1, then each year is modelled as random following IID distribution; 
+#' if 2, then each year is modelled as random following a random walk; 
+#' if 3, then constant among years as fixed effect; and
+#' if 4, then each year is modelled as random following an AR1 process).
+#' todo: Place more details in 'Details' section.
+#' @param comp A logical value specifying if the data are composition data.
+#' The default is \code{FALSE}, where the data are assumed to be catch-rate data
+#' used for an index of abundance rather than composition data.
+#' 
 #' @return Nothing is returned directly, instead files are saved to the disk.
 #'
 #' @import FishStatsUtils
@@ -35,7 +58,8 @@
 VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   overdispersion, obsmodel, rundir,
   Version = NULL, calcs = c(rep(1, 7), 0, 1),
-  strata, pass = FALSE, savefile) {
+  strata, pass = FALSE, savefile,
+  field = NULL, rho = NULL, comp = FALSE) {
 
   if (!exists("compile", where = globalenv()) &&
       !any(grepl("^package:TMB$|^package:TMBdebug$", search()))) {
@@ -73,6 +97,13 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   if (grepl("_v4", Version)) Options <- c("Calculate_Range" = 0)
 
   RhoConfig <- c("Beta1" = 0, "Beta2" = 0, "Epsilon1" = 0, "Epsilon2" = 0)
+  if (!is.null(rho)) {
+    if (length(rho) == 1) rho <- rep(rho, 4)
+      RhoConfig[1] <- rho[1]
+      RhoConfig[2] <- rho[2]
+      RhoConfig[3] <- rho[3]
+      RhoConfig[4] <- rho[4]
+  }
 
   depthdatahere <- switch(as.character(depth),
     no = NULL,
@@ -95,19 +126,31 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   }
 
   # nfactors <- length(unique(datalist$data[, "Sci"]))
+  # Specify FieldConfig for spatial and spatiotemporal variation
+  
+  # Check for missing years b/c one may want to inform them with AR1
   nfactors <- length(unique(datalist$data$Sci))
+  if (is.null(field[1])) {
+    ####
+    if (comp) FieldConfig <- rep("IID", 4)
+  } else {
+    FieldConfig <- if (length(field) == 1) rep(field, 4) else field
+  }
+  if (!exists("FieldConfig")) {
+    FieldConfig <- rep(nfactors, 4)
+  }
+  names(FieldConfig) <- c("Omega1", "Epsilon1", "Omega2", "Epsilon2")
   if (!is.factor(datalist$data$Sci)) {
     datalist$data$Sci <- as.factor(datalist$data$Sci)
   }
+
   TmbData <- suppressWarnings(VAST::Data_Fn(
     "Version" = Version,
     # An array
     "X_xtp" = depthdatahere,
     # 1=Presence-absence; 2=Density given presence;
     # Epsilon=Spatio-temporal; Omega=Spatial
-    "FieldConfig" = c(
-      "Omega1" = nfactors, "Epsilon1" = nfactors,
-      "Omega2" = nfactors, "Epsilon2" = nfactors),
+    "FieldConfig" = FieldConfig,
     # Vessel-year effects for
     # Default is c("eta1" = 0, "eta2" = 0)
     "OverdispersionConfig" = overdispersion,

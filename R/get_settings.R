@@ -45,7 +45,10 @@ get_settings <- function(settings = NULL, verbose = FALSE) {
       "SigmaO1", "SigmaO2", "SigmaE1", "SigmaE2",
       "Range1", "Range2"),
     "replicates" = 0,
-    "Passcondition" = FALSE)
+    "Passcondition" = FALSE,
+    "field" = NULL,
+    "rho" = NULL,
+    "comp" = FALSE)
   Settings_all <- c(Settings, Settings_add)
   need <- !names(Settings_all) %in% names(settings)
   if (verbose) {
