@@ -11,17 +11,22 @@
 #'
 #' @return A list of spatial information used to run the model.
 #' @import FishStatsUtils
+#' @importFrom nwfscSurvey createMatrix
 #'
 #' @author Kelli Faye Johnson
 #' @export
 #'
 VAST_setup <- function(data, dir, regionacronym, strata = NULL, nknots) {
-  determinedregion <- switch(regionacronym,
-    EBSBTS = "eastern_bering_sea",
-    WCGBTS = "California_current",
-    WCGOP = "California_current",
-    NULL)
-  if (is.null(determinedregion)) stop("The survey,",
+  determinedregion <- NULL
+  if (regionacronym %in% 
+    c("WCGBTS", "WCGOP", nwfscSurvey::createMatrix()[, 1])) {
+    determinedregion <- "California_current"
+  }
+  if (regionacronym %in% 
+    c("EBSBTS")) {
+    determinedregion <- "eastern_bering_sea"
+  }
+  if (is.null(determinedregion)) stop("The survey, ",
     regionacronym, ", was not recognized.")
 
   Extrapolation_List <- suppressMessages(FishStatsUtils::make_extrapolation_info(

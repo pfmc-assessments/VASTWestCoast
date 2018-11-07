@@ -54,7 +54,7 @@
 #' @return Nothing is returned by the function, but the function saves two \code{.RData}
 #' structures to the disk in the \code{conditiondir}.
 #' @author Kelli Faye Johnson
-#' @importFrom nwfscSurvey PullCatch.fn
+#' @importFrom nwfscSurvey PullCatch.fn createMatrix
 #' @importFrom FishData download_catch_rates
 #' @importFrom ThorsonUtilities rename_columns
 #' @export
@@ -65,8 +65,11 @@ VAST_condition <- function(conditiondir, settings, spp,
   if (!is.list(settings)) stop("settings must be a list")
   settings <- get_settings(settings)
   survey <- strsplit(spp, "_")[[1]][1]
-  if (!survey %in% c("EBSBTS", "WCGBTS", "WCGOP")) {
-    stop("Survey must be EBSBTS or WCGBTS")
+  availablesurveys <- c("EBSBTS", "WCGBTS", "WCGOP",
+    nwfscSurvey::createMatrix()[, 1])
+  if (!survey %in% availablesurveys) {
+    stop("The survey (specified as ", survey, ") must be one of the following:\n",
+      paste(availablesurveys, collapse = "\n"))
   }
   if (survey == "WCGOP" & is.null(data)) {
     stop("Must supply data when the survey is WCGOP")
@@ -97,17 +100,13 @@ VAST_condition <- function(conditiondir, settings, spp,
         Database[, c("Sci", "Wt", "Year", "Long", "Lat", "TowID")],
         newname = c("Sci", "Catch_KG", "Year", "Lon", "Lat", "TowID"))
     }
-    if (survey == "WCGBTS") {
+    if (survey %in% c("WCGBTS", nwfscSurvey::createMatrix()[, 1])) {
+      usename <- switch(survey,
+        WCGBTS = "NWFSC.Combo",
+        survey)
       Database <- nwfscSurvey::PullCatch.fn(
         SciName = paste(strsplit(settings$Species, "_")[[1]][2:3], collapse = " "),
-        SurveyName = switch(survey, WCGBTS = "NWFSC.Combo", AFSC = "AFSC.Shelf"),
-        SaveFile = FALSE, Dir = NULL, verbose = FALSE)
-    }
-    # Groundfish Triennial Shelf Survey
-    if (survey == "AFSC") {
-      Database <- nwfscSurvey::PullCatch.fn(
-        SciName = paste(strsplit(settings$Species, "_")[[1]][2:3], collapse = " "), 
-        SurveyName = "AFSC.Slope",
+        SurveyName = usename,
         SaveFile = FALSE, Dir = NULL, verbose = FALSE)
     }
     cols <- colnames(Database)
