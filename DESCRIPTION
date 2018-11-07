@@ -35,4 +35,7 @@ Encoding: UTF-8
 URL:
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
-Remotes: github::James-Thorson/VAST, github::nwfsc-assess/nwfscSurvey
+Remotes: 
+    github::James-Thorson/FishData, 
+    github::James-Thorson/VAST, 
+    github::nwfsc-assess/nwfscSurvey
