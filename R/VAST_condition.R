@@ -130,7 +130,7 @@ VAST_condition <- function(conditiondir, settings, spp,
       Database$AreaSwept_km2 <- Database$Area_Swept_ha / 100
     }
     # Make the vessel column as a vessel-year entry
-    if ("Vessel" %in% names(Database)) {
+    if ("Vessel" %in% cols) {
       Database$Vessel <- as.factor(
         paste(Database$Vessel, Database$Year, sep = "_"))
     } else {
@@ -154,7 +154,6 @@ VAST_condition <- function(conditiondir, settings, spp,
     file = file.path(conditiondir, "setup.RData"))
 
   VAST_run(datalist = info, depth = settings$depth,
-    # Need to change the next three args
     overdispersion = overdispersion,
     obsmodel = settings$ObsModelcondition,
     rundir = datadir,

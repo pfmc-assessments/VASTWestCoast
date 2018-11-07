@@ -9,7 +9,7 @@
 #' generated for the operating model and estimated from the estimation
 #' method.
 #'
-#' @importFrom stats lm
+#' @importFrom stats coef lm
 #' @return A vector of delta values, one for each row of the data frame.
 #'
 #' @author Kelli Faye Johnson
@@ -29,7 +29,7 @@ get_coefficient <- function(data) {
       "em" = x[grep("em", names(x))],
       "time" = 1:(length(x)/2))
     if (any(is.na(data))) return(NA)
-    coef(stats::lm(I(log(em)) ~ time + I(log(om)), data = data))[3]
+    stats::coef(stats::lm(I(log(em)) ~ time + I(log(om)), data = data))[3]
   })
   return(delta)
 }

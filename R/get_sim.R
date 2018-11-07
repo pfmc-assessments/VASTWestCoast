@@ -23,6 +23,7 @@
 #' }
 #' @importFrom RandomFields RFsimulate RMgauss 
 #' @importFrom RANN nn2
+#' @importFrom stats plogis rbinom rgamma rlnorm rnorm
 #' @importFrom tweedie rtweedie
 #' @examples
 #' ## # Prepare inputs
@@ -84,9 +85,9 @@ get_sim <- function(Sim_Settings = NULL, Extrapolation_List, Data_Geostat = NULL
   }
 
   rPoisGam <- function(n = 1, shape, scale, intensity){
-    Num <- rpois(n = n, lambda = intensity)
+    Num <- stats::rpois(n = n, lambda = intensity)
     Biomass <- rep(0, length=n)
-    for (i in which(Num > 0)) Biomass[i] <- sum(rgamma(n=Num[i], shape=shape, scale=scale))
+    for (i in which(Num > 0)) Biomass[i] <- sum(stats::rgamma(n=Num[i], shape=shape, scale=scale))
     return(Biomass)
   }
 
@@ -127,9 +128,9 @@ get_sim <- function(Sim_Settings = NULL, Extrapolation_List, Data_Geostat = NULL
 
   # Generate intercepts
   exp_beta1_t <- Settings[["beta1_mean"]] + Settings[["beta1_slope"]] * (1:max(t_i)-mean(1:max(t_i))/2)
-  beta1_t <- rnorm(max(t_i), mean=exp_beta1_t, sd=Settings[["beta1_sd"]])
+  beta1_t <- stats::rnorm(max(t_i), mean=exp_beta1_t, sd=Settings[["beta1_sd"]])
   exp_beta2_t <- Settings[["beta2_mean"]] + Settings[["beta2_slope"]] * (1:max(t_i)-mean(1:max(t_i))/2)
-  beta2_t <- rnorm(max(t_i), mean=exp_beta2_t, sd=Settings[["beta2_sd"]])
+  beta2_t <- stats::rnorm(max(t_i), mean=exp_beta2_t, sd=Settings[["beta2_sd"]])
 
   # Simulate spatial and spatio-temporal components
   O1_s <- RFsim(model=model_O1, x=loc_s[,"E_km"], y=loc_s[,"N_km"], standardize=standardize_fields)
@@ -148,10 +149,10 @@ get_sim <- function(Sim_Settings = NULL, Extrapolation_List, Data_Geostat = NULL
   }
 
   # Simulate vessel effects
-  Vessel1_vy <- array(rnorm(n=max(v_i)*max(t_i), mean=0, sd=Settings[["SigmaVY1"]]), dim=c(max(v_i),max(t_i)))
-  Vessel2_vy <- array(rnorm(n=max(v_i)*max(t_i), mean=0, sd=Settings[["SigmaVY2"]]), dim=c(max(v_i),max(t_i)))
-  Vessel1_v <- array(rnorm(n=max(v_i), mean=0, sd=Settings[["SigmaV1"]]), dim=c(max(v_i)))
-  Vessel2_v <- array(rnorm(n=max(v_i), mean=0, sd=Settings[["SigmaV2"]]), dim=c(max(v_i)))
+  Vessel1_vy <- array(stats::rnorm(n=max(v_i)*max(t_i), mean=0, sd=Settings[["SigmaVY1"]]), dim=c(max(v_i),max(t_i)))
+  Vessel2_vy <- array(stats::rnorm(n=max(v_i)*max(t_i), mean=0, sd=Settings[["SigmaVY2"]]), dim=c(max(v_i),max(t_i)))
+  Vessel1_v <- array(stats::rnorm(n=max(v_i), mean=0, sd=Settings[["SigmaV1"]]), dim=c(max(v_i)))
+  Vessel2_v <- array(stats::rnorm(n=max(v_i), mean=0, sd=Settings[["SigmaV2"]]), dim=c(max(v_i)))
 
   # Calculate covariate effect
   eta1_s <- as.matrix(X_sj) %*% unlist(Settings[c("Depth1_km","Depth1_km2","Dist1_sqrtkm")])
@@ -172,7 +173,7 @@ get_sim <- function(Sim_Settings = NULL, Extrapolation_List, Data_Geostat = NULL
 
     # Calculate true spatio-temporal biomass and annual abundance
     if (Settings[["ObsModel"]][2]==0){
-      B_ast <- array(plogis(P1_st) * exp(P2_st) * outer(Extrapolation_List$Area_km2_x,rep(1,max(t_i))), dim=c(1,dim(P1_st)))
+      B_ast <- array(stats::plogis(P1_st) * exp(P2_st) * outer(Extrapolation_List$Area_km2_x,rep(1,max(t_i))), dim=c(1,dim(P1_st)))
     }
     if (Settings[["ObsModel"]][2] %in% c(1,2)){
       B_ast <- array(exp(P1_st) * exp(P2_st) * outer(Extrapolation_List$Area_km2_x,rep(1,max(t_i))), dim=c(1,dim(P2_st)))
@@ -206,7 +207,7 @@ get_sim <- function(Sim_Settings = NULL, Extrapolation_List, Data_Geostat = NULL
     W_a <- Settings[["W_alpha"]] * L_a^Settings[["W_beta"]]
 
     # Selectivity at age
-    Selex_A50_v <- rnorm(max(v_i), mean=Settings[["Selex_A50_mean"]], sd=Settings[["Selex_A50_sd"]])
+    Selex_A50_v <- stats::rnorm(max(v_i), mean=Settings[["Selex_A50_mean"]], sd=Settings[["Selex_A50_sd"]])
     Selex_av <- NULL
     for (v in 1:max(v_i)) Selex_av = cbind(Selex_av, plogis(1:Settings[["Nages"]], location=Selex_A50_v[v], scale=Settings[["Selex_Aslope"]]))
 
@@ -258,8 +259,8 @@ get_sim <- function(Sim_Settings = NULL, Extrapolation_List, Data_Geostat = NULL
 
   # Simulate catch and assemble data frame
   if (Settings[["ObsModel"]][1]==2){
-    b1_i <- rbinom(n=length(R1_i), size=1, prob=R1_i)
-    b2_i <- rlnorm(n=length(R2_i), meanlog=log(R2_i)-Settings[["SigmaM"]]^2/2, sdlog=Settings[["SigmaM"]])
+    b1_i <- stats::rbinom(n=length(R1_i), size=1, prob=R1_i)
+    b2_i <- stats::rlnorm(n=length(R2_i), meanlog=log(R2_i)-Settings[["SigmaM"]]^2/2, sdlog=Settings[["SigmaM"]])
     b_i <- b1_i * b2_i
   }
   if (Settings[["ObsModel"]][1]==8){
@@ -278,7 +279,7 @@ get_sim <- function(Sim_Settings = NULL, Extrapolation_List, Data_Geostat = NULL
   COG_tm <- array(NA, dim=c(max(t_i),4), dimnames=list(NULL,c("Lat","Lon","E_km","N_km")))
   for (tI in 1:nrow(COG_tm)){
   for (mI in 1:ncol(COG_tm)){
-    COG_tm[tI,mI] <- weighted.mean(x=Extrapolation_List$Data_Extrap[,colnames(COG_tm)[mI]], w=B_st[,tI])
+    COG_tm[tI,mI] <- stats::weighted.mean(x=Extrapolation_List$Data_Extrap[,colnames(COG_tm)[mI]], w=B_st[,tI])
   }}
 
   # Calculate stratified biomass

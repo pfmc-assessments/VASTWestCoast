@@ -9,6 +9,7 @@
 #' @return A data frame of results with one row per simulation replicate.
 #'
 #' @author Kelli Faye Johnson
+#' @importFrom utils read.csv write.table
 #' @export
 #'
 get_results <- function(omdir, write2disk = TRUE) {
@@ -29,10 +30,10 @@ get_results <- function(omdir, write2disk = TRUE) {
   file <- file.path(omdir, "results.csv")
   if (write2disk){
     if (file.exists(file)) {
-      readin <- read.csv(file, header = TRUE)
+      readin <- utils::read.csv(file, header = TRUE)
       allframe <- rbind(readin, allframe)
     }
-    write.table(allframe, file = file,
+    utils::write.table(allframe, file = file,
       sep = ",", row.names = FALSE)
   }
   return(allframe)

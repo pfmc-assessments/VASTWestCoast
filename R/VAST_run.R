@@ -125,7 +125,6 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
     datalist$data <- cbind(datalist$data, "Sci" = 1)
   }
 
-  # nfactors <- length(unique(datalist$data[, "Sci"]))
   # Specify FieldConfig for spatial and spatiotemporal variation
   
   # Check for missing years b/c one may want to inform them with AR1

@@ -60,6 +60,27 @@ get_long <- function(data, names, item, value) {
   return(out)
 }
 
+#' Wrapper for ggplot2 with Relative Error
+#' A wrapper for printing ggplots that display relative
+#' error.
+#' todo: document better
+#' @param data A data frame
+#' @param x The x variable
+#' @param y The y variable
+#' @param print A logical
+#' @param gradient A logical suggesting if the gradient should
+#' be displayed
+#' @param facetx A character vector for x facets
+#' @param facety A character vector for y facets
+#' @param labels Labels for the x and y axes.
+#' @param type What type of plot you want, e.g., code{"box"}
+#' @param scales If you want the scales fixed or free
+#' @param dir A file path where you want the plot saved
+#' @param lim A list of x and y limits
+#' 
+#' @importFrom grDevices jpeg
+#' @importFrom stats as.formula
+#' 
 ggplotre <- function(data, x, y, print = TRUE, gradient = FALSE,
   facetx = c("emname", "em_depth"), facety = "omname",
   labels = NULL, type = "box", scales = c("fixed", "free"),
@@ -105,7 +126,7 @@ ggplotre <- function(data, x, y, print = TRUE, gradient = FALSE,
   if (facetx[1] == "" & facety[1] == "") {
     facet <- "."
   } else {
-    gg <- gg + facet_grid(as.formula(paste(paste(facety, collapse = "+"), "~",
+    gg <- gg + facet_grid(stats::as.formula(paste(paste(facety, collapse = "+"), "~",
       paste(facetx, collapse = "+"))), scales = scales)
   }
 
@@ -122,7 +143,7 @@ ggplotre <- function(data, x, y, print = TRUE, gradient = FALSE,
 
   if (print) print(gg)
   if (!is.null(dir)) {
-    jpeg(
+    grDevices::jpeg(
       filename = file.path(dir,
         paste0("VAST_simulation_depth_", x, "VS", y, ".jpeg")),
       res = 600, units = "in", width = 8, height = 8)
@@ -177,7 +198,7 @@ report$par <- make.unique(as.character(report$par))
 #' @param nsmall An integer value providing the number of digits you
 #' want after the decimal for the MAE
 #'
-#' @param importFrom stats aggregate
+#' @param importFrom stats aggregate median
 #'
 addMAE <- function(data, y, x, gg = NULL, nsmall = 3) {
   if (grepl("em_depth", x)) {
@@ -185,7 +206,7 @@ addMAE <- function(data, y, x, gg = NULL, nsmall = 3) {
   }
   agg1 <- stats::aggregate(as.formula(paste(y[1], "~", x)),
     data = data,
-    function(xx) format(median(xx, na.rm = TRUE), nsmall = nsmall,
+    function(xx) format(stats::median(xx, na.rm = TRUE), nsmall = nsmall,
       digits = 1))
   agg2 <- stats::aggregate(as.formula(paste(y[2], "~", x)),
     data = data,

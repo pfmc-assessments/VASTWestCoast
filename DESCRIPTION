@@ -18,6 +18,7 @@ Imports:
     parallel,
     RandomFields,
     RANN,
+    stats,
     tidyr,
     TMB,
     TMBhelper,
