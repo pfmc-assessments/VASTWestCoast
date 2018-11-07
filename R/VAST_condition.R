@@ -80,7 +80,8 @@ VAST_condition <- function(conditiondir, settings, spp,
     overdispersion <- switch(survey,
       EBSBTS = c("eta1" = 0, "eta2" = 0),
       WCGBTS = c("Delta1" = 1, "Delta2" = 1),
-      WCGOP = c("eta1" = 0, "eta2" = 0))
+      WCGOP = c("eta1" = 0, "eta2" = 0),
+      Triennial = c("Delta1" = 0, "Delta2" = 0))
   }
 
   dir.create(conditiondir, showWarnings = FALSE, recursive = TRUE)
@@ -108,6 +109,11 @@ VAST_condition <- function(conditiondir, settings, spp,
         SciName = paste(strsplit(settings$Species, "_")[[1]][2:3], collapse = " "),
         SurveyName = usename,
         SaveFile = FALSE, Dir = NULL, verbose = FALSE)
+      if (usename == "Triennial") {
+        # Exclude 1977 from the Triennial data because of inconsistent
+        # sampling methods
+        Database <- Database[!Database$Year %in% 1977, ]
+      }
     }
     cols <- colnames(Database)
     if ("Scientific_name" %in% cols) {
