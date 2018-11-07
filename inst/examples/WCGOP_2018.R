@@ -37,3 +37,12 @@ test <- VAST_condition(
   data = VAST_fields)
 
 VAST_diagnostics(downloaddir)
+
+load(file.path(downloaddir, "Save.RData"))
+
+calculate_proportion(TmbData, Index, 
+  Year_Set=NULL, Years2Include=NULL, 
+  strata_names=NULL, category_names=NULL, 
+  plot_legend=TRUE,
+  DirName = paste0(downloaddir,"/"), 
+  PlotName="Proportion.png", interval_width=1, width=6, height=6)
