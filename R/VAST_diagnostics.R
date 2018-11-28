@@ -14,10 +14,14 @@
 #' saved to the disk from VAST_diagnostics
 #' 
 VAST_diagnostics <- function(dir = getwd()) {
+  on.exit(suppressWarnings(dev.off()), add = TRUE)
   # Load the saved file
   savedfile <- dir(dir, pattern = "^Save.RData", full.names = TRUE)
   datafile <- dir(dir, pattern = "DatabaseSave.RData", full.names = TRUE)
   setupfile <- dir(dir, pattern = "setup.RData", full.names = TRUE)
+  if (length(savedfile) == 0) stop("The file Save.RData doesn't exist")
+  if (length(datafile) == 0) stop("The file DatabaseSave.RData doesn't exist")
+  if (length(setupfile) == 0) stop("The file setup.RData doesn't exist")
   base::load(savedfile)
   base::load(datafile)
   base::load(setupfile)
@@ -32,6 +36,7 @@ VAST_diagnostics <- function(dir = getwd()) {
   }
 
   # Check convergence
+  on.exit(suppressWarnings(sink()), add = TRUE)
   sink(file.path(dir, "convergence_gradient.txt"))
   pander::pandoc.table(
     Opt$diagnostics[,
@@ -119,6 +124,7 @@ VAST_diagnostics <- function(dir = getwd()) {
     "Year" = Year_Set[col(Dens_xt)],
     "E_km" = info$Spatial_List$MeshList$loc_x[row(Dens_xt), "E_km"],
     "N_km" = info$Spatial_List$MeshList$loc_x[row(Dens_xt), "N_km"])
+  on.exit(suppressWarnings(sink()), add = TRUE)
   sink(file = file.path(dir, "densityperknot.txt"))
     pander::pandoc.table(Dens_DF, digits = 3)
   sink()
