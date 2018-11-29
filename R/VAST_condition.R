@@ -97,9 +97,6 @@ VAST_condition <- function(conditiondir, settings, spp,
         species_set = gsub("_", " ", gsub("[A-Z]{3}BTS_", "", spp)),
         # species_set = 25,
         error_tol = 0.01, localdir = paste0(datadir, .Platform$file.sep))
-      Database <- ThorsonUtilities::rename_columns(
-        Database[, c("Sci", "Wt", "Year", "Long", "Lat", "TowID")],
-        newname = c("Sci", "Catch_KG", "Year", "Lon", "Lat", "TowID"))
     }
     if (survey %in% c("WCGBTS", nwfscSurvey::createMatrix()[, 1])) {
       usename <- switch(survey,
@@ -115,34 +112,11 @@ VAST_condition <- function(conditiondir, settings, spp,
         Database <- Database[!Database$Year %in% 1977, ]
       }
     }
-    cols <- colnames(Database)
-    if ("Scientific_name" %in% cols) {
-      Database$Sci <- Database$Scientific_name
-    }
-    if ("Longitude_dd" %in% cols) {
-      Database$Lon <- Database$Longitude_dd
-      Database$Lat <- Database$Latitude_dd 
-    }
-    if ("total_catch_wt_kg" %in% cols) {
-      Database$Catch_KG <- Database$total_catch_wt_kg
-    }
-    if ("Area_Swept_ha" %in% cols) {
-      Database$AreaSwept_km2 <- Database$Area_Swept_ha / 100
-    }
-    # Make the vessel column as a vessel-year entry
-    if ("Vessel" %in% cols) {
-      Database$Vessel <- as.factor(
-        paste(Database$Vessel, Database$Year, sep = "_"))
-    } else {
-      Database <- cbind(Database, "Vessel" = 1)
-    }
-    # WCGBTS and all AFSC surveys are in KG/Hectare
-    # todo: check how i set this before, where I think I should have divided
-    # Database <- cbind(Database, "AreaSwept_km2" = 0.01)
-    # Database <- na.omit(Database)
   } else {
     Database <- data
   }
+  Database <- clean_data(Database)
+
   save(Database, file = file.path(conditiondir, "DatabaseSave.RData"))
 
   info <- VAST_setup(data = Database,

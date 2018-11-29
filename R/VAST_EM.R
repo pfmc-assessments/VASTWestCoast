@@ -36,7 +36,6 @@ VAST_EM <- function(reps, settings, directory, n_cluster, getdatafrom) {
   ignore <- foreach::foreach(
     i = replicates,
     .packages = c(
-      "VAST", "ThorsonUtilities",
       "TMB", "TMBhelper",
       "VASTWestCoast")) %dopar% {
     Sim <- NULL
