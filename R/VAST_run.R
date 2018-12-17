@@ -224,7 +224,7 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
         strata_names = strata[, 1], use_biascorr = dobias),
         error = function(e) e)
       sdinfo <- TMB::sdreport(Obj)
-      tables <- FishStatsUtils::summary_nwfsc(obj = Obj, sdreport = sdinfo,
+      tables <- summary_nwfsc(obj = Obj, sdreport = sdinfo,
         savedir = dirname(savefile))
     } else {
       Index <- NULL
