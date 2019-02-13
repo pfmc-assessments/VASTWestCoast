@@ -227,6 +227,7 @@ scaleFUN <- function(x) sprintf("%.0f", x)
 getcompare <- function(file) {
   load(file)
   aic <- AIC
+  if (is.null(aic)) aic <- ""
   temp <- strsplit(basename(dirname(file)), "_")[[1]]
   nx <- temp[4]
   species <- paste(temp[2:3], collapse = " ")
