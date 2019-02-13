@@ -9,11 +9,11 @@ Description: Estimation and simulation code for those working on
 Imports:
     doParallel,
     FishData,
+    INLA,
     FishStatsUtils,
     foreach,
     ggplot2,
     grDevices,
-    INLA,
     nwfscSurvey,
     pander,
     parallel,
@@ -37,8 +37,8 @@ URL:
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 Remotes: 
-    bitbucket::hrue/r-inla/rinla@default,
     github::James-Thorson/FishData, 
+    bitbucket::hrue/r-inla/rinla@default,
     github::James-Thorson/FishStatsUtils, 
     github::James-Thorson/ThorsonUtilities, 
     github::James-Thorson/VAST, 
