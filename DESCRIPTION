@@ -13,6 +13,7 @@ Imports:
     foreach,
     ggplot2,
     grDevices,
+    INLA,
     nwfscSurvey,
     pander,
     parallel,
@@ -36,6 +37,9 @@ URL:
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
 Remotes: 
+    bitbucket::hrue/r-inla
     github::James-Thorson/FishData, 
+    github::James-Thorson/FishStatsUtils, 
+    github::James-Thorson/ThorsonUtilities, 
     github::James-Thorson/VAST, 
     github::nwfsc-assess/nwfscSurvey
