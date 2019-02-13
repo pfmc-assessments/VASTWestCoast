@@ -37,7 +37,7 @@ URL:
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
 Remotes: 
-    bitbucket::hrue/r-inla[/rinla][@default],
+    bitbucket::hrue/r-inla/rinla@default,
     github::James-Thorson/FishData, 
     github::James-Thorson/FishStatsUtils, 
     github::James-Thorson/ThorsonUtilities, 
