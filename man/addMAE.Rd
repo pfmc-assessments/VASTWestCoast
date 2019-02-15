@@ -20,7 +20,7 @@ formula used for aggregation (e.g., \code{"depth + year"})}
 \item{nsmall}{An integer value providing the number of digits you
 want after the decimal for the MAE}
 
-\item{importFrom}{stats aggregate}
+\item{importFrom}{stats aggregate median}
 }
 \description{
 Calculate the median absolute error over categories and add to a plot

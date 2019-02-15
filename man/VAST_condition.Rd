@@ -2,28 +2,28 @@
 % Please edit documentation in R/VAST_condition.R
 \name{VAST_condition}
 \alias{VAST_condition}
-\title{Condition an operating model based on fits to empirical data}
+\title{Estimate Parameters by Fitting to Empirical Data}
 \usage{
 VAST_condition(conditiondir, settings, spp, datadir,
   overdisperion = NULL, data = NULL)
 }
 \arguments{
-\item{conditiondir}{A \code{file.path}, either full or relative, that will be used
+\item{conditiondir}{A directory, either full or relative, that will be used
 to save the results. The directory will be created if it doesn't already exist.}
 
-\item{settings}{A list of settings used to run the spatiotemporal model.}
+\item{settings}{A list of settings used to run the spatiotemporal model. The full
+list of necessary settings can be seen by running \code{\link{get_settings()}}, and
+any settings that are not included in the list supplied to this argument
+will be added at their default values.}
 
 \item{spp}{A character value that includes the survey acronym and the species name
 in latin with all words separated by an underscore.
 For example, \code{"WCGBTS_Sebastes_crameri"}.}
 
-\item{datadir}{The directory where the database is stored.
+\item{datadir}{A directory where you want the database to be stored.
 Also, the kmean information specific to the given survey
-used to collect the data will be saved inside \code{datadir} in a folder named
-the same as the leading characters of \code{spp}. For example, \code{"WCGBTS"} for a
-\code{spp = "WCGBTS_Sebastes_crameri"}, leading to
-\code{file.path(datadir, "WCGBTS_Sebastes_crameri")}. The character value for the
-directory should not have a trailing separator.}
+used to collect the data will be saved here in a folder named after the survey.
+The directory should not have a trailing separator.}
 
 \item{overdisperion}{A vector of overdispersion parameters to include
 in the conditioning. The default is \code{NULL} and will enable the determination
@@ -31,19 +31,18 @@ of overdispersion from the \code{spp} based on its survey.
 See the section below on Overdispersion above for more details.}
 
 \item{data}{A data frame that can be passed to the conditioning function
-such that no data will be downloaded and the passed data frame will be used
-instead. todo: document the columns that are needed.}
+such that no data will be downloaded. todo: document the columns that are needed.}
 }
 \value{
 Nothing is returned by the function, but the function saves two \code{.RData}
 structures to the disk in the \code{conditiondir}.
 }
 \description{
-Fits \code{data} stored on your computer or from the cloud
+Fits data loaded in your R session
+or data that is downloaded from the cloud
 to a \code{\link[VAST]{Build_TMB_Fn}} model using
-\code{\link[TMBhelper]{Optimize}} as specified using the available
-arguments.
-The function was specifically written as a wrapper for
+\code{\link[TMBhelper]{Optimize}}.
+\code{VAST_condition} was specifically written as a wrapper for
 \code{\link[VAST]{Data_Fn}} and \code{\link[VAST]{Build_TMB_Fn}}
 to be used by scientists at the Northwest Fisheries Science Center.
 For more details on how \code{\link[VAST]{Build_TMB_Fn}}
