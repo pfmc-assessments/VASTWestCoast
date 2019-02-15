@@ -65,6 +65,7 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
       !any(grepl("^package:TMB$|^package:TMBdebug$", search()))) {
     e <- new.env()
     e$compile <- TMB::compile
+    e$MakeADFun <- TMB::MakeADFun
     base::attach(e, name = "VASTWestCoast_shims", warn.conflicts = FALSE)
   }
 
