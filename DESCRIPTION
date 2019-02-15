@@ -14,6 +14,7 @@ Imports:
     foreach,
     ggplot2,
     grDevices,
+    INLA,
     nwfscSurvey,
     pander,
     parallel,
@@ -36,9 +37,10 @@ Encoding: UTF-8
 URL:
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
+Additional_repositories: https://inla.r-inla-download.org/R/stable
 Remotes: 
+    github::kaskr/TMB_contrib_R/TMBhelper, 
     github::James-Thorson/FishData, 
-    bitbucket::hrue/r-inla/rinla@default,
     github::James-Thorson/FishStatsUtils, 
     github::James-Thorson/ThorsonUtilities, 
     github::James-Thorson/VAST, 

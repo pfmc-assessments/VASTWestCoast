@@ -1,5 +1,3 @@
-devtools::install_github("James-Thorson/VAST")
-devtools::install_github("James-Thorson/FishStatsUtils")
 devtools::install_github("nwfsc-assess/VASTWestCoast")
 library(VASTWestCoast)
 Sim_Settings <- list(
