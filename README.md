@@ -5,7 +5,7 @@ The Northwest Fisheries Science Center (NWFSC) uses the
 indicies of abundance from survey data. This package, VASTWestCoast,
 acts as a wrapper for VAST, where the arguments are specific to those
 needed for the NWFSC. The package can also perform simulations based
-on the empirical data. 
+on empirical data. 
 
 ## Getting Started
 
@@ -16,12 +16,10 @@ running on your local machine.
 
 Please install [Rtools](https://cran.r-project.org/bin/).
 
-Please install the following packages prior to installing `VASTWestCoast`:
+You will need to install devtools prior to installing `VASTWestCoast`:
 
 ```
 install.packages("devtools")
-install.packages("TMB")
-devtools::install_github("James-Thorson/VAST")
 ```
 
 ### Installing
@@ -34,5 +32,6 @@ devtools::install_github("nwfsc-assess/VASTWestCoast")
 
 Documentation for the functions within the package are available via standard
 roxygen comments.
-Documentation for how the package was used to generate indicies of abundance
-will be available via .tex files.
+
+Examples are available for each survey in [/inst/examples](https://github.com/nwfsc-assess/VASTWestCoast/tree/master/inst/examples). 
+Some of these examples are stil in development.
