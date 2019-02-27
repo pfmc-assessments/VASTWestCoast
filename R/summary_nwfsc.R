@@ -5,7 +5,7 @@
 #'
 #' @param obj A compiled object from Template Model Builder (TMB)
 #' after estimating the maximum likelihood estimate of the fixed effects.
-#' @param sdreport Output from \code\link{[TMB]{sdreport}}
+#' @param sdreport Output from \code{\link[TMB]{sdreport}}
 #' @param savedir A directory to save the resulting tables, which will
 #' be in csv format.
 #' 

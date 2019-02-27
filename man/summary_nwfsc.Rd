@@ -10,7 +10,7 @@ summary_nwfsc(obj, sdreport, savedir = NULL)
 \item{obj}{A compiled object from Template Model Builder (TMB)
 after estimating the maximum likelihood estimate of the fixed effects.}
 
-\item{sdreport}{Output from \code\link{[TMB]{sdreport}}}
+\item{sdreport}{Output from \code{\link[TMB]{sdreport}}}
 
 \item{savedir}{A directory to save the resulting tables, which will
 be in csv format.}
