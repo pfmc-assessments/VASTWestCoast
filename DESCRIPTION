@@ -6,6 +6,8 @@ Maintainer: Kelli Faye Johnson <kelli.johnson@noaa.gov>
 Description: Estimation and simulation code for those working on
     the US West Coast to fit survey data to estimate an
     index of abundance or perform compositional expansion.
+Depends:
+    VAST
 Imports:
     doParallel,
     FishData,
@@ -24,8 +26,7 @@ Imports:
     TMB,
     TMBhelper,
     ThorsonUtilities,
-    tweedie,
-    VAST (>= 2.0.0)
+    tweedie
 Suggests:
     knitr,
     devtools,
