@@ -14,5 +14,5 @@ test <- VAST_condition(
   conditiondir = downloaddir,
   settings = Sim_Settings, spp = Sim_Settings$Species,
   datadir = downloaddir,
-  overdisperion = NULL)
+  overdispersion = NULL)
 VAST_diagnostics(downloaddir)

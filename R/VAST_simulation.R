@@ -61,7 +61,7 @@ VAST_simulation <- function(maindir = getwd(), conditiondir = NULL,
   if (!file.exists(file.path(conditiondir, "parameter_estimates.txt"))) {
     VAST_condition(conditiondir, settings = globalsettings,
       spp = globalsettings$Species,
-      datadir = datadir, overdisperion = NULL)
+      datadir = datadir, overdispersion = NULL)
   }
 
   # 02 OM

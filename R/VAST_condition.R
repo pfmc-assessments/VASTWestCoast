@@ -43,7 +43,7 @@
 #' Also, the kmean information specific to the given survey
 #' used to collect the data will be saved here in a folder named after the survey.
 #' The directory should not have a trailing separator.
-#' @param overdisperion A vector of overdispersion parameters to include
+#' @param overdispersion A vector of overdispersion parameters to include
 #' in the conditioning. The default is \code{NULL} and will enable the determination
 #' of overdispersion from the \code{spp} based on its survey.
 #' See the section below on Overdispersion above for more details.
@@ -59,7 +59,7 @@
 #' @export
 #'
 VAST_condition <- function(conditiondir, settings, spp,
-  datadir, overdisperion = NULL, data = NULL) {
+  datadir, overdispersion = NULL, data = NULL) {
   # Start the OM
   if (!is.list(settings)) stop("settings must be a list")
   settings <- get_settings(settings)
@@ -75,7 +75,7 @@ VAST_condition <- function(conditiondir, settings, spp,
   }
   if (!file.exists(datadir)) stop("The datadir, ", datadir, ", doesn't exist.")
 
-  if (is.null(overdisperion)) {
+  if (is.null(overdispersion)) {
     overdispersion <- switch(survey,
       EBSBTS = c("eta1" = 0, "eta2" = 0),
       WCGBTS = c("Delta1" = 1, "Delta2" = 1),
@@ -123,7 +123,7 @@ VAST_condition <- function(conditiondir, settings, spp,
     regionacronym = survey,
     strata = settings$strata,
     nknots = settings$nknots)
-  save(info, conditiondir, settings, spp, datadir, overdisperion, Database,
+  save(info, conditiondir, settings, spp, datadir, overdispersion, Database,
     file = file.path(conditiondir, "setup.RData"))
 
   VAST_run(datalist = info, depth = settings$depth,

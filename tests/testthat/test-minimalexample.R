@@ -22,7 +22,7 @@ test_that("Testing database is saved in VAST_condition", {
     conditiondir = temp_path,
     settings = Sim_Settings, spp = Sim_Settings$Species,
     datadir = temp_path,
-    overdisperion = NULL)
+    overdispersion = NULL)
   expect_true(file.exists("Save.RData"))
   e1 <- new.env()
   base::load(file = "Save.RData", envir = e1)
