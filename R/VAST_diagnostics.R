@@ -14,7 +14,21 @@
 #' saved to the disk from VAST_diagnostics
 #' 
 VAST_diagnostics <- function(dir = getwd()) {
-  on.exit(suppressWarnings(dev.off()), add = TRUE)
+  
+  dev.off.new <- function(keep = NULL) {
+  	if (is.null(keep)) grDevices::graphics.off()
+  	keep <- c(1, keep)
+    all <- grDevices::dev.list()
+    while (any(!all %in% keep)) {
+    	if (!all[1] %in% keep) {
+    		grDevices::dev.off(all[1])
+    	}
+    	all <- all[-1]
+    }
+  }
+  devices <- grDevices::dev.list()
+  on.exit(dev.off.new(keep = devices))
+  
   # Load the saved file
   savedfile <- dir(dir, pattern = "^Save.RData", full.names = TRUE)
   datafile <- dir(dir, pattern = "DatabaseSave.RData", full.names = TRUE)
