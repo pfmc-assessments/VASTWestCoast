@@ -40,8 +40,12 @@ VAST_diagnostics <- function(dir = getwd()) {
   base::load(datafile)
   base::load(setupfile)
 
+  if (!is.null(Opt$message)) stop("The warning message from the optimization",
+  	" routine indicates the model\nmight not be converged. Check the following",
+  	" message:\n", Opt$message)
+
   region <- info$region
-  if(is.null(region)) {
+  if (is.null(region)) {
     region <- switch(
       strsplit(settings$Species, "_")[[1]][1],
       EBSBTS = "eastern_bering_sea",
@@ -64,14 +68,16 @@ VAST_diagnostics <- function(dir = getwd()) {
 
   # Check positive catch rates
   # Won't work for Poisson-link
-  Q <- FishStatsUtils::plot_quantile_diagnostic(
-    TmbData = TmbData,
-    Report = Report,
-    FileName_PP = "Posterior_Predictive",
-    FileName_Phist = "Posterior_Predictive-Histogram",
-    FileName_QQ = "Q-Q_plot",
-    FileName_Qhist = "Q-Q_hist",
-    DateFile = dir)
+  if (!all(settings$ObsModelcondition == c(2, 1))) {
+    Q <- FishStatsUtils::plot_quantile_diagnostic(
+      TmbData = TmbData,
+      Report = Report,
+      FileName_PP = "Posterior_Predictive",
+      FileName_Phist = "Posterior_Predictive-Histogram",
+      FileName_QQ = "Q-Q_plot",
+      FileName_Qhist = "Q-Q_hist",
+      DateFile = dir)
+  }
   MapDetails_List <- FishStatsUtils::make_map_info(
     "Region" = region,
     "NN_Extrap" = info$Spatial_List$NN_Extrap,
