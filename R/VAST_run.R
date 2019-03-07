@@ -218,10 +218,12 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
     sdreport <- Opt[["SD"]]
 
     if (!is.null(Opt[["SD"]])) {
+      yearset <- seq(min(datalist$data[, "Year"]), max(datalist$data[, "Year"]))
       Index <- tryCatch(FishStatsUtils::plot_biomass_index(
         DirName = dirname(savefile), TmbData = TmbData,
         Sdreport = Opt[["SD"]],
-        Year_Set = seq(min(datalist$data[, "Year"]), max(datalist$data[, "Year"])),
+        Year_Set = yearset,
+        Years2Include = which(yearset %in% sort(unique(datalist$data[, "Year"]))),
         strata_names = strata[, 1], use_biascorr = dobias),
         error = function(e) e)
       sdinfo <- TMB::sdreport(Obj)
