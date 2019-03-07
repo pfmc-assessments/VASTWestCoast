@@ -57,7 +57,7 @@
 #'
 VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   overdispersion, obsmodel, rundir,
-  Version = NULL, calcs = c(rep(1, 7), 0, 1),
+  Version = NULL, calcs = c(1, rep(0, 6), 0, 1),
   strata, pass = FALSE, savefile,
   field = NULL, rho = NULL, comp = FALSE) {
 
