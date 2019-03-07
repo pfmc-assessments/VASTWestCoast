@@ -156,14 +156,24 @@ VAST_diagnostics <- function(dir = getwd()) {
 
   # Range shifts
   if (!is.null(Opt[["SD"]])) {
-  if (TmbData$Options["Calculate_effective_area"] == 1) {
-    FishStatsUtils::plot_range_index(
-      Report = Report,
-      TmbData = TmbData,
-      Sdreport = Opt[["SD"]],
-      Znames = colnames(Report$Z_xm),
-      PlotDir = paste0(dir, .Platform$file.sep),
-      Year_Set = Year_Set)
-  }}
+    check <- FALSE
+    if ("Calculate_effective_area" %in% names(TmbData$Options)) {
+      check <- ifelse(TmbData$Options["Calculate_effective_area"] == 1,
+        TRUE, check)
+    }
+    if ("Options" %in% names(TmbData$Options)) {
+      check <- ifelse(TmbData$Options$Options["Calculate_effective_area"] == 1,
+        TRUE, check)
+    }
+    if (check) {
+      FishStatsUtils::plot_range_index(
+        Report = Report,
+        TmbData = TmbData,
+        Sdreport = Opt[["SD"]],
+        Znames = colnames(Report$Z_xm),
+        PlotDir = paste0(dir, .Platform$file.sep),
+        Year_Set = Year_Set)
+    }
+  }
   invisible()
 }
