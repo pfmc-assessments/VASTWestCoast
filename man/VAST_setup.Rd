@@ -4,7 +4,7 @@
 \alias{VAST_setup}
 \title{Set up the spatial information for a \code{VAST} run.}
 \usage{
-VAST_setup(data, dir, regionacronym, strata = NULL, nknots)
+VAST_setup(data, dir, regionacronym, strata = NULL, nknots, ...)
 }
 \arguments{
 \item{data}{A data frame with columns for Latitude and Longitude labeled using
@@ -19,6 +19,10 @@ only "EBSTS" and "WCGBTS" are supported.}
 \item{strata}{A data frame specifying the strata.}
 
 \item{nknots}{The number of knots you want in your spatial field.}
+
+\item{...}{Other parameters passed to 
+\code{\link[FishStatsUtils]{make_extrapolation_info}}. For example,
+the argument \code{"survey"} could be helpful.}
 }
 \value{
 A list of spatial information used to run the model.

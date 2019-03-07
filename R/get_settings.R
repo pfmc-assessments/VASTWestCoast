@@ -40,6 +40,9 @@ get_settings <- function(settings = NULL, verbose = FALSE) {
     "strata" = data.frame("STRATA" = "All_areas"),
     "depth" = c("no", "linear", "squared")[1],
     "Species" = "WCGBTS_Anoplopoma_fimbria",
+    # Extrapolation to the entire California Current grid area
+    # is not necessary. You can specify a smaller footprint here. 
+    "extrapolation" = NULL, 
     "version" = FishStatsUtils::get_latest_version(),
     "changepar" = c(
       "SigmaO1", "SigmaO2", "SigmaE1", "SigmaE2",

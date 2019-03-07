@@ -8,6 +8,9 @@
 #' only "EBSTS" and "WCGBTS" are supported.
 #' @param strata A data frame specifying the strata.
 #' @param nknots The number of knots you want in your spatial field.
+#' @param ... Other parameters passed to 
+#' \code{\link[FishStatsUtils]{make_extrapolation_info}}. For example,
+#' the argument \code{"survey"} could be helpful.
 #'
 #' @return A list of spatial information used to run the model.
 #' @import FishStatsUtils
@@ -16,7 +19,7 @@
 #' @author Kelli Faye Johnson
 #' @export
 #'
-VAST_setup <- function(data, dir, regionacronym, strata = NULL, nknots) {
+VAST_setup <- function(data, dir, regionacronym, strata = NULL, nknots, ...) {
   determinedregion <- NULL
   if (regionacronym %in% 
     c("WCGBTS", "WCGOP", nwfscSurvey::createMatrix()[, 1])) {
@@ -28,10 +31,9 @@ VAST_setup <- function(data, dir, regionacronym, strata = NULL, nknots) {
   }
   if (is.null(determinedregion)) stop("The survey, ",
     regionacronym, ", was not recognized.")
-
   Extrapolation_List <- suppressMessages(FishStatsUtils::make_extrapolation_info(
     Region = determinedregion,
-    strata.limits = strata))
+    strata.limits = strata, ...))
   if (regionacronym == "EBSBTS") {
     ignore <- which(colnames(Extrapolation_List$Data_Extrap) == "Mid_Depth")
     if (length(ignore) == 1) colnames(Extrapolation_List$Data_Extrap)[ignore] <- "Depth_km"

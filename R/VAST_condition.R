@@ -109,6 +109,8 @@ VAST_condition <- function(conditiondir, settings, spp,
         # Exclude 1977 from the Triennial data because of inconsistent
         # sampling methods
         Database <- Database[!Database$Year %in% 1977, ]
+        Database$truevessel <- Database$Vessel
+        Database$Vessel <- "none"
       }
     }
   } else {
@@ -118,11 +120,23 @@ VAST_condition <- function(conditiondir, settings, spp,
 
   save(Database, file = file.path(conditiondir, "DatabaseSave.RData"))
 
-  info <- VAST_setup(data = Database,
-    dir = kmeandir,
-    regionacronym = survey,
-    strata = settings$strata,
-    nknots = settings$nknots)
+  # todo: make this code better, somehow use an ifelse statement
+  # or something similar so that I don't have two calls to the
+  # exact same function
+  if (!is.null(settings$extrapolation)) {
+    info <- VAST_setup(data = Database,
+      dir = kmeandir,
+      regionacronym = survey,
+      surveyname = settings$extrapolation,
+      strata = settings$strata,
+      nknots = settings$nknots)
+  } else {
+    info <- VAST_setup(data = Database,
+      dir = kmeandir,
+      regionacronym = survey,
+      strata = settings$strata,
+      nknots = settings$nknots)
+  }
   save(info, conditiondir, settings, spp, datadir, overdispersion, Database,
     file = file.path(conditiondir, "setup.RData"))
 
