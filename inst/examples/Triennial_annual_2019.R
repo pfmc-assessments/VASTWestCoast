@@ -1,5 +1,6 @@
 devtools::install_github("nwfsc-assess/VASTWestCoast")
 library(VASTWestCoast)
+
 Sim_Settings <- list(
   "Species" = "Triennial_Anoplopoma_fimbria",
   # lognormal
@@ -23,4 +24,5 @@ test <- VAST_condition(
   settings = Sim_Settings, spp = Sim_Settings$Species,
   datadir = downloaddir,
   overdispersion = NULL)
-VAST_diagnostics(downloaddir)
+mapply(VAST_diagnostics, 
+  file.path(downloaddir, c("", "early", "late")))

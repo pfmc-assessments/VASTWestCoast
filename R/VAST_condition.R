@@ -123,6 +123,7 @@ VAST_condition <- function(conditiondir, settings, spp,
   # todo: make this code better, somehow use an ifelse statement
   # or something similar so that I don't have two calls to the
   # exact same function
+  setup_spatial <- "info"
   if (!is.null(settings$extrapolation)) {
     info <- VAST_setup(data = Database,
       dir = kmeandir,
@@ -130,13 +131,48 @@ VAST_condition <- function(conditiondir, settings, spp,
       surveyname = settings$extrapolation,
       strata = settings$strata,
       nknots = settings$nknots)
+    if (survey == "Triennial") {
+      info_early <- VAST_setup(
+        data = Database[Database$Year < 1993, ],
+        dir = kmeandir,
+        regionacronym = survey,
+        surveyname = settings$extrapolation,
+        strata = settings$strata,
+        nknots = settings$nknots)
+      info_late <- VAST_setup(
+        data = Database[Database$Year >= 1993 , ],
+        dir = kmeandir,
+        regionacronym = survey,
+        surveyname = settings$extrapolation,
+        strata = settings$strata,
+        nknots = settings$nknots)
+      setup_spatial <- c(setup_spatial, "info_early", "info_late")
+    }
   } else {
     info <- VAST_setup(data = Database,
       dir = kmeandir,
       regionacronym = survey,
       strata = settings$strata,
       nknots = settings$nknots)
+    if (survey == "Triennial") {
+      info_early <- VAST_setup(
+        data = Database[Database$Year < 1993, ],
+        dir = kmeandir,
+        regionacronym = survey,
+        strata = settings$strata,
+        nknots = settings$nknots)
+      info_late <- VAST_setup(
+        data = Database[Database$Year >= 1993 , ],
+        dir = kmeandir,
+        regionacronym = survey,
+        strata = settings$strata,
+        nknots = settings$nknots)
+      setup_spatial <- c(setup_spatial, "info_early", "info_late")
+    }
   }
+  save(list = setup_spatial, 
+    file = file.path(conditiondir, "setup_spatial.RData"))
+
   save(info, conditiondir, settings, spp, datadir, overdispersion, Database,
     file = file.path(conditiondir, "setup.RData"))
 
@@ -150,6 +186,51 @@ VAST_condition <- function(conditiondir, settings, spp,
     savefile = file.path(conditiondir, "Save.RData"),
     field = switch(survey, WCGOP = "IID", NULL),
     rho = settings$rho,
+    # calcs = rep(0, 9), # todo: make this part of settings
     comp = settings$comp)
+  
+  if (survey == "Triennial") {
+    datadir_tri <- file.path(datadir, c("early", "late"))
+    ignore <- mapply(dir.create, datadir_tri,
+      MoreArgs = list(showWarnings = FALSE))
+    
+    info_all <- info
+    Database_all <- Database
+    Database <- Database_all[Database_all$Year < 1993, ]
+    info <- info_early
+    save(Database, 
+      file = file.path(datadir_tri[1], "DatabaseSave.RData"))
+    save(info, 
+      conditiondir, settings, spp, datadir, 
+      overdispersion, Database,
+      file = file.path(datadir_tri[1], "setup.RData"))
+    info <- info_late
+    Database <- Database_all[Database_all$Year >= 1993, ]
+    save(Database, 
+      file = file.path(datadir_tri[2], "DatabaseSave.RData"))
+    save(info, 
+      conditiondir, settings, spp, datadir, 
+      overdispersion, Database,
+      file = file.path(datadir_tri[2], "setup.RData"))
+    info <- info_all
+    Database <- Database_all
+    
+    mapply(VAST_run, 
+      datalist = list(info_early, info_late),
+      savefile = file.path(datadir_tri, "Save.RData"),
+      MoreArgs = list(
+        depth = settings$depth,
+        overdispersion = overdispersion,
+        obsmodel = settings$ObsModelcondition,
+        rundir = datadir,
+        Version = settings$version,
+        strata = settings$strata,
+        pass = settings$Passcondition,
+        field = switch(survey, WCGOP = "IID", NULL),
+        rho = settings$rho,
+        # calcs = rep(0, 9), # Use to make run estimate faster
+        comp = settings$comp)
+      )
+  }
 
 }
