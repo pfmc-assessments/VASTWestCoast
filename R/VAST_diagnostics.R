@@ -66,18 +66,15 @@ VAST_diagnostics <- function(dir = getwd()) {
     Data_Geostat = Database,
     DirName = dir)
 
-  # Check positive catch rates
-  # Won't work for Poisson-link
-  if (!all(settings$ObsModelcondition == c(2, 1))) {
-    Q <- FishStatsUtils::plot_quantile_diagnostic(
-      TmbData = TmbData,
-      Report = Report,
-      FileName_PP = "Posterior_Predictive",
-      FileName_Phist = "Posterior_Predictive-Histogram",
-      FileName_QQ = "Q-Q_plot",
-      FileName_Qhist = "Q-Q_hist",
-      DateFile = dir)
-  }
+  Q <- FishStatsUtils::plot_quantile_diagnostic(
+    TmbData = TmbData,
+    Report = Report,
+    FileName_PP = "Posterior_Predictive",
+    FileName_Phist = "Posterior_Predictive-Histogram",
+    FileName_QQ = "Q-Q_plot",
+    FileName_Qhist = "Q-Q_hist",
+    DateFile = dir)
+  
   MapDetails_List <- FishStatsUtils::make_map_info(
     "Region" = region,
     "NN_Extrap" = info$Spatial_List$NN_Extrap,
@@ -135,7 +132,7 @@ VAST_diagnostics <- function(dir = getwd()) {
     zone = MapDetails_List[["Zone"]],
     Report = Report,
     Sdreport = Opt$SD,
-    FileName = paste0(dir, .Platform$path.sep),
+    FileName = paste0(dir, .Platform$file.sep),
     Year_Set = Year_Set, Years2Include = Years2Include,
     mar = c(0, 0, 2, 0), oma = c(3.5, 3.5, 0, 0),
     cex = 1.8, plot_legend_fig = FALSE)
@@ -152,7 +149,7 @@ VAST_diagnostics <- function(dir = getwd()) {
   FishStatsUtils::plot_data(
     Extrapolation_List = info$Extrapolation_List,
     Spatial_List = info$Spatial_List, 
-    Data_Geostat = Database, PlotDir = dir)
+    Data_Geostat = Database, PlotDir = paste0(dir, .Platform$file.sep))
 
   # Range shifts
   if (!is.null(Opt[["SD"]])) {
