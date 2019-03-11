@@ -190,8 +190,8 @@ VAST_condition <- function(conditiondir, settings, spp,
     comp = settings$comp)
   
   if (survey == "Triennial") {
-    datadir_tri <- file.path(datadir, c("early", "late"))
-    ignore <- mapply(dir.create, datadir_tri,
+    conditiondir_tri <- file.path(conditiondir, c("early", "late"))
+    ignore <- mapply(dir.create, conditiondir_tri,
       MoreArgs = list(showWarnings = FALSE))
     
     info_all <- info
@@ -199,25 +199,25 @@ VAST_condition <- function(conditiondir, settings, spp,
     Database <- Database_all[Database_all$Year < 1993, ]
     info <- info_early
     save(Database, 
-      file = file.path(datadir_tri[1], "DatabaseSave.RData"))
+      file = file.path(conditiondir_tri[1], "DatabaseSave.RData"))
     save(info, 
       conditiondir, settings, spp, datadir, 
       overdispersion, Database,
-      file = file.path(datadir_tri[1], "setup.RData"))
+      file = file.path(conditiondir_tri[1], "setup.RData"))
     info <- info_late
     Database <- Database_all[Database_all$Year >= 1993, ]
     save(Database, 
-      file = file.path(datadir_tri[2], "DatabaseSave.RData"))
+      file = file.path(conditiondir_tri[2], "DatabaseSave.RData"))
     save(info, 
       conditiondir, settings, spp, datadir, 
       overdispersion, Database,
-      file = file.path(datadir_tri[2], "setup.RData"))
+      file = file.path(conditiondir_tri[2], "setup.RData"))
     info <- info_all
     Database <- Database_all
     
     mapply(VAST_run, 
       datalist = list(info_early, info_late),
-      savefile = file.path(datadir_tri, "Save.RData"),
+      savefile = file.path(conditiondir_tri, "Save.RData"),
       MoreArgs = list(
         depth = settings$depth,
         overdispersion = overdispersion,
