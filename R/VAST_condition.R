@@ -64,12 +64,18 @@ VAST_condition <- function(conditiondir, settings, spp,
   if (!is.list(settings)) stop("settings must be a list")
   settings <- get_settings(settings)
   survey <- strsplit(spp, "_")[[1]][1]
-  availablesurveys <- c("EBSBTS", "WCGBTS", "WCGOP",
+  if (any(grep("[a-z]", survey)) {
+    warning("Lower-case letters were found in the survey name (",
+      survey, "),\nand are being changed to uppper case.")
+    survey <- toupper(survey)
+  }
+  availablesurveys <- c("EBSBTS", "WCGBT", "WCGBTS", "WCGOP",
     nwfscSurvey::createMatrix()[, 1])
   if (!survey %in% availablesurveys) {
     stop("The survey (specified as ", survey, ") must be one of the following:\n",
       paste(availablesurveys, collapse = "\n"))
   }
+  survey <- ifelse(survey == "WCGBT", "WCGBTS", survey)
   if (survey == "WCGOP" & is.null(data)) {
     stop("Must supply data when the survey is WCGOP")
   }
