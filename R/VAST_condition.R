@@ -64,7 +64,7 @@ VAST_condition <- function(conditiondir, settings, spp,
   if (!is.list(settings)) stop("settings must be a list")
   settings <- get_settings(settings)
   survey <- strsplit(spp, "_")[[1]][1]
-  if (any(grep("[a-z]", survey)) {
+  if (any(grep("[a-z]", survey))) {
     warning("Lower-case letters were found in the survey name (",
       survey, "),\nand are being changed to uppper case.")
     survey <- toupper(survey)
