@@ -71,7 +71,7 @@ VAST_EMrepi <- function(settings, data, datadir, emdir,
   overdispersion = c("eta1" = 0, "eta2" = 0),
   rerun = FALSE) {
   settings <- get_settings(settings)
-  survey <- strsplit(settings$Species, "_")[[1]][1]
+  survey <- get_spp(settings$Species, "_")["survey"]
 
   dir.create(emdir, showWarnings = FALSE, recursive = TRUE)
 

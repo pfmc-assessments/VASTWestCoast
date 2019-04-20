@@ -63,19 +63,8 @@ VAST_condition <- function(conditiondir, settings, spp,
   # Start the OM
   if (!is.list(settings)) stop("settings must be a list")
   settings <- get_settings(settings)
-  survey <- strsplit(spp, "_")[[1]][1]
-  if (any(grep("[a-z]", survey))) {
-    warning("Lower-case letters were found in the survey name (",
-      survey, "),\nand are being changed to uppper case.")
-    survey <- toupper(survey)
-  }
-  availablesurveys <- c("EBSBTS", "WCGBT", "WCGBTS", "WCGOP",
-    nwfscSurvey::createMatrix()[, 1])
-  if (!survey %in% availablesurveys) {
-    stop("The survey (specified as ", survey, ") must be one of the following:\n",
-      paste(availablesurveys, collapse = "\n"))
-  }
-  survey <- ifelse(survey == "WCGBT", "WCGBTS", survey)
+  surveyspp <- get_spp(spp)
+  survey <- surveyspp["survey"]
   if (survey == "WCGOP" & is.null(data)) {
     stop("Must supply data when the survey is WCGOP")
   }
@@ -99,19 +88,18 @@ VAST_condition <- function(conditiondir, settings, spp,
     if (survey == "EBSBTS") {
       Database <- FishData::download_catch_rates(
         survey = survey,
-        species_set = gsub("_", " ", gsub("[A-Z]{3}BTS_", "", spp)),
+        species_set = surveyspp["species"],
         # species_set = 25,
         error_tol = 0.01, localdir = paste0(datadir, .Platform$file.sep))
     }
     if (survey %in% c("WCGBTS", nwfscSurvey::createMatrix()[, 1])) {
-      usename <- switch(survey,
-        WCGBTS = "NWFSC.Combo",
-        survey)
       Database <- nwfscSurvey::PullCatch.fn(
-        SciName = paste(strsplit(settings$Species, "_")[[1]][2:3], collapse = " "),
-        SurveyName = usename,
+        SciName = surveyspp["species"],
+        SurveyName = switch(survey,
+          WCGBTS = "NWFSC.Combo",
+          survey),
         SaveFile = FALSE, Dir = NULL, verbose = FALSE)
-      if (usename == "Triennial") {
+      if (survey == "Triennial") {
         # Exclude 1977 from the Triennial data because of inconsistent
         # sampling methods
         Database <- Database[!Database$Year %in% 1977, ]
