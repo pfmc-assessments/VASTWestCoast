@@ -64,7 +64,7 @@ VAST_condition <- function(conditiondir, settings, spp,
   surveyspp <- get_spp(spp)
   survey <- surveyspp["survey"]
 
-  if (!file.exists(datadir)) stop("The datadir, ", datadir, ", doesn't exist.")
+  dir.create(datadir, showWarnings = FALSE, recursive = TRUE)
 
   if (is.null(overdispersion)) {
     overdispersion <- switch(survey,
