@@ -12,9 +12,6 @@ Sim_Settings <- list(
   "nknots" = 250,
   "strata" = data.frame("STRATA" = "All_areas"),
   "depth" = c("no", "linear", "squared")[1],
-  # Use extrapolation to reduce extrapolation footprint
-  # to that sampled by the Triennial survey
-  "extrapolation" = "propInTriennial",
   "Passcondition" = FALSE)
 
 downloaddir <- getwd()

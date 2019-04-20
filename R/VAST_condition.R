@@ -1,12 +1,10 @@
-#' Estimate Parameters by Fitting to Empirical Data
+#' Estimate Parameters by Fitting VAST to Empirical Data
 #'
 #' Fits data loaded in your R session
-#' or data that is downloaded from the cloud
+#' or data that is downloaded from the 
+#' Northwest Fisheries Science Center datawarehouse
 #' to a \code{\link[VAST]{Build_TMB_Fn}} model using
 #' \code{\link[TMBhelper]{Optimize}}.
-#' \code{VAST_condition} was specifically written as a wrapper for
-#' \code{\link[VAST]{Data_Fn}} and \code{\link[VAST]{Build_TMB_Fn}}
-#' to be used by scientists at the Northwest Fisheries Science Center.
 #' For more details on how \code{\link[VAST]{Build_TMB_Fn}}
 #' is configured see the sections below.
 #'
@@ -53,7 +51,6 @@
 #' @return Nothing is returned by the function, but the function saves two \code{.RData}
 #' structures to the disk in the \code{conditiondir}.
 #' @author Kelli Faye Johnson
-#' @importFrom ThorsonUtilities rename_columns
 #' @export
 #'
 VAST_condition <- function(conditiondir, settings, spp,
@@ -75,8 +72,6 @@ VAST_condition <- function(conditiondir, settings, spp,
   }
 
   dir.create(conditiondir, showWarnings = FALSE, recursive = TRUE)
-  kmeandir <- file.path(datadir, survey)
-  dir.create(kmeandir, showWarnings = FALSE, recursive = TRUE)
 
   # Make the data work for VAST
   if (is.null(data)) {
@@ -84,119 +79,40 @@ VAST_condition <- function(conditiondir, settings, spp,
   } else {
     Database <- get_data(data = Database)
   }
-  save(Database, file = file.path(conditiondir, "DatabaseSave.RData"))
 
-  # todo: make this code better, somehow use an ifelse statement
-  # or something similar so that I don't have two calls to the
-  # exact same function
-  setup_spatial <- "info"
-  if (!is.null(settings$extrapolation)) {
-    info <- VAST_setup(data = Database,
-      dir = kmeandir,
-      regionacronym = survey,
-      surveyname = settings$extrapolation,
-      strata = settings$strata,
-      nknots = settings$nknots)
-    if (survey == "Triennial") {
-      info_early <- VAST_setup(
-        data = Database[Database$Year < 1993, ],
-        dir = kmeandir,
-        regionacronym = survey,
-        surveyname = settings$extrapolation,
-        strata = settings$strata,
-        nknots = settings$nknots)
-      info_late <- VAST_setup(
-        data = Database[Database$Year >= 1993 , ],
-        dir = kmeandir,
-        regionacronym = survey,
-        surveyname = settings$extrapolation,
-        strata = settings$strata,
-        nknots = settings$nknots)
-      setup_spatial <- c(setup_spatial, "info_early", "info_late")
-    }
-  } else {
-    info <- VAST_setup(data = Database,
-      dir = kmeandir,
-      regionacronym = survey,
-      strata = settings$strata,
-      nknots = settings$nknots)
-    if (survey == "Triennial") {
-      info_early <- VAST_setup(
-        data = Database[Database$Year < 1993, ],
-        dir = kmeandir,
-        regionacronym = survey,
-        strata = settings$strata,
-        nknots = settings$nknots)
-      info_late <- VAST_setup(
-        data = Database[Database$Year >= 1993 , ],
-        dir = kmeandir,
-        regionacronym = survey,
-        strata = settings$strata,
-        nknots = settings$nknots)
-      setup_spatial <- c(setup_spatial, "info_early", "info_late")
-    }
-  }
-  save(list = setup_spatial, 
-    file = file.path(conditiondir, "setup_spatial.RData"))
-
-  save(info, conditiondir, settings, spp, datadir, overdispersion, Database,
-    file = file.path(conditiondir, "setup.RData"))
-
-  VAST_run(datalist = info, depth = settings$depth,
-    overdispersion = overdispersion,
-    obsmodel = settings$ObsModelcondition,
-    rundir = datadir,
-    Version = settings$version,
-    strata = settings$strata,
-    pass = settings$Passcondition,
-    savefile = file.path(conditiondir, "Save.RData"),
-    field = switch(survey, WCGOP = "IID", NULL),
-    rho = settings$rho,
-    # calcs = rep(0, 9), # todo: make this part of settings
-    comp = settings$comp)
+  settings[["overdispersion"]] <- overdispersion
+  
+  VAST_do(
+    Database = Database,
+    settings = settings,
+    conditiondir = conditiondir,
+    datadir = datadir)
   
   if (survey == "Triennial") {
-    conditiondir_tri <- file.path(conditiondir, c("early", "late"))
-    ignore <- mapply(dir.create, conditiondir_tri,
-      MoreArgs = list(showWarnings = FALSE))
-    
-    info_all <- info
-    Database_all <- Database
-    Database <- Database_all[Database_all$Year < 1993, ]
-    info <- info_early
-    save(Database, 
-      file = file.path(conditiondir_tri[1], "DatabaseSave.RData"))
-    save(info, 
-      conditiondir, settings, spp, datadir, 
-      overdispersion, Database,
-      file = file.path(conditiondir_tri[1], "setup.RData"))
-    info <- info_late
-    Database <- Database_all[Database_all$Year >= 1993, ]
-    save(Database, 
-      file = file.path(conditiondir_tri[2], "DatabaseSave.RData"))
-    save(info, 
-      conditiondir, settings, spp, datadir, 
-      overdispersion, Database,
-      file = file.path(conditiondir_tri[2], "setup.RData"))
-    info <- info_all
-    Database <- Database_all
-    
-    mapply(VAST_run, 
-      datalist = list(info_early, info_late),
-      savefile = file.path(conditiondir_tri, "Save.RData"),
+    mapply(VAST_do,
+      Database = list(
+        Database[Database[, "Year"] <  1993, ],
+        Database[Database[, "Year"] >= 1994, ],
+        Database[Database[, "Year"] <  2004, ],
+        Database[Database[, "Depth_m"] <=  366, ]),
+      conditiondir = lapply(c("early", "late", "noNWFSC", "shallow"),
+        function(x) file.path(conditiondir, x)),
       MoreArgs = list(
-        depth = settings$depth,
-        overdispersion = overdispersion,
-        obsmodel = settings$ObsModelcondition,
-        rundir = datadir,
-        Version = settings$version,
-        strata = settings$strata,
-        pass = settings$Passcondition,
-        field = switch(survey, WCGOP = "IID", NULL),
-        rho = settings$rho,
-        # calcs = rep(0, 9), # Use to make run estimate faster
-        comp = settings$comp)
-      )
+        settings = settings,
+        datadir = datadir)
+    )
+    rhosettings <- settings
+    rhosettings[["rho"]] <- c(0, 0, 4, 4)
+    VAST_do(
+      Database = Database,
+      conditiondir = file.path(conditiondir, "ar1"),
+      settings = rhosettings,
+      datadir = datadir)
+    VAST_do(
+      Database = Database[Database[, "Depth_m"] <=  366, ],
+      conditiondir = file.path(conditiondir, "ar1_shallow"),
+      settings = rhosettings,
+      datadir = datadir)
   }
 
 }

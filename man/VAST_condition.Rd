@@ -2,10 +2,10 @@
 % Please edit documentation in R/VAST_condition.R
 \name{VAST_condition}
 \alias{VAST_condition}
-\title{Estimate Parameters by Fitting to Empirical Data}
+\title{Estimate Parameters by Fitting VAST to Empirical Data}
 \usage{
 VAST_condition(conditiondir, settings, spp, datadir,
-  overdisperion = NULL, data = NULL)
+  overdispersion = NULL, data = NULL)
 }
 \arguments{
 \item{conditiondir}{A directory, either full or relative, that will be used
@@ -25,7 +25,7 @@ Also, the kmean information specific to the given survey
 used to collect the data will be saved here in a folder named after the survey.
 The directory should not have a trailing separator.}
 
-\item{overdisperion}{A vector of overdispersion parameters to include
+\item{overdispersion}{A vector of overdispersion parameters to include
 in the conditioning. The default is \code{NULL} and will enable the determination
 of overdispersion from the \code{spp} based on its survey.
 See the section below on Overdispersion above for more details.}
@@ -39,12 +39,10 @@ structures to the disk in the \code{conditiondir}.
 }
 \description{
 Fits data loaded in your R session
-or data that is downloaded from the cloud
+or data that is downloaded from the 
+Northwest Fisheries Science Center datawarehouse
 to a \code{\link[VAST]{Build_TMB_Fn}} model using
 \code{\link[TMBhelper]{Optimize}}.
-\code{VAST_condition} was specifically written as a wrapper for
-\code{\link[VAST]{Data_Fn}} and \code{\link[VAST]{Build_TMB_Fn}}
-to be used by scientists at the Northwest Fisheries Science Center.
 For more details on how \code{\link[VAST]{Build_TMB_Fn}}
 is configured see the sections below.
 }
