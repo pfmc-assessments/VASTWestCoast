@@ -53,8 +53,6 @@
 #' @return Nothing is returned by the function, but the function saves two \code{.RData}
 #' structures to the disk in the \code{conditiondir}.
 #' @author Kelli Faye Johnson
-#' @importFrom nwfscSurvey PullCatch.fn createMatrix
-#' @importFrom FishData download_catch_rates
 #' @importFrom ThorsonUtilities rename_columns
 #' @export
 #'
@@ -65,9 +63,7 @@ VAST_condition <- function(conditiondir, settings, spp,
   settings <- get_settings(settings)
   surveyspp <- get_spp(spp)
   survey <- surveyspp["survey"]
-  if (survey == "WCGOP" & is.null(data)) {
-    stop("Must supply data when the survey is WCGOP")
-  }
+
   if (!file.exists(datadir)) stop("The datadir, ", datadir, ", doesn't exist.")
 
   if (is.null(overdispersion)) {
@@ -84,27 +80,10 @@ VAST_condition <- function(conditiondir, settings, spp,
 
   # Make the data work for VAST
   if (is.null(data)) {
-    # todo: add ability to subset the years
-    if (survey == "EBSBTS") {
-      Database <- FishData::download_catch_rates(
-        survey = survey,
-        species_set = surveyspp["species"],
-        # species_set = 25,
-        error_tol = 0.01, localdir = paste0(datadir, .Platform$file.sep))
-    }
-    if (survey %in% c("WCGBTS", nwfscSurvey::createMatrix()[, 1])) {
-      Database <- nwfscSurvey::PullCatch.fn(
-        SciName = surveyspp["species"],
-        SurveyName = switch(survey,
-          WCGBTS = "NWFSC.Combo",
-          survey),
-        SaveFile = FALSE, Dir = NULL, verbose = FALSE)
-    }
+    Database <- get_data(survey = survey, species = surveyspp["species"])
   } else {
-    Database <- data
+    Database <- get_data(data = Database)
   }
-  Database <- clean_data(Database)
-
   save(Database, file = file.path(conditiondir, "DatabaseSave.RData"))
 
   # todo: make this code better, somehow use an ifelse statement
