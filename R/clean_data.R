@@ -17,29 +17,12 @@
 #' @author Kelli Faye Johnson
 clean_data <- function(data) {
   cols <- colnames(data)
-  if ("year" %in% cols) {
-    data$Year <- data$year
-  }
-  if ("Scientific_name" %in% cols) {
-    data$Sci <- data$Scientific_name
-  }
-  if ("Longitude_dd" %in% cols) {
-    data$Lon <- data$Longitude_dd
-  }
-  if ("Long" %in% cols) {
-    data$Lon <- data$Long
-  }
-  if ("Latitude_dd" %in% cols) {
-    data$Lat <- data$Latitude_dd 
-  }
-  if ("total_catch_wt_kg" %in% cols) {
-    data$Catch_KG <- data$total_catch_wt_kg
-  }
-  if ("Wt" %in% cols) {
-    data$Catch_KG <- data$Wt
-  }
+  colnames(data) <- gsub("year", "Year", colnames(data))
+  colnames(data) <- gsub("entific_name|itude_dd", "", colnames(data))
+  colnames(data) <- gsub("Long", "Lon", colnames(data))
+  colnames(data) <- gsub("total_catch_wt_kg|Wt", "Catch_KG", colnames(data))
   if ("Area_Swept_ha" %in% cols) {
-    data$AreaSwept_km2 <- data$Area_Swept_ha / 100
+    data[, "AreaSwept_km2"] <- data[, "Area_Swept_ha"] / 100
   }
   if ("Vessel" %in% cols) {
     if (!all(grepl("_[0-9]{4}", as.character(data$Vessel)))) {
