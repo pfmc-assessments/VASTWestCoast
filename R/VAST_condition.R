@@ -99,13 +99,6 @@ VAST_condition <- function(conditiondir, settings, spp,
           WCGBTS = "NWFSC.Combo",
           survey),
         SaveFile = FALSE, Dir = NULL, verbose = FALSE)
-      if (survey == "Triennial") {
-        # Exclude 1977 from the Triennial data because of inconsistent
-        # sampling methods
-        Database <- Database[!Database$Year %in% 1977, ]
-        Database$truevessel <- Database$Vessel
-        Database$Vessel <- "none"
-      }
     }
   } else {
     Database <- data

@@ -24,14 +24,19 @@ clean_data <- function(data) {
   if ("Area_Swept_ha" %in% cols) {
     data[, "AreaSwept_km2"] <- data[, "Area_Swept_ha"] / 100
   }
-  if ("Vessel" %in% cols) {
-    if (!all(grepl("_[0-9]{4}", as.character(data$Vessel)))) {
-      data$Vesselraw <- data$Vessel
-      data$Vessel <- as.factor(
-        paste(data$Vessel, data$Year, sep = "_"))
-      }
-  } else {
-    data <- cbind(data, "Vessel" = 1)
+  if (!"Vessel" %in% cols) data[, "Vessel"] <- 1
+  data[, "Vesselraw"] <- data[, "Vessel"]
+
+  # Clean Triennial
+  if ("Project" %in% cols) {
+    if (unique(data[, "Project"]) == "Triennial") {
+      data <- data[!data[, "Year"] %in% 1977, ]
+      data[, "Vessel"] <- "none"
+    }
+  }
+  if (!all(grepl("_[0-9]{4}", as.character(data[, "Vessel"])))) {
+    data[, "Vessel"] <- as.factor(
+      paste(data[, "Vessel"], data[, "Year"], sep = "_"))
   }
   return(data)
 }
