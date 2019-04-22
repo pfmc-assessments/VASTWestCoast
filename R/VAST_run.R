@@ -226,8 +226,7 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
         Years2Include = which(yearset %in% sort(unique(datalist$data[, "Year"]))),
         strata_names = strata[, 1], use_biascorr = dobias),
         error = function(e) e)
-      sdinfo <- TMB::sdreport(Obj)
-      tables <- summary_nwfsc(obj = Obj, sdreport = sdinfo,
+      tables <- summary_nwfsc(obj = Obj, sdreport = Opt[["SD"]],
         savedir = dirname(savefile))
     } else {
       Index <- NULL

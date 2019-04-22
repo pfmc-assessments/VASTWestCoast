@@ -8,10 +8,6 @@
 #' @param sdreport Output from \code{\link[TMB]{sdreport}}
 #' @param savedir A directory to save the resulting tables, which will
 #' be in csv format.
-#' @param Sdreport Output from \code{Opt[["SD"]]}. Does not have to be
-#' provided to the function, but for newer versions of VAST it is imperative
-#' that it is so that the bias correction is correctly labeled Yes or No.
-#' 
 #' @return Tagged list containing objects for running a VAST model
 #' \describe{
 #'   \item{TableA}{Table of settings}
@@ -25,8 +21,7 @@
 #' @author James T. Thorson
 #' @export
 #' 
-summary_nwfsc <- function(obj, sdreport, savedir = NULL,
-  Sdreport = NULL) {
+summary_nwfsc <- function(obj, sdreport, savedir = NULL) {
 
   f <- function(num, threshold = 0.000001) {
     ifelse(num<threshold, paste0("< ", threshold), num)
@@ -44,11 +39,10 @@ summary_nwfsc <- function(obj, sdreport, savedir = NULL,
       "FALSE" = "No",
       "TRUE" = "Yes"))
   TableA[4, ] <- c("Was bias correction used?", 
-    ifelse("Est. (bias.correct)" %in% 
-      colnames(TMB::summary.sdreport(sdreport)), "Yes", "No"))
-  if (!is.null(Sdreport)) {
-    if("unbiased" %in% names(Sdreport)) TableA[4, 2] <- "Yes"
-  }
+    ifelse(
+      all(is.na(sdreport[["unbiased"]][["value"]])), 
+      "No", 
+      "Yes"))
   TableA[5, ] <- c("Distribution for measurement errors", 
     ifelse(as.character(obj$env$data$ObsModel[2]) == 1,
     "Poisson-link", 
