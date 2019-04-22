@@ -43,15 +43,8 @@ VAST_diagnostics <- function(dir = getwd()) {
   if (!is.null(Opt$message)) stop("The warning message from the optimization",
   	" routine indicates the model\nmight not be converged. Check the following",
   	" message:\n", Opt$message)
-
-  region <- info$region
-  if (is.null(region)) {
-    region <- switch(
-      strsplit(settings$Species, "_")[[1]][1],
-      EBSBTS = "eastern_bering_sea",
-      WCGBTS = "California_current",
-      NULL)
   }
+  if (is.null(info$region)) info$region <- "california_current"
 
   # Check convergence
   on.exit(suppressWarnings(sink()), add = TRUE)
@@ -76,7 +69,7 @@ VAST_diagnostics <- function(dir = getwd()) {
     DateFile = dir)
   
   MapDetails_List <- FishStatsUtils::make_map_info(
-    "Region" = region,
+    "Region" = info$region,
     "NN_Extrap" = info$Spatial_List$NN_Extrap,
     "Extrapolation_List" = info$Extrapolation_List)
   years <- Database$Year
