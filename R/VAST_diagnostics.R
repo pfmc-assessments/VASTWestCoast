@@ -41,8 +41,10 @@ VAST_diagnostics <- function(dir = getwd()) {
   base::load(setupfile)
 
   if (!is.null(Opt$message)) stop("The warning message from the optimization",
-  	" routine indicates the model\nmight not be converged. Check the following",
+    " routine indicates the model \nmight not be converged. Check the following",
   	" message:\n", Opt$message)
+  if (length(Opt[["opt"]][["Convergence_check"]]) > 0) {
+    stop(Opt[["opt"]][["Convergence_check"]])
   }
   if (is.null(info$region)) info$region <- "california_current"
 
