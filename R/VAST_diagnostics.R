@@ -47,12 +47,10 @@ VAST_diagnostics <- function(dir = getwd()) {
   if (is.null(info$region)) info$region <- "california_current"
 
   # Check convergence
-  on.exit(suppressWarnings(sink()), add = TRUE)
-  sink(file.path(dir, "convergence_gradient.txt"))
-  pander::pandoc.table(
-    Opt$diagnostics[,
-      c("Param","Lower","MLE","Upper","final_gradient")])
-  sink()
+  cat(file = file.path(dir, "convergence_gradient.txt"), 
+    pander::pandoc.table.return(
+      Opt$diagnostics[,
+        c("Param","Lower","MLE","Upper","final_gradient")]))
   # Check encounter probability
   FishStatsUtils::plot_encounter_diagnostic(
     Report = Report,
@@ -134,10 +132,8 @@ VAST_diagnostics <- function(dir = getwd()) {
     "Year" = Year_Set[col(Dens_xt)],
     "E_km" = info$Spatial_List$MeshList$loc_x[row(Dens_xt), "E_km"],
     "N_km" = info$Spatial_List$MeshList$loc_x[row(Dens_xt), "N_km"])
-  on.exit(suppressWarnings(sink()), add = TRUE)
-  sink(file = file.path(dir, "densityperknot.txt"))
-    pander::pandoc.table(Dens_DF, digits = 3)
-  sink()
+  cat(file = file.path(dir, "densityperknot.txt"),
+    pander::pandoc.table.return(Dens_DF, digits = 3))
 
   FishStatsUtils::plot_data(
     Extrapolation_List = info$Extrapolation_List,
