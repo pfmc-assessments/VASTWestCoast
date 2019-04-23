@@ -21,6 +21,7 @@ get_extraplist <- function(survey, strata = NULL) {
     strata.limits = strata,
     surveyname = switch(survey,
       Triennial = "propInTriennial", 
+      NWFSC.Slope = "propInSlope02", 
                   "propInWCGBTS"),
     zone = NA), 
     "region" = "california_current"))
