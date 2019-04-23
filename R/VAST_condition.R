@@ -78,7 +78,7 @@ VAST_condition <- function(conditiondir, settings, spp,
   if (is.null(data)) {
     Database <- get_data(survey = survey, species = surveyspp["species"])
   } else {
-    Database <- get_data(data = Database)
+    Database <- get_data(data = data)
   }
 
   settings[["overdispersion"]] <- overdispersion
