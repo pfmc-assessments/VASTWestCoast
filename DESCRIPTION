@@ -22,7 +22,6 @@ Imports:
     RandomFields,
     RANN,
     stats,
-    taxize,
     tidyr,
     TMB,
     TMBhelper,

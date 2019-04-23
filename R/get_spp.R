@@ -15,7 +15,6 @@
 #' 
 #' @author Kelli Faye Johnson
 #' @importFrom nwfscSurvey createMatrix
-#' @importFrom taxize gnr_resolve
 #' @export
 #' 
 #' @examples
@@ -41,15 +40,8 @@ get_spp <- function(input, split = "_") {
   }
 
   # Species name
-  species <- gsub(split, " ",
-  	gsub(paste0("^[A-Za-z]+", split), "", input))
-  scitable <- taxize::gnr_resolve(names = species)
-  scis <- scitable[
-    scitable[, "score"] == max(scitable[, "score"]), 
-    "submitted_name", drop = TRUE]
-  finalspp <- unique(scis[!grepl("\\(", scis)])
-  if (length(finalspp) > 1) stop("More than one species name was found",
-  	" for ", species, ":\n", paste(finalspp, collapse = ","))
+  species <- apply(sapply(splits, "[", 2:3), 2, paste, collapse = " ")
+  finalspp <- gsub("(^[[:alpha:]])", "\\U\\1", species, perl = TRUE)
   
   return(c("survey" = finalsurvey, "species" = finalspp))
 }
