@@ -31,7 +31,6 @@ clean_data <- function(data) {
   if ("Project" %in% cols) {
     if (unique(data[, "Project"]) == "Triennial") {
       data <- data[!data[, "Year"] %in% 1977, ]
-      data[, "Vessel"] <- "none"
     }
   }
   if (!all(grepl("_[0-9]{4}", as.character(data[, "Vessel"])))) {
