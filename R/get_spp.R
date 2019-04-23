@@ -27,15 +27,18 @@ get_spp <- function(input, split = "_") {
   # Survey name
   availablesurveys <- c("EBSBTS", "WCGBTS", "WCGOP",
     nwfscSurvey::createMatrix()[, 1])
-  survey <- toupper(sapply(splits, "[[", 1))
+  survey <- sapply(splits, "[[", 1)
   finalsurvey <- switch(survey,
-  	TRIENNIAL = "Triennial",
-  	WCGBT = "WCGBTS",
-  	NWFSC.COMBO = "WCGBTS",
-  	survey)
+    TRIENNIAL = "Triennial",
+    Triennial = "Triennial",
+    WCGBT = "WCGBTS",
+    NWFSC.Combo = "WCGBTS",
+    NWFSC.Shelf = "NWFSC.Shelf",
+    NWFSC.Slope = "NWFSC.Slope",
+    survey)
   if (!finalsurvey %in% availablesurveys) {
     stop("The survey (specified as ", finalsurvey, 
-    	") must be one of the following:\n",
+      ") must be one of the following:\n",
       paste(availablesurveys, collapse = "\n"))
   }
 
