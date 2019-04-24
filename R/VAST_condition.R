@@ -61,6 +61,8 @@ VAST_condition <- function(conditiondir, settings, spp,
   surveyspp <- get_spp(spp)
   survey <- surveyspp["survey"]
 
+  datadir <- normalizePath(datadir, mustWork = FALSE)
+  conditiondir <- normalizePath(conditiondir, mustWork = FALSE)
   dir.create(datadir, showWarnings = FALSE, recursive = TRUE)
 
   if (is.null(overdispersion)) {
