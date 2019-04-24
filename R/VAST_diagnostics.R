@@ -40,11 +40,15 @@ VAST_diagnostics <- function(dir = getwd()) {
   base::load(datafile)
   base::load(setupfile)
 
-  if (!is.null(Opt$message)) stop("The warning message from the optimization",
-    " routine indicates the model \nmight not be converged. Check the following",
-  	" message:\n", Opt$message)
-  if (length(Opt[["opt"]][["Convergence_check"]]) > 0) {
-    stop(Opt[["opt"]][["Convergence_check"]])
+  if (!is.null(Opt$message)) {
+    warning("The warning message from the optimization",
+      " routine indicates the model \nmight not be converged. Check the following",
+  	  " message:\n", Opt$message)
+    return(NULL)
+  }
+  if (length(Opt[["opt"]][["Convergence_check"]]) > 0 | is.null(Opt[["SD"]])) {
+    warning("The model in, ", dir, " appears to have found a solution but didn't produce a hessian")
+    return(NULL)
   }
   if (is.null(info$region)) info$region <- "california_current"
 
