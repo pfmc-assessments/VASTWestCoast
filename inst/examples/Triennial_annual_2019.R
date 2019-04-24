@@ -22,4 +22,4 @@ test <- VAST_condition(
   datadir = downloaddir,
   overdispersion = NULL)
 mapply(VAST_diagnostics, 
-  file.path(downloaddir, c("", "early", "late")))
+  c(downloaddir, list.dirs(downloaddir)))
