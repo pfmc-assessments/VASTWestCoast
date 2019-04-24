@@ -26,6 +26,10 @@ clean_data <- function(data) {
   }
   if (!"Vessel" %in% cols) data[, "Vessel"] <- 1
   data[, "Vesselraw"] <- data[, "Vessel"]
+  if (!any(grepl("^sci", colnames(data), ignore.case = TRUE))) {
+    data[, "Sci"] <- 1
+  }
+  if (!is.factor(data[, "Sci"])) data[, "Sci"] <- as.factor(data[, "Sci"])
 
   # Clean Triennial
   if ("Project" %in% cols) {

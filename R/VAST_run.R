@@ -122,10 +122,6 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
   } else {qdatahere <- NULL}
 
   # Make TMB data list
-  if (!"sci" %in% tolower(colnames(datalist$data))) {
-    datalist$data <- cbind(datalist$data, "Sci" = 1)
-  }
-
   # Specify FieldConfig for spatial and spatiotemporal variation
   
   # Check for missing years b/c one may want to inform them with AR1
@@ -140,9 +136,6 @@ VAST_run <- function(datalist, depth = c("no", "linear", "squared"),
     FieldConfig <- rep(nfactors, 4)
   }
   names(FieldConfig) <- c("Omega1", "Epsilon1", "Omega2", "Epsilon2")
-  if (!is.factor(datalist$data$Sci)) {
-    datalist$data$Sci <- as.factor(datalist$data$Sci)
-  }
 
   TmbData <- suppressWarnings(VAST::Data_Fn(
     "Version" = Version,
