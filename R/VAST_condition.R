@@ -72,7 +72,7 @@ VAST_condition <- function(conditiondir, settings, spp,
       WCGOP = c("eta1" = 0, "eta2" = 0),
       AFSC.Slope = c("Delta1" = 0, "Delta2" = 0),
       NWFSC.Slope = c("Delta1" = 0, "Delta2" = 0),
-      Triennial = c("Delta1" = 0, "Delta2" = 0))
+      Triennial = c("Delta1" = 1, "Delta2" = 1))
   }
 
   dir.create(conditiondir, showWarnings = FALSE, recursive = TRUE)
