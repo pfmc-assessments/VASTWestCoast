@@ -57,6 +57,7 @@ VAST_diagnostics <- function(dir = getwd()) {
     pander::pandoc.table.return(
       Opt$diagnostics[,
         c("Param","Lower","MLE","Upper","final_gradient")]))
+  browser()
   # Check encounter probability
   FishStatsUtils::plot_encounter_diagnostic(
     Report = Report,
@@ -79,6 +80,7 @@ VAST_diagnostics <- function(dir = getwd()) {
   years <- Database$Year
   Year_Set <- seq(min(years), max(years))
   Years2Include <- which(Year_Set %in% sort(unique(years)))
+
   FishStatsUtils::plot_residuals(
     Lat_i = Database$Lat,
     Lon_i = Database$Lon,
@@ -94,7 +96,7 @@ VAST_diagnostics <- function(dir = getwd()) {
     Rotate = MapDetails_List[["Rotate"]],
     Cex = MapDetails_List[["Cex"]], Legend = MapDetails_List[["Legend"]],
     zone = MapDetails_List[["Zone"]],
-    mar = c(0, 0, 2, 0), oma = c(3.5, 3.5 ,0, 0), cex = 1.8)
+    mar = c(0, 0, 2, 0), oma = c(3.5, 3.5 ,0, 0), cex = 0.8)
 
   # Plot anisotropy
   FishStatsUtils::plot_anisotropy(
