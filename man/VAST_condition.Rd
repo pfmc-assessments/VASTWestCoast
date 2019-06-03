@@ -5,7 +5,7 @@
 \title{Estimate Parameters by Fitting VAST to Empirical Data}
 \usage{
 VAST_condition(conditiondir, settings, spp, datadir,
-  overdispersion = NULL, data = NULL)
+  overdispersion = NULL, data = NULL, sensitivity = TRUE)
 }
 \arguments{
 \item{conditiondir}{A directory, either full or relative, that will be used
@@ -32,6 +32,10 @@ See the section below on Overdispersion above for more details.}
 
 \item{data}{A data frame that can be passed to the conditioning function
 such that no data will be downloaded. todo: document the columns that are needed.}
+
+\item{sensitivity}{logical; run sensitivity analyses specific to a given survey.
+For example, the Triennial survey can be split into two seperate surveys and limited
+to 366 m depth.}
 }
 \value{
 Nothing is returned by the function, but the function saves two \code{.RData}

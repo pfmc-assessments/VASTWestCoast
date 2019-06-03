@@ -47,14 +47,18 @@
 #' See the section below on Overdispersion above for more details.
 #' @param data A data frame that can be passed to the conditioning function
 #' such that no data will be downloaded. todo: document the columns that are needed.
-#'
+#' @param sensitivity logical; run sensitivity analyses specific to a given survey.
+#' For example, the Triennial survey can be split into two seperate surveys and limited
+#' to 366 m depth. 
+#' 
 #' @return Nothing is returned by the function, but the function saves two \code{.RData}
 #' structures to the disk in the \code{conditiondir}.
 #' @author Kelli Faye Johnson
 #' @export
 #'
 VAST_condition <- function(conditiondir, settings, spp,
-  datadir, overdispersion = NULL, data = NULL) {
+  datadir, overdispersion = NULL, data = NULL,
+  sensitivity = TRUE) {
   # Start the OM
   if (!is.list(settings)) stop("settings must be a list")
   settings <- get_settings(settings)
@@ -92,7 +96,7 @@ VAST_condition <- function(conditiondir, settings, spp,
     conditiondir = conditiondir,
     datadir = datadir)
   
-  if (survey == "Triennial") {
+  if (survey == "Triennial" & sensitivity) {
     mapply(VAST_do,
       Database = list(
         Database[Database[, "Year"] <  1993, ],
