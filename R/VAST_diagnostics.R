@@ -57,7 +57,7 @@ VAST_diagnostics <- function(dir = getwd()) {
     pander::pandoc.table.return(
       Opt$diagnostics[,
         c("Param","Lower","MLE","Upper","final_gradient")]))
-  browser()
+  #browser()
   # Check encounter probability
   FishStatsUtils::plot_encounter_diagnostic(
     Report = Report,
