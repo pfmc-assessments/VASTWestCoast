@@ -95,15 +95,25 @@ VAST_condition <- function(conditiondir, settings, spp,
     settings = settings,
     conditiondir = conditiondir,
     datadir = datadir)
-  
-  if (survey == "Triennial" & sensitivity) {
+
+  if (survey == "Triennial") {
     mapply(VAST_do,
       Database = list(
         Database[Database[, "Year"] <  1993, ],
-        Database[Database[, "Year"] >= 1994, ],
+        Database[Database[, "Year"] >= 1994, ]),
+      conditiondir = lapply(c("early", "late"),
+        function(x) file.path(conditiondir, x)),
+      MoreArgs = list(
+        settings = settings,
+        datadir = datadir)
+    )
+  }
+  if (survey == "Triennial" & sensitivity) {
+    mapply(VAST_do,
+      Database = list(
         Database[Database[, "Year"] <  2004, ],
         Database[Database[, "Depth_m"] <=  366, ]),
-      conditiondir = lapply(c("early", "late", "noNWFSC", "shallow"),
+      conditiondir = lapply(c("noNWFSC", "shallow"),
         function(x) file.path(conditiondir, x)),
       MoreArgs = list(
         settings = settings,
