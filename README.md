@@ -16,7 +16,12 @@ running on your local machine.
 2. Install devtools from CRAN `install.packages("devtools")`
 
 ### Installing
-`devtools::install_github("nwfsc-assess/VASTWestCoast")`
+Currently, the package is not up to date with VAST. Please use the following code:
+```library(devtools)
+devtools::install_github("kellijohnson-NOAA/FishStatsUtils")
+devtools::install_github("James-Thorson-NOAA/VAST@2034b7442f31bbe0e79b521652a58ed99e025e49")
+devtools::install_github("nwfsc-assess/VASTWestCoast")
+```
 
 ## Documentation
 Configuration of the VAST package is complex, and the intent of VASTWestCoast was to simplify and standardize the code needed to generate indices of abundance for species managed by the Pacific Fisheries Management Council (PFMC). Settings that should be specified the same regardless of species and of survey are set behind the scenes to ensure their consistency. For example, all results are corrected for retransformation bias to account for nonlinear transformation of random effects (Thorson and Kristensen, 2016). Survey-specific example scripts are available in [/inst/examples](https://github.com/nwfsc-assess/VASTWestCoast/tree/master/inst/examples). 
