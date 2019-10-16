@@ -74,9 +74,11 @@ VAST_diagnostics <- function(dir = getwd()) {
     DateFile = dir)
   
   MapDetails_List <- FishStatsUtils::make_map_info(
+    spatial_list = info$Spatial_List,
     "Region" = info$region,
     "NN_Extrap" = info$Spatial_List$NN_Extrap,
-    "Extrapolation_List" = info$Extrapolation_List)
+    "Extrapolation_List" = info$Extrapolation_List,
+    fine_scale = FALSE)
   years <- Database$Year
   Year_Set <- seq(min(years), max(years))
   Years2Include <- which(Year_Set %in% sort(unique(years)))
