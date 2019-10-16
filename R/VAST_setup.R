@@ -28,7 +28,8 @@ VAST_setup <- function(data, dir, survey, strata = NULL, nknots) {
     nstart = 100,
     iter.max = 1e3,
     # Argument passed to Calc_Kmeans
-    DirPath = dir))
+    DirPath = dir,
+    Save_Results = TRUE))
   data <- cbind(data, "knot_i" = Spatial_List$knot_i)
 
   # Generate covariate
