@@ -30,7 +30,7 @@ plot_index <- function(dir, recursive = TRUE, area = "All_areas",
 	data[, "low"] <- data[, "Estimate_metric_tons"] - 1.96 * data[, "SD_mt"]
 	data[, "upp"] <- data[, "Estimate_metric_tons"] + 1.96 * data[, "SD_mt"]
 	g <- ggplot(data, aes(Year, Estimate_metric_tons, 
-		color = as.factor(folder),
+		color = as.factor(Fleet),
   fill = as.factor(folder))) +
     geom_ribbon(data = data,
       aes(ymin = low, ymax = upp), alpha = 0.2,

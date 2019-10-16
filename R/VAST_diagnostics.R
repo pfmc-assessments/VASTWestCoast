@@ -72,7 +72,6 @@ VAST_diagnostics <- function(dir = getwd()) {
     FileName_QQ = "Q-Q_plot",
     FileName_Qhist = "Q-Q_hist",
     DateFile = dir)
-  
   MapDetails_List <- FishStatsUtils::make_map_info(
     spatial_list = info$Spatial_List,
     "Region" = info$region,
@@ -83,6 +82,11 @@ VAST_diagnostics <- function(dir = getwd()) {
   Year_Set <- seq(min(years), max(years))
   Years2Include <- which(Year_Set %in% sort(unique(years)))
 
+  plot_biomass_index(TmbData, sdreport, 
+    Year_Set = Year_Set, Years2Include = Years2Include, 
+    DirName = dir,
+    PlotName = "timeseries",
+    strata_names = if(nrow(settings$strata) == 1) {""} else {settings$strata[,1]})
   FishStatsUtils::plot_residuals(
     Lat_i = Database$Lat,
     Lon_i = Database$Lon,
