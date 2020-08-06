@@ -7,10 +7,20 @@ A wrapper for printing ggplots that display relative
 error.
 todo: document better}
 \usage{
-ggplotre(data, x, y, print = TRUE, gradient = FALSE,
-  facetx = c("emname", "em_depth"), facety = "omname", labels = NULL,
-  type = "box", scales = c("fixed", "free"), dir = NULL,
-  lim = list(x = NULL, y = NULL))
+ggplotre(
+  data,
+  x,
+  y,
+  print = TRUE,
+  gradient = FALSE,
+  facetx = c("emname", "em_depth"),
+  facety = "omname",
+  labels = NULL,
+  type = "box",
+  scales = c("fixed", "free"),
+  dir = NULL,
+  lim = list(x = NULL, y = NULL)
+)
 }
 \arguments{
 \item{data}{A data frame}

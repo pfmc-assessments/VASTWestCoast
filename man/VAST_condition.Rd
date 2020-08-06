@@ -4,8 +4,15 @@
 \alias{VAST_condition}
 \title{Estimate Parameters by Fitting VAST to Empirical Data}
 \usage{
-VAST_condition(conditiondir, settings, spp, datadir,
-  overdispersion = NULL, data = NULL, sensitivity = TRUE)
+VAST_condition(
+  conditiondir,
+  settings,
+  spp,
+  datadir,
+  overdispersion = NULL,
+  data = NULL,
+  sensitivity = TRUE
+)
 }
 \arguments{
 \item{conditiondir}{A directory, either full or relative, that will be used

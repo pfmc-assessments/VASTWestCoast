@@ -4,8 +4,16 @@
 \alias{get_EMpath}
 \title{Create full path to estimation model}
 \usage{
-get_EMpath(simnum, omnum, repnum, emnum, basedir = getwd(),
-  simname = "_VAST_simulation", check = FALSE, make = FALSE)
+get_EMpath(
+  simnum,
+  omnum,
+  repnum,
+  emnum,
+  basedir = getwd(),
+  simname = "_VAST_simulation",
+  check = FALSE,
+  make = FALSE
+)
 }
 \arguments{
 \item{simnum}{The simulation number}

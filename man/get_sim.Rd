@@ -4,8 +4,12 @@
 \alias{get_sim}
 \title{Simulate data}
 \usage{
-get_sim(Sim_Settings = NULL, Extrapolation_List, Data_Geostat = NULL,
-  standardize_fields = FALSE)
+get_sim(
+  Sim_Settings = NULL,
+  Extrapolation_List,
+  Data_Geostat = NULL,
+  standardize_fields = FALSE
+)
 }
 \arguments{
 \item{Sim_Settings}{An optional tagged list for specifying input parameters. 

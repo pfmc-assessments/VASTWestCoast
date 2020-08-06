@@ -4,8 +4,14 @@
 \alias{VAST_EMrepi}
 \title{Run the estimation method for a given set of "settings"}
 \usage{
-VAST_EMrepi(settings, data, datadir, emdir, overdispersion = c(eta1 = 0,
-  eta2 = 0), rerun = FALSE)
+VAST_EMrepi(
+  settings,
+  data,
+  datadir,
+  emdir,
+  overdispersion = c(eta1 = 0, eta2 = 0),
+  rerun = FALSE
+)
 }
 \arguments{
 \item{settings}{A list of settings.}

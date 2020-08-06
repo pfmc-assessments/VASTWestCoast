@@ -4,9 +4,21 @@
 \alias{VAST_run}
 \title{Estimate parameters from a spatiotemporal index-standardization model}
 \usage{
-VAST_run(datalist, depth = c("no", "linear", "squared"), overdispersion,
-  obsmodel, rundir, Version = NULL, calcs = c(rep(1, 7), 0, 1), strata,
-  pass = FALSE, savefile, field = NULL, rho = NULL, comp = FALSE)
+VAST_run(
+  datalist,
+  depth = c("no", "linear", "squared"),
+  overdispersion,
+  obsmodel,
+  rundir,
+  Version = NULL,
+  calcs = c(1, rep(0, 6), 0, 1),
+  strata,
+  pass = FALSE,
+  savefile,
+  field = NULL,
+  rho = NULL,
+  comp = FALSE
+)
 }
 \arguments{
 \item{datalist}{A list of data used for the model.}

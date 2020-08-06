@@ -4,8 +4,13 @@
 \alias{plot_index}
 \title{Plot indicies of Relative Abundance}
 \usage{
-plot_index(dir, recursive = TRUE, area = "All_areas",
-  keepyears = NULL, limit = NULL)
+plot_index(
+  dir,
+  recursive = TRUE,
+  area = "All_areas",
+  keepyears = NULL,
+  limit = NULL
+)
 }
 \arguments{
 \item{dir}{A file path with folders containing VASTWestCoast runs.}

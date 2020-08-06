@@ -4,8 +4,13 @@
 \alias{VAST_simulation}
 \title{Run a complete simulation using \link{VAST}}
 \usage{
-VAST_simulation(maindir = getwd(), conditiondir = NULL, globalsettings,
-  n_cluster, OMdir = NULL)
+VAST_simulation(
+  maindir = getwd(),
+  conditiondir = NULL,
+  globalsettings,
+  n_cluster,
+  OMdir = NULL
+)
 }
 \arguments{
 \item{maindir}{The main directory that will house all of the results using a
