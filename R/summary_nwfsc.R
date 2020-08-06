@@ -15,9 +15,6 @@
 #'   \item{TableC}{Table of MLE of fixed effects}
 #' }
 #' 
-#' @importFrom ThorsonUtilities list_parameters
-#' @importFrom TMB summary.sdreport
-#' @importFrom utils write.csv
 #' @author James T. Thorson
 #' @export
 #' 
@@ -67,7 +64,7 @@ summary_nwfsc <- function(obj, sdreport, savedir = NULL) {
       "1" = "Yes"))
 
   # Print number of parameters
-  TableB <- ThorsonUtilities::list_parameters(obj, verbose = FALSE)
+  TableB <- utilities::list_parameters(obj, verbose = FALSE)
 
   # Print table of MLE of fixed effects
   TableC <- TMB::summary.sdreport(sdreport, "fixed")
@@ -76,7 +73,7 @@ summary_nwfsc <- function(obj, sdreport, savedir = NULL) {
   Return <- list("TableA" = TableA, "TableB" = TableB, "TableC" = TableC)
   if(!is.null(savedir)) {
     for(i in 1:3) {
-      write.csv(Return[[i]], 
+      utils::write.csv(Return[[i]],
         file = file.path(savedir, paste0(names(Return)[i], ".csv")),
         row.names = c(FALSE, FALSE, TRUE)[i])
     }
