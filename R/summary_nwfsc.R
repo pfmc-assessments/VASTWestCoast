@@ -64,7 +64,14 @@ summary_nwfsc <- function(obj, sdreport, savedir = NULL) {
       "1" = "Yes"))
 
   # Print number of parameters
-  TableB <- utilities::list_parameters(obj, verbose = FALSE)
+  fe <- names(obj$env$last.par[-Obj$env$random])
+  re <- names(obj$env$last.par[Obj$env$random])
+  TableB <- data.frame(
+    Coefficient_name = c(names(table(fe)), names(table(re))),
+    Number_of_coefficients = type.convert(c(table(fe), table(re)), as.is = TRUE),
+    Type = c(rep("Fixed", length(unique(fe))), rep("Random", length(unique(re))))
+  )
+  rm(fe, re)
 
   # Print table of MLE of fixed effects
   TableC <- TMB::summary.sdreport(sdreport, "fixed")

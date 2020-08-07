@@ -42,6 +42,5 @@ Remotes:
     github::kaskr/TMB_contrib_R/TMBhelper, 
     github::James-Thorson/FishData, 
     github::James-Thorson/FishStatsUtils, 
-    github::James-Thorson/utilities, 
     github::James-Thorson/VAST, 
     github::nwfsc-assess/nwfscSurvey
