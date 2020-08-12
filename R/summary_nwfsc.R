@@ -64,8 +64,8 @@ summary_nwfsc <- function(obj, sdreport, savedir = NULL) {
       "1" = "Yes"))
 
   # Print number of parameters
-  fe <- names(obj$env$last.par[-Obj$env$random])
-  re <- names(obj$env$last.par[Obj$env$random])
+  fe <- names(obj$env$last.par[-obj$env$random])
+  re <- names(obj$env$last.par[obj$env$random])
   TableB <- data.frame(
     Coefficient_name = c(names(table(fe)), names(table(re))),
     Number_of_coefficients = type.convert(c(table(fe), table(re)), as.is = TRUE),
