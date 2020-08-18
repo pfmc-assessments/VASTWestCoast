@@ -55,9 +55,7 @@ VAST_EM <- function(reps, settings, directory, n_cluster, getdatafrom) {
 #' @param data A matrix of data
 #' @param datadir A directory where the kmeans information is housed.
 #' @param emdir A directory where the EM information will be saved.
-#' @param overdispersion A vector of values specifying if a vessel_year
-#' effect should be included. The default \code{c("eta1" = 0, "eta2" = 0)}
-#' does not estimate an effect.
+#' @template overdispersion
 #' @param rerun A logical value specifying if the EM should be overwritten
 #' with a new estimation process.
 #'

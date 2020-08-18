@@ -8,18 +8,6 @@
 #' For more details on how \code{\link[VAST]{Build_TMB_Fn}}
 #' is configured see the sections below.
 #'
-#' @section Overdispersion:
-#' Overdispersion controls the number of catchability factor for each
-#' model component. The default is to ignore catchability, but for the
-#' US West Coast we assume a vessel-year effect.
-#' \enumerate{
-#'   \item Alaska (i.e., EBSBTS) where overdispersion will be the default
-#' value in \code{\link[VAST]{Data_Fn}}of \code{c("eta1" = 0, "eta2" = 0)}.
-#'   \item US West Coast (i.e., WCGBTS) where overdispersion will be modelled
-#' for both components using a vessel-year effect labeled delta
-#' (i.e., \code{c("Delta1" = 1, "Delta2" = 1)}).
-#' }
-#'
 #' @section Pass:
 #' The US West Coast has operated using two passes of the survey area, where
 #' each pass is done during a different time of year. If you think that migration
@@ -41,10 +29,7 @@
 #' Also, the kmean information specific to the given survey
 #' used to collect the data will be saved here in a folder named after the survey.
 #' The directory should not have a trailing separator.
-#' @param overdispersion A vector of overdispersion parameters to include
-#' in the conditioning. The default is \code{NULL} and will enable the determination
-#' of overdispersion from the \code{spp} based on its survey.
-#' See the section below on Overdispersion above for more details.
+#' @template overdispersion
 #' @param data A data frame that can be passed to the conditioning function
 #' such that no data will be downloaded. todo: document the columns that are needed.
 #' @param sensitivity logical; run sensitivity analyses specific to a given survey.
@@ -72,7 +57,7 @@ VAST_condition <- function(conditiondir, settings, spp,
   if (is.null(overdispersion)) {
     overdispersion <- switch(survey,
       EBSBTS = c("eta1" = 0, "eta2" = 0),
-      WCGBTS = c("Delta1" = 1, "Delta2" = 1),
+      WCGBTS = c("eta1" = 1, "eta2" = 1),
       WCGOP = c("eta1" = 0, "eta2" = 0),
       AFSC.Slope = c("Delta1" = 0, "Delta2" = 0),
       NWFSC.Slope = c("Delta1" = 0, "Delta2" = 0),

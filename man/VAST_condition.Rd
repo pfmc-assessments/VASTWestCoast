@@ -32,10 +32,40 @@ Also, the kmean information specific to the given survey
 used to collect the data will be saved here in a folder named after the survey.
 The directory should not have a trailing separator.}
 
-\item{overdispersion}{A vector of overdispersion parameters to include
-in the conditioning. The default is \code{NULL} and will enable the determination
-of overdispersion from the \code{spp} based on its survey.
-See the section below on Overdispersion above for more details.}
+\item{overdispersion}{A vector of two integer values named "eta1" and "eta2"
+that specify how overdispersion is modeled. Typical options include
+\code{c("eta1"=0, "eta2"=0)}, which is used for the
+Alaska Fisheries Science Center Slope Survey, and
+\code{c("eta1"=1, "eta2"=1)}, which is used for the
+Northwest Fisheries Science Center
+West Coast Groundfish Bottom Trawl Survey.
+This vector is passed to \code{"OverdispersionConfig"} within the
+\code{\link[VAST]{make_data}()}.
+The former configuration of zero turns off this feature in VAST.
+The latter configuration allows for random covariation in catchability
+(e.g., a vessel effect if v_i is assigned to vessel or a
+vessel-year effect if v_i is assigned to a vector that combines vessel
+and year into a factor).
+\code{"eta1"} is for the encounter model and
+\code{"eta2"} is for the positive catch-rate model. Specifically,
+one random effect will be estimated for each unique value in v_i
+if this feature is set to one.
+The eta values can also be set to \code{"AR1"} if you want correlated
+overdispersion in the available categories. The autoregressive process
+might be appropriate if you believe there is overdispersion at the tow
+level and tows closer in time provide more information about tows than
+tows that are further apart in time.
+L_1 and L_2 are the estimated parameters representing the variance of these
+random effects for each model.
+The configuration for the overdispersion parameters is automatically set in
+\code{\link{VAST_condition}} based on the input argument \code{spp},
+which includes a short-hand version of the survey name. Leaving the input
+value to the default of \code{NULL} allows the overdispersion parameter to
+be set behind the scenes. This can be overridden by providing a vector.
+If there is no default value for overdispersion, then a named vector
+must be supplied where the first value is for the encounter model and the
+second value is for the positive catch-rate model as given in the examples
+above for the different surveys.}
 
 \item{data}{A data frame that can be passed to the conditioning function
 such that no data will be downloaded. todo: document the columns that are needed.}
@@ -57,20 +87,6 @@ to a \code{\link[VAST]{Build_TMB_Fn}} model using
 For more details on how \code{\link[VAST]{Build_TMB_Fn}}
 is configured see the sections below.
 }
-\section{Overdispersion}{
-
-Overdispersion controls the number of catchability factor for each
-model component. The default is to ignore catchability, but for the
-US West Coast we assume a vessel-year effect.
-\enumerate{
-  \item Alaska (i.e., EBSBTS) where overdispersion will be the default
-value in \code{\link[VAST]{Data_Fn}}of \code{c("eta1" = 0, "eta2" = 0)}.
-  \item US West Coast (i.e., WCGBTS) where overdispersion will be modelled
-for both components using a vessel-year effect labeled delta
-(i.e., \code{c("Delta1" = 1, "Delta2" = 1)}).
-}
-}
-
 \section{Pass}{
 
 The US West Coast has operated using two passes of the survey area, where

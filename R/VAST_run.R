@@ -3,10 +3,7 @@
 #' @param datalist A list of data used for the model.
 #' @param depth A character value of either no, linear, or squared specifying how
 #' the covariate should be included in the model.
-#' @param overdispersion A vector of length two that specifies how overdispersion
-#' is modelled. Typical options include \code{c("eta1"=0, "eta2"=0)} and
-#' \code{c("Delta1"=1, "Delta2"=1)}, where the latter is for the US West Coast
-#' and the former is for Alaska.
+#' @template overdispersion
 #' @param obsmodel A numerical vector of length two that specifies the distributions
 #' for the observation and rate models. No default is specified, but the typical value
 #' used on the US West Coast is \code{c(2, 0)}.
