@@ -2,32 +2,59 @@
 % Please edit documentation in R/plot_index.R
 \name{plot_index}
 \alias{plot_index}
-\title{Plot indicies of Relative Abundance}
+\title{Comparison Plot of Estimated Indices of Relative Abundance}
 \usage{
 plot_index(
   dir,
   recursive = TRUE,
-  area = "All_areas",
+  area = NULL,
   keepyears = NULL,
-  limit = NULL
+  limit = NULL,
+  legend_position = c(0.5, 0.05),
+  savefile = NULL
 )
 }
 \arguments{
-\item{dir}{A file path with folders containing VASTWestCoast runs.}
+\item{dir}{A file path with folders containing VASTWestCoast runs.
+Presumably each model run will be in its own folder, where these folder
+names are later used to name the lines on the figure.}
 
 \item{recursive}{A boolean value indicating whether or not you want to
-recursively search for VAST runs inside \code{dir} or just look 
-at the top level.}
+recursively search for VASTWestCoast runs inside \code{dir} or just look
+at the top level. The default is to look in all available folders.}
 
-\item{area}{A character value specifying the area to plot.
-The area is specified as the fleet column in the csv file.}
+\item{area}{A vector of character values specifying the areas to plot.
+The area is specified as the Fleet column in the csv file. The default is
+to keep all of the defined areas and partition the results by the folder
+it was found in and area using colors.
+\code{NA} values in the Fleet column will be changed to \code{"unknown"}
+and words separated using \code{"_"} will be separated using spaces, e.g.,
+\code{"All_areas"} will become \code{"All areas"}. Only the first underscore
+is replaced.}
 
 \item{keepyears}{A vector of years you want to plot.
-If \code{NULL}, then all years will be plotted.}
+If \code{NULL}, which is the default, then all years are plotted.}
 
-\item{limit}{A vertical-axis upper limit, which is forced.}
+\item{limit}{A upper limit of the vertical axis, which is forced. The default is
+to let the data define the upper limit, where all confidence intervals will
+be included.}
+
+\item{legend_position}{A vector of two numbers between zero and one that
+specify the location of the legend relative to the lower-left corner.
+The default values keeps the legend near the lower-left corner.}
+
+\item{savefile}{The file name that you want the results saved to. A full path can
+be specified, else the file will be saved in the current directory.}
+}
+\value{
+A data frame of sourced \code{Table_for_SS3.csv} files that have
+been subset appropriately based on the input arguments. This data frame was
+used to generate the image that is returned to the screen and potentially
+saved to the disk.
 }
 \description{
-Compare estimated indices by plotting them with their confidence
-intervals on a single plot.
+Compare estimated indices and their confidence intervals on a single plot.
+Results from \code{Table_for_SS3.csv} files are searched for and loaded as
+objects, which are then plotted by model run and area
+using unique colors for each run-area combination.
 }
