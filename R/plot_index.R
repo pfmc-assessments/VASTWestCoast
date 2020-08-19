@@ -51,7 +51,7 @@ plot_index <- function(dir, recursive = TRUE, area = NULL,
   }
   data <- do.call("rbind",
     mapply(function(x, y) "[<-"(x, "folder", value = y),
-    lapply(files, read.table, sep = ",", header = TRUE),
+    lapply(files, utils::read.table, sep = ",", header = TRUE),
     basename(dirname(files)), SIMPLIFY = FALSE))
 
   #subset data and calculate confidence intervals
@@ -68,14 +68,14 @@ plot_index <- function(dir, recursive = TRUE, area = NULL,
     data[, "Area"])
 
   #plot the information using ggplot
-  g <- ggplot(data, aes(Year, Estimate_metric_tons)) +
+  g <- ggplot(data, aes(data[["Year"]], data[["Estimate_metric_tons"]])) +
     geom_ribbon(data = data,
-      aes(ymin = low, ymax = upp,
-        fill = interaction(as.factor(folder), Area, sep = " -- ")),
+      aes(ymin = data[["low"]], ymax = data[["upp"]],
+        fill = interaction(as.factor(data[["folder"]]), data[["Area"]], sep = " -- ")),
       alpha = 0.2,
       show.legend = FALSE) +
     geom_line(lwd = 1.5,
-      aes(col = interaction(as.factor(folder), Area, sep = " -- "))) +
+      aes(col = interaction(as.factor(data[["folder"]]), data[["Area"]], sep = " -- "))) +
     theme_bw() +
     scale_colour_brewer(palette="Spectral", name = "", guide = "legend") +
     scale_fill_brewer(palette="Spectral", name = "") +

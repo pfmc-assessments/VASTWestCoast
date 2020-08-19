@@ -2,27 +2,31 @@
 % Please edit documentation in R/get_settings.R
 \name{get_settings}
 \alias{get_settings}
-\title{Check that all of the settings are in the list}
+\title{Add Default Settings To User List}
 \usage{
 get_settings(settings = NULL, verbose = FALSE)
 }
 \arguments{
 \item{settings}{A list of the current settings where each object in the
-list must be named. Those names that are not found in the stored list will
-be added. The default value of \code{NULL} leads to a full list being returned.}
+list must be named. Names that are in the stored list but not the list
+provided in this argument will be added to the value returned.
+The default value of \code{NULL} leads to a full list being returned.}
 
-\item{verbose}{A logical value specifying if the message should be output
-to the screen or not.}
+\item{verbose}{A logical value specifying if messages should be output
+to the screen or not. The default value is \code{FALSE}, which leads
+to nothing being printed.}
 }
 \value{
 A list of setting for running a conditioning model or a simulation
 with \code{\link{VAST}}.
 }
 \description{
-Check that all of the settings are in the list
+Get default settings for VASTWestCoast where users do not have
+to input a single value, but if they do, then \code{get_settings}
+will only add those values that are not already included in the list.
 }
 \examples{
-get_settings(list("SigmaM" = 3))
+get_settings(list("nknots" = 300))
 names(get_settings(c("yes" = 2), verbose = TRUE))
 }
 \author{

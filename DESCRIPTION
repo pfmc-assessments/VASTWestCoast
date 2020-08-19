@@ -1,5 +1,5 @@
 Package: VASTWestCoast
-Version: 0.2
+Version: 1.0
 Title: Estimation and simulation with VAST for the US West Coast
 Author: Kelli Faye Johnson <kelli.johnson@noaa.gov>
 Maintainer: Kelli Faye Johnson <kelli.johnson@noaa.gov>
@@ -9,20 +9,13 @@ Description: Estimation and simulation code for those working on
 Depends:
     VAST
 Imports:
-    doParallel,
-    FishData,
     INLA,
     FishStatsUtils,
-    foreach,
     ggplot2,
     grDevices,
     nwfscSurvey,
     pander,
-    parallel,
-    RandomFields,
-    RANN,
     stats,
-    tidyr,
     TMB,
     TMBhelper,
     ThorsonUtilities,
@@ -40,7 +33,6 @@ RoxygenNote: 7.1.1
 Additional_repositories: https://inla.r-inla-download.org/R/stable
 Remotes: 
     github::kaskr/TMB_contrib_R/TMBhelper, 
-    github::James-Thorson/FishData, 
     github::James-Thorson/FishStatsUtils, 
     github::James-Thorson/VAST, 
     github::nwfsc-assess/nwfscSurvey

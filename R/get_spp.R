@@ -25,7 +25,7 @@ get_spp <- function(input, split = "_") {
   splits <- strsplit(x = input, split = split)
 
   # Survey name
-  availablesurveys <- c("EBSBTS", "WCGBTS", "WCGOP",
+  availablesurveys <- c("WCGBTS",
     nwfscSurvey::createMatrix()[, 1])
   survey <- sapply(splits, "[[", 1)
   finalsurvey <- switch(survey,

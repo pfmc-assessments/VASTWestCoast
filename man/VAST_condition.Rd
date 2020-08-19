@@ -8,7 +8,6 @@ VAST_condition(
   conditiondir,
   settings,
   spp,
-  datadir,
   overdispersion = NULL,
   data = NULL,
   sensitivity = TRUE
@@ -27,33 +26,29 @@ will be added at their default values.}
 in latin with all words separated by an underscore.
 For example, \code{"WCGBTS_Sebastes_crameri"}.}
 
-\item{datadir}{A directory where you want the database to be stored.
-Also, the kmean information specific to the given survey
-used to collect the data will be saved here in a folder named after the survey.
-The directory should not have a trailing separator.}
-
 \item{overdispersion}{A vector of two integer values named "eta1" and "eta2"
-that specify how overdispersion is modeled. Typical options include
+that specify how overdispersion is modeled.
+\code{"eta1"} is for the encounter model and
+\code{"eta2"} is for the positive catch-rate model.
+Typical options include
 \code{c("eta1"=0, "eta2"=0)}, which is used for the
 Alaska Fisheries Science Center Slope Survey, and
 \code{c("eta1"=1, "eta2"=1)}, which is used for the
 Northwest Fisheries Science Center
 West Coast Groundfish Bottom Trawl Survey.
 This vector is passed to \code{"OverdispersionConfig"} within the
-\code{\link[VAST]{make_data}()}.
+\code{\link[VAST]{make_data}()} function.
 The former configuration of zero turns off this feature in VAST.
 The latter configuration allows for random covariation in catchability
 (e.g., a vessel effect if v_i is assigned to vessel or a
 vessel-year effect if v_i is assigned to a vector that combines vessel
-and year into a factor).
-\code{"eta1"} is for the encounter model and
-\code{"eta2"} is for the positive catch-rate model. Specifically,
+and year into a factor). Specifically,
 one random effect will be estimated for each unique value in v_i
 if this feature is set to one.
 The eta values can also be set to \code{"AR1"} if you want correlated
 overdispersion in the available categories. The autoregressive process
 might be appropriate if you believe there is overdispersion at the tow
-level and tows closer in time provide more information about tows than
+level and tows closer in time provide more information about other tows than
 tows that are further apart in time.
 L_1 and L_2 are the estimated parameters representing the variance of these
 random effects for each model.
@@ -82,9 +77,9 @@ structures to the disk in the \code{conditiondir}.
 Fits data loaded in your R session
 or data that is downloaded from the 
 Northwest Fisheries Science Center datawarehouse
-to a \code{\link[VAST]{Build_TMB_Fn}} model using
-\code{\link[TMBhelper]{Optimize}}.
-For more details on how \code{\link[VAST]{Build_TMB_Fn}}
+to a \code{\link[VAST]{make_model}} using
+\code{\link[TMBhelper]{fit_tmb}}.
+For more details on how the VAST model
 is configured see the sections below.
 }
 \section{Pass}{

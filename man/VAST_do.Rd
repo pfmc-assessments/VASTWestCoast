@@ -4,7 +4,7 @@
 \alias{VAST_do}
 \title{Shortened Code for VAST}
 \usage{
-VAST_do(Database, settings, conditiondir, datadir)
+VAST_do(Database, settings, conditiondir)
 }
 \arguments{
 \item{Database}{A data base ran through \code{\link{get_data}}.}
@@ -16,11 +16,6 @@ will be added at their default values.}
 
 \item{conditiondir}{A directory, either full or relative, that will be used
 to save the results. The directory will be created if it doesn't already exist.}
-
-\item{datadir}{A directory where you want the database to be stored.
-Also, the kmean information specific to the given survey
-used to collect the data will be saved here in a folder named after the survey.
-The directory should not have a trailing separator.}
 }
 \description{
 Major workhorse to run a VAST model

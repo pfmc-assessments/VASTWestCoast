@@ -4,13 +4,13 @@
 \alias{summary_nwfsc}
 \title{Summarize a VAST model for Northwest Fisheries Science Center}
 \usage{
-summary_nwfsc(obj, sdreport, savedir = NULL)
+summary_nwfsc(obj, parameter_estimates, savedir = NULL)
 }
 \arguments{
 \item{obj}{A compiled object from Template Model Builder (TMB)
 after estimating the maximum likelihood estimate of the fixed effects.}
 
-\item{sdreport}{Output from \code{\link[TMB]{sdreport}}}
+\item{parameter_estimates}{Output from \code{\link[FishStatsUtils]{fit_model}}.}
 
 \item{savedir}{A directory to save the resulting tables, which will
 be in csv format.}
