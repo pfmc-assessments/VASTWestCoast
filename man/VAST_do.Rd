@@ -7,10 +7,10 @@
 VAST_do(Database, settings, conditiondir)
 }
 \arguments{
-\item{Database}{A data base ran through \code{\link{get_data}}.}
+\item{Database}{A data base ran through \code{\link{get_data}()}.}
 
 \item{settings}{A list of settings used to run the spatiotemporal model. The full
-list of necessary settings can be seen by running \code{\link{get_settings()}}, and
+list of necessary settings can be seen by running \code{\link{get_settings}()}, and
 any settings that are not included in the list supplied to this argument
 will be added at their default values.}
 

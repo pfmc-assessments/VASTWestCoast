@@ -18,7 +18,7 @@ VAST_condition(
 to save the results. The directory will be created if it doesn't already exist.}
 
 \item{settings}{A list of settings used to run the spatiotemporal model. The full
-list of necessary settings can be seen by running \code{\link{get_settings()}}, and
+list of necessary settings can be seen by running \code{\link{get_settings}()}, and
 any settings that are not included in the list supplied to this argument
 will be added at their default values.}
 
@@ -66,7 +66,7 @@ above for the different surveys.}
 such that no data will be downloaded. todo: document the columns that are needed.}
 
 \item{sensitivity}{logical; run sensitivity analyses specific to a given survey.
-For example, the Triennial survey can be split into two seperate surveys and limited
+For example, the Triennial survey can be split into two separate surveys and limited
 to 366 m depth.}
 }
 \value{

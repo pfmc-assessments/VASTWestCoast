@@ -19,7 +19,7 @@
 #' @param conditiondir A directory, either full or relative, that will be used
 #' to save the results. The directory will be created if it doesn't already exist.
 #' @param settings A list of settings used to run the spatiotemporal model. The full
-#' list of necessary settings can be seen by running \code{\link{get_settings()}}, and
+#' list of necessary settings can be seen by running \code{\link{get_settings}()}, and
 #' any settings that are not included in the list supplied to this argument
 #' will be added at their default values. 
 #' @param spp A character value that includes the survey acronym and the species name
@@ -29,7 +29,7 @@
 #' @param data A data frame that can be passed to the conditioning function
 #' such that no data will be downloaded. todo: document the columns that are needed.
 #' @param sensitivity logical; run sensitivity analyses specific to a given survey.
-#' For example, the Triennial survey can be split into two seperate surveys and limited
+#' For example, the Triennial survey can be split into two separate surveys and limited
 #' to 366 m depth. 
 #' 
 #' @return Nothing is returned by the function, but the function saves two \code{.RData}

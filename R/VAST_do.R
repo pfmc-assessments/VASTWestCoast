@@ -2,11 +2,11 @@
 #' 
 #' Major workhorse to run a VAST model
 #' 
-#' @param Database A data base ran through \code{\link{get_data}}.
+#' @param Database A data base ran through \code{\link{get_data}()}.
 #' @param settings A list of settings used to run the spatiotemporal model. The full
-#' list of necessary settings can be seen by running \code{\link{get_settings()}}, and
+#' list of necessary settings can be seen by running \code{\link{get_settings}()}, and
 #' any settings that are not included in the list supplied to this argument
-#' will be added at their default values. 
+#' will be added at their default values.
 #' @param conditiondir A directory, either full or relative, that will be used
 #' to save the results. The directory will be created if it doesn't already exist.
 #'
