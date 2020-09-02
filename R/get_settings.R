@@ -30,7 +30,8 @@ get_settings <- function(settings = NULL, verbose = FALSE) {
     "version" = FishStatsUtils::get_latest_version(),
     "Passcondition" = FALSE,
     "field" = NULL,
-    "rho" = NULL)
+    "rho" = NULL,
+    "fine_scale" = FALSE)
   need <- !names(Settings_all) %in% names(settings)
   if (verbose) {
     message("Adding the following objects to settings:\n",

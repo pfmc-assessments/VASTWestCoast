@@ -28,7 +28,7 @@ VAST_do <- function(Database, settings, conditiondir) {
     n_x = settings[["nknots"]],
     Region = "california_current",
     purpose = "index2",
-    fine_scale = FALSE,
+    fine_scale = settings[["fine_scale"]],
     strata.limits = settings[["strata"]],
     #zone = NA, #default
     FieldConfig = settings[["FieldConfig"]],
