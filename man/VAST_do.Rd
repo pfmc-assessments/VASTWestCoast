@@ -2,21 +2,27 @@
 % Please edit documentation in R/VAST_do.R
 \name{VAST_do}
 \alias{VAST_do}
-\title{Shortened Code for VAST}
+\title{Shortened Code for \code{\link[FishStatsUtils:fit_model]{VAST}}}
 \usage{
 VAST_do(Database, settings, conditiondir)
 }
 \arguments{
-\item{Database}{A data base ran through \code{\link{get_data}()}.}
+\item{Database}{A data base entered and returned from or just returned
+from \code{\link{get_data}()}.}
 
-\item{settings}{A list of settings used to run the spatiotemporal model. The full
-list of necessary settings can be seen by running \code{\link{get_settings}()}, and
-any settings that are not included in the list supplied to this argument
-will be added at their default values.}
+\item{settings}{A list of settings used to run the spatiotemporal model.
+The full list of settings can be seen by running
+\code{\link{get_settings}()}, and
+any settings that are not included in the list supplied to \code{settings}
+will be added using the default values seen \code{get_settings()}.}
 
-\item{conditiondir}{A directory, either full or relative, that will be used
-to save the results. The directory will be created if it doesn't already exist.}
+\item{conditiondir}{A directory, either a full or relative path,
+that will be used to save the results.
+The directory will be created recursively if it does not already exist.}
 }
 \description{
-Major workhorse to run a VAST model
+Major workhorse to run a VAST model using data and settings that are
+specific to the US West Coast. Many parameters are still customizable,
+but many parameters are also set in the background based on the sampling
+protocols and data availability that are specific to each survey.
 }
