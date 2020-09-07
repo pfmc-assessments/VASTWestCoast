@@ -79,11 +79,11 @@ VAST_do <- function(Database, settings, conditiondir) {
     run_model = TRUE)
   maps <- FishStatsUtils::plot_results(settings = info, fit = out,
     working_dir = file.path(conditiondir, .Platform$file.sep), check_residuals = FALSE)
-  summary_nwfsc(obj = out$tmb_list$Obj, parameter_estimates = out$parameter_estimates,
+  rsessioninfo <- summary_nwfsc(obj = out$tmb_list$Obj,
+    parameter_estimates = out$parameter_estimates,
     savedir = conditiondir)
 
-  save(info, out, Database, settings, conditiondir, spp, survey, maps, overdispersion,
-    file = file.path(conditiondir, "Save.RData"))
+  save(list = ls(all = TRUE), file = file.path(conditiondir, "Save.RData"))
   save(Database, file = file.path(conditiondir, "DatabaseSave.RData"))
 
   return(NULL)
