@@ -59,7 +59,7 @@ VAST_do <- function(Database, settings, conditiondir) {
     # Xconfig_zcp = ,
     # X_gtp = ,
     # X_itp = ,
-    Q_ik = if (settings[["Passcondition"]]) {
+    catchabilitydata = if (settings[["Passcondition"]]) {
         as.matrix(Database[, "Pass", drop = FALSE])
       } else {
         NULL
