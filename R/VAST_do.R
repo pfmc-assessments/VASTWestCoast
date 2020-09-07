@@ -17,11 +17,11 @@
 #' The directory will be created recursively if it does not already exist.
 #'
 VAST_do <- function(Database, settings, conditiondir) {
-	
-	spp <- settings[["Species"]]
-	survey <- get_spp(spp)["survey"]
-	overdispersion <- settings[["overdispersion"]]
-  
+
+  spp <- settings[["Species"]]
+  survey <- get_spp(spp)["survey"]
+  overdispersion <- settings[["overdispersion"]]
+
   dir.create(conditiondir, showWarnings = FALSE, recursive = TRUE)
 
   info <- FishStatsUtils::make_settings(
