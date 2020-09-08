@@ -57,6 +57,7 @@ plot_index <- function(dir, recursive = TRUE, area = NULL,
   #subset data and calculate confidence intervals
   if (is.null(keepyears)) keepyears <- unique(data[, "Year"])
   data <- data[data[, "Year"] %in% keepyears, ]
+  data <- data[data[, "Estimate_metric_tons"] != 0, ]
   data[, "low"] <- data[, "Estimate_metric_tons"] - 1.96 * data[, "SD_mt"]
   data[, "upp"] <- data[, "Estimate_metric_tons"] + 1.96 * data[, "SD_mt"]
   if (!is.null(area[1])) {
@@ -68,14 +69,18 @@ plot_index <- function(dir, recursive = TRUE, area = NULL,
     data[, "Area"])
 
   #plot the information using ggplot
-  g <- ggplot(data, aes(data[["Year"]], data[["Estimate_metric_tons"]])) +
+  ylims <- c(NA,
+    ifelse(is.null(limit), max(data[["upp"]], na.rm = TRUE) * 1.02, limit))
+  g <- ggplot(data, aes(.data[["Year"]], .data[["Estimate_metric_tons"]])) +
     geom_ribbon(data = data,
-      aes(ymin = data[["low"]], ymax = data[["upp"]],
-        fill = interaction(as.factor(data[["folder"]]), data[["Area"]], sep = " -- ")),
+      aes(ymin = .data[["low"]], ymax = .data[["upp"]],
+        fill = interaction(as.factor(.data[["folder"]]), .data[["Area"]], sep = " -- ")),
       alpha = 0.2,
       show.legend = FALSE) +
+    ylab("Abundance (mt)") +
+    ylim(ylims) +
     geom_line(lwd = 1.5,
-      aes(col = interaction(as.factor(data[["folder"]]), data[["Area"]], sep = " -- "))) +
+      aes(col = interaction(as.factor(.data[["folder"]]), .data[["Area"]], sep = " -- "))) +
     theme_bw() +
     scale_colour_brewer(palette="Spectral", name = "", guide = "legend") +
     scale_fill_brewer(palette="Spectral", name = "") +
@@ -88,9 +93,7 @@ plot_index <- function(dir, recursive = TRUE, area = NULL,
       legend.justification = c(1, 0),
     legend.background = element_rect(fill = "transparent", colour = NA),
     legend.box.background = element_rect(fill = "transparent", colour = NA),
-      legend.position = legend_position) +
-    ylab("Abundance (mt)") +
-    ylim(c(NA, ifelse(is.null(limit), max(data[, "upp"]) * 1.02, limit)))
+      legend.position = legend_position)
   grDevices::dev.new()
   print(g)
   if (!is.null(savefile)) {
