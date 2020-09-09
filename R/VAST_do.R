@@ -63,7 +63,7 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     knot_method = "samples", #default is "grid"
     n_categories = length(unique(Database$Sci))
   )
-  out <- FishStatsUtils::fit_model(
+  out <- tryCatch(FishStatsUtils::fit_model(
     settings = info,
     Lat_i = Database[, "Lat"],
     Lon_i = Database[, "Lon"],
@@ -89,7 +89,12 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     # optimize_args = ,
     model_args = list(CompileDir = compiledir),
     silent = TRUE,
-    run_model = TRUE)
+    run_model = TRUE), error = function(e) e)
+  if ("simpleError" %in% class(out)) {
+    if (grepl("Please change model structure to avoid problems", out)) {
+      return(out)
+    }
+  }
   maps <- FishStatsUtils::plot_results(settings = info, fit = out,
     working_dir = file.path(conditiondir, .Platform$file.sep), check_residuals = FALSE)
   rsessioninfo <- summary_nwfsc(obj = out$tmb_list$Obj,

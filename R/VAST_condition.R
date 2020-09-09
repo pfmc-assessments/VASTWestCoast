@@ -63,46 +63,67 @@ VAST_condition <- function(conditiondir, settings, spp,
     Database <- get_data(data = data)
   }
 
-  
-  VAST_do(
+  check <- VAST_do(
     Database = Database,
     settings = settings,
     conditiondir = conditiondir,
     compiledir = compiledir)
 
-  if (survey == "Triennial") {
-    mapply(VAST_do,
-      Database = list(
-        Database[Database[, "Year"] <  1993, ],
-        Database[Database[, "Year"] >= 1994, ]),
-      conditiondir = lapply(c("early", "late"),
-        function(x) file.path(conditiondir, x)),
-      MoreArgs = list(
-        settings = settings)
-    )
-  }
   if (survey == "Triennial" & sensitivity) {
-    mapply(VAST_do,
-      Database = list(
-        Database[Database[, "Year"] <  2004, ],
-        Database[Database[, "Depth_m"] <=  366, ]),
-      conditiondir = lapply(c("noNWFSC", "shallow"),
-        function(x) file.path(conditiondir, x)),
-      MoreArgs = list(
-        settings = settings)
-    )
+    #### early
+    #todo: make the prediction map smaller to the spatial
+    # footprint that is covered
+    check <- VAST_do(
+      Database = Database[Database[, "Year"] <  1993, ],
+      conditiondir = paste(conditiondir, "early", sep = "_"),
+      settings = settings,
+      compiledir = compiledir)
+
+    #### late
+    check <- VAST_do(
+      Database = Database[Database[, "Year"] >= 1994, ],
+      conditiondir = paste(conditiondir, "late", sep = "_"),
+      settings = settings,
+      compiledir = compiledir)
+
+    #### Shallow
+    #todo: make the prediction map smaller to the spatial
+    # footprint that is covered
+    check <- VAST_do(
+      Database = Database[Database[, "Depth_m"] <=  366, ],
+      conditiondir = paste(conditiondir, "shallow", sep = "_"),
+      settings = settings,
+      compiledir = compiledir)
+
+    #### No NWFSC suvey in 2004
+    # todo: decide if we should be running this one
+    # maybe we should have a different catchability or something instead
+    check <- VAST_do(
+      Database = Database[Database[, "Year"] <  2004, ],
+      conditiondir = paste(conditiondir, "noNWFSC", sep = "_"),
+      settings = settings,
+      compiledir = compiledir)
+
+    #### Run AR(1) structure for Triennial b/c of missing years
     rhosettings <- settings
     rhosettings[["RhoConfig"]] <- c(
       "Beta1" = 0, "Beta2" = 0,
       "Epsilon1" = 4, "Epsilon2" = 4)
-    VAST_do(
+    check <- VAST_do(
       Database = Database,
-      conditiondir = file.path(conditiondir, "ar1"),
-      settings = rhosettings)
-    VAST_do(
-      Database = Database[Database[, "Depth_m"] <=  366, ],
-      conditiondir = file.path(conditiondir, "ar1_shallow"),
-      settings = rhosettings)
+      conditiondir = file.path(conditiondir, "ar4"),
+      settings = rhosettings,
+      compiledir = compiledir)
+    # Only run random walk if AR(1) structure cannot be estimated
+    # i.e., parameter is more than likely going to one
+    if (any(grepl("simpleError", class(check)))) {
+      rhosettings[["RhoConfig"]][3:4] <- 2
+      check <- VAST_do(
+        Database = Database,
+        conditiondir = file.path(conditiondir, "ar2"),
+        settings = rhosettings,
+        compiledir = compiledir)
+    }
   }
 
 }
