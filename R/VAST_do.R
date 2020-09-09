@@ -15,18 +15,37 @@
 #' @param conditiondir A directory, either a full or relative path,
 #' that will be used to save the results.
 #' The directory will be created recursively if it does not already exist.
+#' @param region A single character value specifying the region of interest.
+#' This value will be passed to
+#' \code{\link[FishStatsUtils]{make_extrapolation_info}()}, where the region
+#' defines the background data set that is used to create the prediction grid.
+#' If the default value of \code{"user"} is used, then \code{VAST_do} calls
+#' \code{\link{get_inputgrid}} to define a corrected version of the
+#' \code{california_current_grid} that is used if
+#' \code{region = "california_current"}. The default removes all grid cells
+#' that fall in depths shallower than 35 m (including those on land) and
+#' grid cells within the Cowcod Conservation Areas.
 #'
-VAST_do <- function(Database, settings, conditiondir) {
+VAST_do <- function(Database, settings, conditiondir,
+  region = c("user", "california_current")) {
 
+  region <- match.arg(region, several.ok = FALSE)
   spp <- settings[["Species"]]
   survey <- get_spp(spp)["survey"]
   overdispersion <- settings[["overdispersion"]]
 
   dir.create(conditiondir, showWarnings = FALSE, recursive = TRUE)
+  localinputgrid <- get_inputgrid(survey)
+  if (region == "user"){
+    g <- plot.inputgrid(localinputgrid, print = FALSE)
+    suppressMessages(ggplot2::ggsave(plot = g, units = "in",
+      filename = file.path(conditiondir, "VASTWestCoast_inputgrid.png"),
+      height = 9))
+  }
 
   info <- FishStatsUtils::make_settings(
     n_x = settings[["nknots"]],
-    Region = "california_current",
+    Region = region,
     purpose = "index2",
     fine_scale = settings[["fine_scale"]],
     strata.limits = settings[["strata"]],
@@ -66,12 +85,8 @@ VAST_do <- function(Database, settings, conditiondir) {
       },
     #newtonsteps = 1, #default
     extrapolation_args = c(info["zone"], info["Region"], info["strata.limits"],
-      surveyname = switch(survey,
-        Triennial = "propInTriennial",
-        AFSC.Slope = "propInSlope98_00",
-        NWFSC.Slope = "propInSlope02",
-        #default
-        "propInWCGBTS")),
+      surveyname = convert_survey4vast(survey),
+      input_grid = list(localinputgrid)),
     spatial_args = list(randomseed = 1, nstart = 100, iter.max = 1e3),
     # optimize_args = ,
     # model_args = ,

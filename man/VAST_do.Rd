@@ -4,7 +4,11 @@
 \alias{VAST_do}
 \title{Shortened Code for \code{\link[FishStatsUtils:fit_model]{VAST}}}
 \usage{
-VAST_do(Database, settings, conditiondir)
+VAST_do(
+  Database,
+  settings,
+  conditiondir,
+  region = c("user", "california_current")
 }
 \arguments{
 \item{Database}{A data base entered and returned from or just returned
@@ -19,6 +23,16 @@ will be added using the default values seen \code{get_settings()}.}
 \item{conditiondir}{A directory, either a full or relative path,
 that will be used to save the results.
 The directory will be created recursively if it does not already exist.}
+\item{region}{A single character value specifying the region of interest.
+This value will be passed to
+\code{\link[FishStatsUtils]{make_extrapolation_info}()}, where the region
+defines the background data set that is used to create the prediction grid.
+If the default value of \code{"user"} is used, then \code{VAST_do} calls
+\code{\link{get_inputgrid}} to define a corrected version of the
+\code{california_current_grid} that is used if
+\code{region = "california_current"}. The default removes all grid cells
+that fall in depths shallower than 35 m (including those on land) and
+grid cells within the Cowcod Conservation Areas.}
 }
 \description{
 Major workhorse to run a VAST model using data and settings that are
