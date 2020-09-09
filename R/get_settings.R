@@ -31,7 +31,8 @@ get_settings <- function(settings = NULL, verbose = FALSE) {
     "Passcondition" = FALSE,
     "field" = NULL,
     "rho" = NULL,
-    "fine_scale" = FALSE)
+    "fine_scale" = FALSE,
+    "overdispersion" = NULL)
   need <- !names(Settings_all) %in% names(settings)
   if (verbose) {
     message("Adding the following objects to settings:\n",
@@ -74,6 +75,17 @@ get_settings <- function(settings = NULL, verbose = FALSE) {
   }
   Settings_all$RhoConfig <- RhoConfig
   Settings_all$FieldConfig <- c(Omega1 = 1, Epsilon1 = 1, Omega2 = 1, Epsilon2 = 1)
+
+  # Overdispersion
+  if (is.null(Settings_all[["overdispersion"]])) {
+    Settings_all[["overdispersion"]] <- switch(
+      get_spp(Settings_all$Species)["survey"],
+      WCGBTS = c("eta1" = 1, "eta2" = 1),
+      AFSC.Slope = c("Delta1" = 0, "Delta2" = 0),
+      NWFSC.Slope = c("Delta1" = 0, "Delta2" = 0),
+      # todo: think about how to write an if statement for this in VAST_do
+      Triennial = c("Delta1" = 0, "Delta2" = 0))
+  }
 
   return(Settings_all)
 }

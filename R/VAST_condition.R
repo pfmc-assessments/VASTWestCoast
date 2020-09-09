@@ -48,12 +48,9 @@ VAST_condition <- function(conditiondir, settings, spp,
 
   conditiondir <- normalizePath(conditiondir, mustWork = FALSE)
 
-  if (is.null(overdispersion)) {
-    overdispersion <- switch(survey,
-      WCGBTS = c("eta1" = 1, "eta2" = 1),
-      AFSC.Slope = c("Delta1" = 0, "Delta2" = 0),
-      NWFSC.Slope = c("Delta1" = 0, "Delta2" = 0),
-      Triennial = c("Delta1" = 1, "Delta2" = 1))
+  if (!missing(overdispersion)) {
+    stop("'overdispersion' is deprecated,\nplease place overdispersion in",
+      " the settings list.")
   }
 
   dir.create(conditiondir, showWarnings = FALSE, recursive = TRUE)
@@ -66,7 +63,6 @@ VAST_condition <- function(conditiondir, settings, spp,
     Database <- get_data(data = data)
   }
 
-  settings[["overdispersion"]] <- overdispersion
   
   VAST_do(
     Database = Database,
