@@ -8,7 +8,9 @@ VAST_do(
   Database,
   settings,
   conditiondir,
+  compiledir,
   region = c("user", "california_current")
+)
 }
 \arguments{
 \item{Database}{A data base entered and returned from or just returned
@@ -23,6 +25,15 @@ will be added using the default values seen \code{get_settings()}.}
 \item{conditiondir}{A directory, either a full or relative path,
 that will be used to save the results.
 The directory will be created recursively if it does not already exist.}
+
+\item{compiledir}{A file path, either relative or full, to a directory where
+the VAST cpp file will be compiled leading to three files saved to the disk.
+Thus, users should have both read and write capabilities within this
+directory. A single file path can be used for multiple models allowing for
+the model to be only compiled once rather than multiple times.
+This file path is tranfered to the \code{CompileDir} within
+\code{\link[VAST]{make_model}()}.}
+
 \item{region}{A single character value specifying the region of interest.
 This value will be passed to
 \code{\link[FishStatsUtils]{make_extrapolation_info}()}, where the region

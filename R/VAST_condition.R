@@ -16,8 +16,7 @@
 #' presume that many US West Coast users will want to change this using the
 #' \code{settings} argument.
 #'
-#' @param conditiondir A directory, either full or relative, that will be used
-#' to save the results. The directory will be created if it doesn't already exist.
+#' @template conditiondir
 #' @param settings A list of settings used to run the spatiotemporal model. The full
 #' list of necessary settings can be seen by running \code{\link{get_settings}()}, and
 #' any settings that are not included in the list supplied to this argument
@@ -31,6 +30,7 @@
 #' @param sensitivity logical; run sensitivity analyses specific to a given survey.
 #' For example, the Triennial survey can be split into two separate surveys and limited
 #' to 366 m depth. 
+#' @template compiledir
 #' 
 #' @return Nothing is returned by the function, but the function saves two \code{.RData}
 #' structures to the disk in the \code{conditiondir}.
@@ -38,8 +38,8 @@
 #' @export
 #'
 VAST_condition <- function(conditiondir, settings, spp,
-  overdispersion = NULL, data = NULL,
-  sensitivity = TRUE) {
+  overdispersion, data = NULL,
+  sensitivity = TRUE, compiledir = conditiondir) {
 
   if (!is.list(settings)) stop("settings must be a list")
   settings <- get_settings(settings)
@@ -57,6 +57,7 @@ VAST_condition <- function(conditiondir, settings, spp,
   }
 
   dir.create(conditiondir, showWarnings = FALSE, recursive = TRUE)
+  dir.create(compiledir, showWarnings = FALSE, recursive = TRUE)
 
   # Make the data work for VAST
   if (is.null(data)) {
@@ -70,7 +71,8 @@ VAST_condition <- function(conditiondir, settings, spp,
   VAST_do(
     Database = Database,
     settings = settings,
-    conditiondir = conditiondir)
+    conditiondir = conditiondir,
+    compiledir = compiledir)
 
   if (survey == "Triennial") {
     mapply(VAST_do,

@@ -8,14 +8,16 @@ VAST_condition(
   conditiondir,
   settings,
   spp,
-  overdispersion = NULL,
+  overdispersion,
   data = NULL,
-  sensitivity = TRUE
+  sensitivity = TRUE,
+  compiledir = conditiondir
 )
 }
 \arguments{
-\item{conditiondir}{A directory, either full or relative, that will be used
-to save the results. The directory will be created if it doesn't already exist.}
+\item{conditiondir}{A directory, either a full or relative path,
+that will be used to save the results.
+The directory will be created recursively if it does not already exist.}
 
 \item{settings}{A list of settings used to run the spatiotemporal model. The full
 list of necessary settings can be seen by running \code{\link{get_settings}()}, and
@@ -68,6 +70,14 @@ such that no data will be downloaded. todo: document the columns that are needed
 \item{sensitivity}{logical; run sensitivity analyses specific to a given survey.
 For example, the Triennial survey can be split into two separate surveys and limited
 to 366 m depth.}
+
+\item{compiledir}{A file path, either relative or full, to a directory where
+the VAST cpp file will be compiled leading to three files saved to the disk.
+Thus, users should have both read and write capabilities within this
+directory. A single file path can be used for multiple models allowing for
+the model to be only compiled once rather than multiple times.
+This file path is tranfered to the \code{CompileDir} within
+\code{\link[VAST]{make_model}()}.}
 }
 \value{
 Nothing is returned by the function, but the function saves two \code{.RData}

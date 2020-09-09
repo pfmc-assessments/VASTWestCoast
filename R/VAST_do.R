@@ -12,9 +12,8 @@
 #' \code{\link{get_settings}()}, and
 #' any settings that are not included in the list supplied to \code{settings}
 #' will be added using the default values seen \code{get_settings()}.
-#' @param conditiondir A directory, either a full or relative path,
-#' that will be used to save the results.
-#' The directory will be created recursively if it does not already exist.
+#' @template conditiondir
+#' @template compiledir
 #' @param region A single character value specifying the region of interest.
 #' This value will be passed to
 #' \code{\link[FishStatsUtils]{make_extrapolation_info}()}, where the region
@@ -26,7 +25,7 @@
 #' that fall in depths shallower than 35 m (including those on land) and
 #' grid cells within the Cowcod Conservation Areas.
 #'
-VAST_do <- function(Database, settings, conditiondir,
+VAST_do <- function(Database, settings, conditiondir, compiledir,
   region = c("user", "california_current")) {
 
   region <- match.arg(region, several.ok = FALSE)
@@ -89,7 +88,7 @@ VAST_do <- function(Database, settings, conditiondir,
       input_grid = list(localinputgrid)),
     spatial_args = list(randomseed = 1, nstart = 100, iter.max = 1e3),
     # optimize_args = ,
-    # model_args = ,
+    model_args = list(CompileDir = compiledir),
     silent = TRUE,
     run_model = TRUE)
   maps <- FishStatsUtils::plot_results(settings = info, fit = out,
