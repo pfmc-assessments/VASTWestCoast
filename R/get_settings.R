@@ -84,7 +84,9 @@ get_settings <- function(settings = NULL, verbose = FALSE) {
       AFSC.Slope = c("Delta1" = 0, "Delta2" = 0),
       NWFSC.Slope = c("Delta1" = 0, "Delta2" = 0),
       # todo: think about how to write an if statement for this in VAST_do
-      Triennial = c("Delta1" = 0, "Delta2" = 0))
+      Triennial = c("Delta1" = 0, "Delta2" = 0),
+      # provide a default to not estimate a vessel-year catchability
+      c(eta1 = 0, eta2 = 0))
   }
 
   return(Settings_all)
