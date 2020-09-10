@@ -63,18 +63,10 @@ get_settings <- function(settings = NULL, verbose = FALSE) {
     stop("Must remove .cpp from the version number of VAST that you specify")
   }
 
-  RhoConfig <- c("Beta1" = 0, "Beta2" = 0, "Epsilon1" = 0, "Epsilon2" = 0)
-  if (!is.null(Settings_all$rho)) {
-    if (length(Settings_all$rho) == 1) {
-      Settings_all$rho <- rep(Settings_all$rho, 4)
-    }
-      RhoConfig[1] <- Settings_all$rho[1]
-      RhoConfig[2] <- Settings_all$rho[2]
-      RhoConfig[3] <- Settings_all$rho[3]
-      RhoConfig[4] <- Settings_all$rho[4]
-  }
-  Settings_all$RhoConfig <- RhoConfig
-  Settings_all$FieldConfig <- c(Omega1 = 1, Epsilon1 = 1, Omega2 = 1, Epsilon2 = 1)
+  Settings_all$RhoConfig <- get_settings_single(Settings_all$rho,
+    default = c(Beta1 = 0, Beta2 = 0, Epsilon1 = 0, Epsilon2 = 0))
+  Settings_all$FieldConfig <- get_settings_single(Settings_all$field,
+    default = c(Omega1 = 1, Epsilon1 = 1, Omega2 = 1, Epsilon2 = 1))
 
   # Overdispersion
   if (is.null(Settings_all[["overdispersion"]])) {
@@ -90,4 +82,30 @@ get_settings <- function(settings = NULL, verbose = FALSE) {
   }
 
   return(Settings_all)
+}
+
+#' Get Settings For a Single Parameter
+#' @param par A vector of values that do not need to be named.
+#' If a single value is provided, it will be repeated for each needed value.
+#' @param default A vector of default values that will be used if
+#' \code{par = NULL}. The names from this vector are always copied
+#' over to the vector that is returned, so name them well.
+#' @return A vector of values the same length as \code{default} and with the
+#' same names as those given to \code{default}.
+get_settings_single <- function(par, default) {
+  if (is.null(par)) {
+    return(default)
+  } else {
+    if (length(par) == 1) {
+      par <- rep(par, length(default))
+    } else {
+      if (length(par) != length(default)) {
+        stop("Input vector par must be of length 1 or same length as",
+          " default input vector,\nwhich is ", length(default), ".",
+          call. = TRUE)
+      }
+    }
+    names(par) <-  names(default)
+    return(par)
+  }
 }
