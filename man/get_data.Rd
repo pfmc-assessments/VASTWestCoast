@@ -8,7 +8,8 @@ get_data(survey, species, data = NULL)
 }
 \arguments{
 \item{survey}{A character value supplying the survey name.
-The value is typically an acronym.}
+The value is typically an acronym.
+See \code{\link[nwfscSurvey]{createMatrix}()} for a list of defaults.}
 
 \item{species}{A character value supplying the scientific name.
 The value should be spelled correctly and split using a space.}
