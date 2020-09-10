@@ -33,13 +33,8 @@ get_settings <- function(settings = NULL, verbose = FALSE) {
     "rho" = NULL,
     "fine_scale" = FALSE,
     "overdispersion" = NULL)
-  need <- !names(Settings_all) %in% names(settings)
-  if (verbose) {
-    message("Adding the following objects to settings:\n",
-      paste(names(Settings_all[need]), collapse = "\n"), "\n",
-      appendLF = TRUE)
-  }
-  Settings_all <- c(settings, Settings_all[need])
+  Settings_all <- utils::modifyList(x = Settings_all, val = settings,
+    keep.null = TRUE)
 
   # Pass
   if (Settings_all$Passcondition %in% c("T", 1)) {
