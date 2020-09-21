@@ -1,10 +1,10 @@
 #' Shortened Code for \code{\link[FishStatsUtils:fit_model]{VAST}}
-#' 
+#'
 #' Major workhorse to run a VAST model using data and settings that are
 #' specific to the US West Coast. Many parameters are still customizable,
 #' but many parameters are also set in the background based on the sampling
 #' protocols and data availability that are specific to each survey.
-#' 
+#'
 #' @param Database A data base entered and returned from or just returned
 #' from \code{\link{get_data}()}.
 #' @param settings A list of settings used to run the spatiotemporal model.
