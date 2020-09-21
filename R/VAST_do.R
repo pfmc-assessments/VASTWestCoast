@@ -95,8 +95,9 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
       return(out)
     }
   }
-  maps <- FishStatsUtils::plot_results(settings = info, fit = out,
-    working_dir = file.path(conditiondir, .Platform$file.sep), check_residuals = FALSE)
+  maps <- suppressWarnings(FishStatsUtils::plot_results(settings = info, fit = out,
+    working_dir = file.path(conditiondir, .Platform$file.sep),
+    check_residuals = TRUE))
   rsessioninfo <- summary_nwfsc(obj = out$tmb_list$Obj,
     parameter_estimates = out$parameter_estimates,
     savedir = conditiondir)
