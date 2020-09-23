@@ -86,9 +86,13 @@ VAST_condition <- function(conditiondir, settings, spp,
       settings = settings,
       compiledir = compiledir)
 
+    #todo: do a better job of integrating these two surveys into a single survey
+
     #### Shallow
     #todo: make the prediction map smaller to the spatial
     # footprint that is covered
+    #todo: only run this if less than a certain percentage of positive
+    # tows are in deep waters?
     check <- VAST_do(
       Database = Database[Database[, "Depth_m"] <=  366, ],
       conditiondir = paste(conditiondir, "shallow", sep = "_"),
@@ -98,6 +102,9 @@ VAST_condition <- function(conditiondir, settings, spp,
     #### No NWFSC suvey in 2004
     # todo: decide if we should be running this one
     # maybe we should have a different catchability or something instead
+    # At least for sablefish and some other species,
+    # a vessel-year effect is not significant, so I don't see why it would
+    # be for a single year here.
     check <- VAST_do(
       Database = Database[Database[, "Year"] <  2004, ],
       conditiondir = paste(conditiondir, "noNWFSC", sep = "_"),
