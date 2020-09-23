@@ -118,7 +118,7 @@ VAST_condition <- function(conditiondir, settings, spp,
       "Epsilon1" = 4, "Epsilon2" = 4)
     check <- VAST_do(
       Database = Database,
-      conditiondir = file.path(conditiondir, "ar4"),
+      conditiondir = paste(conditiondir, "ar4", sep = "_"),
       settings = rhosettings,
       compiledir = compiledir)
     # Only run random walk if AR(1) structure cannot be estimated
@@ -127,7 +127,7 @@ VAST_condition <- function(conditiondir, settings, spp,
       rhosettings[["RhoConfig"]][3:4] <- 2
       check <- VAST_do(
         Database = Database,
-        conditiondir = file.path(conditiondir, "ar2"),
+        conditiondir = paste(conditiondir, "ar2", sep = "_"),
         settings = rhosettings,
         compiledir = compiledir)
     }
