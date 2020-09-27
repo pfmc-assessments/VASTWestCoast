@@ -13,11 +13,7 @@
 #' \code{"Lat"} specifying the Latitude.
 #' The locations will be used to define the outer boundary of the
 #' triangulation mesh.
-#' @param numknots The desired number of knots to have in the resulting mesh.
-#' This will be approximate because the distance between points used for knots
-#' will be used to solve to the ideal number of knots using a while loop.
-#' Thus, expect the resulting number of knots to be within plus or minus five
-#' percent of this input value.
+#' @template numknots
 #'
 #' @export
 #' @author Kelli Faye Johnson
@@ -40,10 +36,10 @@
 get_mesh <- function(data.inner, data.outer, numknots) {
 
   set.seed(2)
-  aa <- project_coordinates(
+  aa <- FishStatsUtils::project_coordinates(
     X = data.outer[, c("Lon")],
     Y = data.outer[, c("Lat")])
-  coords <- project_coordinates(
+  coords <- FishStatsUtils::project_coordinates(
     X = data.inner[, c("Lon")],
     Y = data.inner[, c("Lat")])
 
@@ -112,8 +108,8 @@ get_mesh.meshbuilder <- function(loc) {
   new <- INLA::inla.mesh.2d(
     loc = loc,
     boundary = list(
-      INLA::inla.nonconvex.hull(coordinates(loc), 0.1),
-      INLA::inla.nonconvex.hull(coordinates(loc), 0.3)),
+      INLA::inla.nonconvex.hull(sp::coordinates(loc), 0.1),
+      INLA::inla.nonconvex.hull(sp::coordinates(loc), 0.3)),
     max.edge = c(0.05, 0.5),
     min.angle = c(35, 21),
     max.n = c(48000, 16000), # Safeguard against large meshes.
