@@ -4,16 +4,44 @@
 \alias{get_inputgrid}
 \title{Get the Input Grid for a Given Survey}
 \usage{
-get_inputgrid(survey)
+get_inputgrid(survey, range.depth = c(-35, -Inf))
 }
 \arguments{
 \item{survey}{A character value supplying the survey name.
 The value is typically an acronym.
 See \code{\link[nwfscSurvey]{createMatrix}()} for a list of defaults.}
+
+\item{range.depth}{A vector of two numeric values specifying the range of
+depth values of interest. Values must be in meters and negative values
+represent those below sea level and positive values are assumed to be
+above sea level. The first entry is the shallow value and the second
+entry is the deeper cutoff. The default value is
+\code{c(-35, -Inf)}, which truncates the data to depths deeper than 35 m
+with no limit on how deep they can be.}
+}
+\value{
+A data frame of grid points with associated metadata for each
+box. The data frame is an augmented version of the california current
+data frame available in the \pkg{FishStatsUtils} package.
+The most relevant columns will be those for Latitude (Lat),
+Longitude (Lon), Depth (in meters), and Area_km2.
+For Area_km2, a column created by this function,
+only grid cells that pertain to the survey of interest will
+have positive values. These grid cells with positive values will be
+included in the prediction area for the results.
 }
 \description{
 Define the input grid for a given survey, where positive values for
 each coordinate pair define the area in square kilometers to predict to.
+}
+\details{
+Grid cells within the cowcod conservation area
+denoted by positive values in the \code{Cowcod} column and grid cells
+with a depth less than 35 m are removed from the prediction area
+for all surveys. The remaining grid cells are chosen for inclusion in
+the predicted area based on the \code{"prop..."} column that is relevant
+to the survey of interest. See \code{\link{convert_survey4vast}()} for
+column names for a given survey.
 }
 \author{
 Kelli Faye Johnson

@@ -4,8 +4,41 @@
 \alias{plot.inputgrid}
 \title{Plot Inputgrid}
 \usage{
-\method{plot}{inputgrid}(data, print = TRUE)
+\method{plot}{inputgrid}(data, savedir = getwd(), lab.survey = "survey")
+}
+\arguments{
+\item{data}{A data frame returned from \code{\link{get_inputgrid}}
+that includes the following columns:
+Latitude, available as \code{"Lat"};
+Longitude, available as \code{"Lon"};
+Area, available as \code{"Area_km2"}; and
+Depth in meters.}
+
+\item{savedir}{A file path to the directory where the results will be saved.
+The default is the current working directory.
+The path can be relative or absolute.}
+
+\item{lab.survey}{A character entry specifying the name of the survey that
+gathered the data. This can be text of your choice or a single word used
+to represent the survey name as defined in the first column of
+\code{\link[nwfscSurvey]{createMatrix}()}.
+See \code{\link[nwfscSurvey]{GetSurveyAbb.fn}()}
+for how this shortened name is linked to a longer abbreviation.
+Either the results of this function
+based on your input or your direct input if no match is found will be
+used as text on the plot or in the resulting caption.
+The default is the word \code{"survey"} which will fit the bill for a
+generic specification.}
+}
+\value{
+A figure 9 inches long (roughly fitting on a single page)
+is saved to the disk, along with a caption. The files are saved
+using the name VASTWestCoast_mesh.[ext]. The \pkg{ggplot2} object
+is returned for future manipulation.
 }
 \description{
-Plot Inputgrid
+Plot a map of the grid cells used in the prediction of VAST results.
+}
+\author{
+Kelli Faye Johnson
 }
