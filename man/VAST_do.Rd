@@ -45,9 +45,18 @@ If the default value of \code{"user"} is used, then \code{VAST_do} calls
 that fall in depths shallower than 35 m (including those on land) and
 grid cells within the Cowcod Conservation Areas.}
 }
+\value{
+Nothing is returned from the function, but many items are saved
+to the disk, largely by other helper functions that are called by
+\code{VAST_do}. All R objects are saved in a file called \code{"Save.RData"}
+within \code{conditiondir}.
+}
 \description{
 Major workhorse to run a VAST model using data and settings that are
 specific to the US West Coast. Many parameters are still customizable,
 but many parameters are also set in the background based on the sampling
 protocols and data availability that are specific to each survey.
+}
+\author{
+Kelli Faye Johnson
 }

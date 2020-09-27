@@ -25,6 +25,13 @@
 #' that fall in depths shallower than 35 m (including those on land) and
 #' grid cells within the Cowcod Conservation Areas.
 #'
+#' @author Kelli Faye Johnson
+#' @export
+#' @return Nothing is returned from the function, but many items are saved
+#' to the disk, largely by other helper functions that are called by
+#' \code{VAST_do}. All R objects are saved in a file called \code{"Save.RData"}
+#' within \code{conditiondir}.
+#'
 VAST_do <- function(Database, settings, conditiondir, compiledir,
   region = c("user", "california_current")) {
 
