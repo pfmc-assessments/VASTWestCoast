@@ -2,39 +2,60 @@
 % Please edit documentation in R/plot_ss.R
 \name{plot_ss}
 \alias{plot_ss}
-\title{Plot Index Time Series}
+\title{Plot Index From SS3 Table}
 \usage{
-plot_ss(file.in = "Table_for_SS3.csv", file.out, name = "", do_smooth = TRUE)
+plot_ss(
+  file.in = "Table_for_SS3.csv",
+  savefile,
+  lab.survey = "survey",
+  lab.spp = "",
+  do.smooth = TRUE
+)
 }
 \arguments{
 \item{file.in}{A file path pointing to the \code{"Table_for_SS3.csv"} file
 that has the results you wish to plot. The path can be relative or absolute.
-This file is generated from \code{\link{VAST_condition}}.}
+This file is generated while running \code{\link{VAST_condition}()}.}
 
-\item{file.out}{A file path for plotting the results and saving them to the
-disk. This can be a relative or absolute path. If no extension is added, then
-\code{.png} will be added to the file name because the resulting figure is
-a png. If missing, a default file name will be generated.}
+\item{savefile}{The file name that you want the results saved to. A full path can
+be specified, else the file will be saved in the current directory.}
 
-\item{name}{A character string that will be pasted after the survey name to
-for the main title for the figure.
-Typically, this is the name of the species, which is also the folder
-in which the results exist, though not always.}
+\item{lab.survey}{A character entry specifying the name of the survey that
+gathered the data. This can be text of your choice or a single word used
+to represent the survey name as defined in the first column of
+\code{\link[nwfscSurvey]{createMatrix}()}.
+See \code{\link[nwfscSurvey]{GetSurveyAbb.fn}()}
+for how this shortened name is linked to a longer abbreviation.
+Either the results of this function
+based on your input or your direct input if no match is found will be
+used as text on the plot or in the resulting caption.
+The default is the word \code{"survey"} which will fit the bill for a
+generic specification.}
+
+\item{lab.spp}{A character string that will be pasted after the survey name
+for the main title for the figure. Typically, this is the species name.
+Scientific names can be passed using 
+\code{lab.spp = expression(italic("xxx"))} or
+\code{lab.spp = bquote(italic(.(xxx)))} if you want to evaluate the
+object \code{xxx}.}
+
+\item{do.smooth}{A logical value specifying whether or not a smoother should
+be added for the first strata, which is typically the strata that includes
+all areas.}
 }
 \value{
 A 10 by 7 inch png is saved to the disk showing a time series of the
 estimated index of abundance from a single model run. If there are more than
-one strata, than all strata are plotted, but the summary strata is always
+one strata, all strata are plotted, but the summary strata is always
 plotted in black and will be the only line with confidence intervals.
-The survey name and text provided in the name argument are pasted together
-to form the main title of the plot. Estimates are in metric tonnes and the
-ylab reflects this. Years with estimates of zero are excluded from the figure.
+Estimates are in metric tonnes, as labelled.
+Years with estimates of zero are excluded from the figure.
 A caption with a Latex label is also written to a csv file, where the first
 column is the label and the second column is the caption.
 }
 \description{
 Plot a single time series of estimated index values for the
-US West Coast.
+US West Coast using data in a \code{"Table_for_SS3.csv"} file.
 }
 \author{
 Chantel Wetzel

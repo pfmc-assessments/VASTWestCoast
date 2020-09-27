@@ -31,6 +31,7 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
   region <- match.arg(region, several.ok = FALSE)
   spp <- settings[["Species"]]
   survey <- get_spp(spp)["survey"]
+  spp_sci <- paste(strsplit(spp, "_")[[1]][2:3], collapse = " ")
 
   dir.create(conditiondir, showWarnings = FALSE, recursive = TRUE)
   localinputgrid <- get_inputgrid(survey)
