@@ -99,9 +99,19 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
   maps <- suppressWarnings(FishStatsUtils::plot_results(settings = info, fit = out,
     working_dir = file.path(conditiondir, .Platform$file.sep),
     check_residuals = TRUE))
+  index <- suppressWarnings(FishStatsUtils::plot_biomass_index(
+    DirName = file.path(conditiondir, .Platform$file.sep),
+    TmbData = out$data_list, Sdreport = out$parameter_estimates$SD,
+    use_biascorr = TRUE,
+    Year_Set = out$year_labels, Years2Include = out$years_to_plot,
+    strata_names = out$settings$strata.limits$STRATA
+  ))
   rsessioninfo <- summary_nwfsc(obj = out$tmb_list$Obj,
     parameter_estimates = out$parameter_estimates,
     savedir = conditiondir)
+  plot_ss(file.in = file.path(conditiondir, "Table_for_SS3.csv"),
+    lab.survey = survey,
+    lab.spp = bquote(italic(.(spp_sci))))
 
   save(list = ls(all = TRUE), file = file.path(conditiondir, "Save.RData"))
   save(Database, file = file.path(conditiondir, "DatabaseSave.RData"))
