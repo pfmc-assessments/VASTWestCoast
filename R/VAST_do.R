@@ -99,10 +99,11 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     silent = TRUE,
     run_model = TRUE), error = function(e) e)
   if ("simpleError" %in% class(out)) {
-    if (grepl("Please change model structure to avoid problems", out)) {
-      return(out)
-    }
+    save(out, file = file.path(conditiondir, "Error.RData"))
+    save(list = ls(all.names = TRUE), file = file.path(conditiondir, "Save.RData"))
+    return(out)
   }
+
   maps <- suppressWarnings(FishStatsUtils::plot_results(settings = info, fit = out,
     working_dir = file.path(conditiondir, .Platform$file.sep),
     check_residuals = TRUE))
