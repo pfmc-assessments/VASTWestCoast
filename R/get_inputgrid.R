@@ -12,6 +12,7 @@
 #' column names for a given survey.
 #' @template survey
 #' @template range.depth
+#' @template range.lat
 #'
 #' @author Kelli Faye Johnson
 #' @export
@@ -25,7 +26,8 @@
 #' have positive values. These grid cells with positive values will be
 #' included in the prediction area for the results.
 #'
-get_inputgrid <- function(survey, range.depth = c(-35, -Inf)) {
+get_inputgrid <- function(survey,
+  range.depth = c(-35, -Inf), range.lat = c(-Inf, Inf)) {
 
   surveyname <- convert_survey4vast(survey)
   utils::data(california_current_grid, package = "FishStatsUtils")
@@ -44,6 +46,8 @@ get_inputgrid <- function(survey, range.depth = c(-35, -Inf)) {
   Data_Extrap[Data_Extrap[, "Cowcod"] != 0, "Area_km2"] <- 0
   Data_Extrap[Data_Extrap[, "Ngdc_m"] > range.depth[1], "Area_km2"] <- 0
   Data_Extrap[Data_Extrap[, "Ngdc_m"] < range.depth[2], "Area_km2"] <- 0
+  Data_Extrap[Data_Extrap[, "Lat"] < range.lat[1], "Area_km2"] <- 0
+  Data_Extrap[Data_Extrap[, "Lat"] > range.lat[2], "Area_km2"] <- 0
 
   return(Data_Extrap)
 }
