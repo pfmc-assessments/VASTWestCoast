@@ -2,6 +2,8 @@
 
 export(VAST_condition)
 export(VAST_diagnostics)
+export(VAST_do)
+export(VAST_mesh)
 export(clean_data)
 export(clean_unload)
 export(convert_strata4vast)

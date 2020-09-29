@@ -41,13 +41,17 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
   spp_sci <- paste(strsplit(spp, "_")[[1]][2:3], collapse = " ")
 
   dir.create(conditiondir, showWarnings = FALSE, recursive = TRUE)
-  localinputgrid <- get_inputgrid(survey)
-  if (region == "user"){
-    g <- plot.inputgrid(localinputgrid, print = FALSE)
-    suppressMessages(ggplot2::ggsave(plot = g, units = "in",
-      filename = file.path(conditiondir, "VASTWestCoast_inputgrid.png"),
-      height = 9))
-  }
+
+  local <- VAST_mesh(data = Database, survey = survey,
+    savedir = conditiondir,
+    numknots = settings[["nknots"]],
+    range.depth = c(
+      -1 * min(settings[["strata"]][,"shallow_border"]),
+      -1 * max(settings[["strata"]][,"deep_border"])),
+    range.lat = c(
+      min(settings[["strata"]][,"south_border"]),
+      max(settings[["strata"]][,"north_border"])))
+  subdata <- local$mesh$data.inner
 
   info <- FishStatsUtils::make_settings(
     n_x = settings[["nknots"]],
@@ -69,31 +73,41 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     #VamConfig = c(Method = 0, Rank = 0, Timing = 0), #default
     max_cells = Inf, #default is max( 2000, n_x*10 )
     knot_method = "samples", #default is "grid"
-    n_categories = length(unique(Database$Sci))
+    n_categories = length(unique(subdata$Sci))
   )
   out <- tryCatch(FishStatsUtils::fit_model(
     settings = info,
-    Lat_i = Database[, "Lat"],
-    Lon_i = Database[, "Lon"],
-    t_i = Database[, "Year"],
-    c_iz = as.numeric(Database[, "Sci"]) - 1,
-    b_i = Database[, "Catch_KG"],
-    a_i = Database[, "AreaSwept_km2"],
-    v_i = as.numeric(Database[, "Vessel"], as.is = FALSE) - 1,
+    Lat_i = subdata[, "Lat"],
+    Lon_i = subdata[, "Lon"],
+    t_i = subdata[, "Year"],
+    c_iz = as.numeric(subdata[, "Sci"]) - 1,
+    b_i = subdata[, "Catch_KG"],
+    a_i = subdata[, "AreaSwept_km2"],
+    v_i = as.numeric(subdata[, "Vessel"], as.is = FALSE) - 1,
     working_dir = conditiondir,
     # Xconfig_zcp = ,
     # X_gtp = ,
     # X_itp = ,
     catchabilitydata = if (settings[["Passcondition"]]) {
-        as.matrix(Database[, "Pass", drop = FALSE])
+        as.matrix(subdata[, "Pass", drop = FALSE])
       } else {
         NULL
       },
     #newtonsteps = 1, #default
     extrapolation_args = c(info["zone"], info["Region"], info["strata.limits"],
       surveyname = convert_survey4vast(survey),
-      input_grid = list(localinputgrid)),
-    spatial_args = list(randomseed = 1, nstart = 100, iter.max = 1e3),
+      input_grid = list(local[["inputgrid"]])),
+    spatial_args = list(
+      randomseed = 1,
+      nstart = 100,
+      iter.max = 1e3,
+      anisotropic_mesh = if (info["Region"] == "user") {
+        local[["mesh"]]
+      } else {
+        NULL
+      },
+      Kmeans = NULL,
+      fine_scale = info[["fine_scale"]]),
     # optimize_args = ,
     model_args = list(CompileDir = compiledir),
     silent = TRUE,
