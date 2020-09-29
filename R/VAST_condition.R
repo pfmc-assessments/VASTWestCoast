@@ -93,8 +93,10 @@ VAST_condition <- function(conditiondir, settings, spp,
     # footprint that is covered
     #todo: only run this if less than a certain percentage of positive
     # tows are in deep waters?
+    shallsettings <- settings
+    shallsettings[["strata"]][, "deep_border"] <- 366
     check <- VAST_do(
-      Database = Database[Database[, "Depth_m"] <=  366, ],
+      Database = Database,
       conditiondir = paste(conditiondir, "shallow", sep = "_"),
       settings = settings,
       compiledir = compiledir)
