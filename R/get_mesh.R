@@ -42,6 +42,7 @@ get_mesh <- function(data.inner, data.outer, numknots) {
   coords <- FishStatsUtils::project_coordinates(
     X = data.inner[, c("Lon")],
     Y = data.inner[, c("Lat")])
+  boundaryhull <- INLA::inla.nonconvex.hull(aa, convex = -0.05)
 
   new <- list(n = Inf)
   cutoff <- 15
@@ -54,7 +55,7 @@ get_mesh <- function(data.inner, data.outer, numknots) {
       cutoff + increment, cutoff - increment)
     counter <- counter + 1
     new <- INLA::inla.mesh.create(coords,
-      boundary = INLA::inla.nonconvex.hull(aa, convex = -0.05, concave = -0.05),
+      boundary = boundaryhull,
       cutoff = cutoff)
     if (counter > 100) break
   }
