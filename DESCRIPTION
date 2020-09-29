@@ -34,7 +34,7 @@ VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 Additional_repositories: https://inla.r-inla-download.org/R/stable
 Remotes: 
-    github::kaskr/TMB_contrib_R/TMBhelper, 
-    github::James-Thorson-NOAA/FishStatsUtils, 
-    github::James-Thorson-NOAA/VAST, 
+    github::kaskr/TMB_contrib_R/TMBhelper,
+    github::James-Thorson-NOAA/FishStatsUtils,
+    github::James-Thorson-NOAA/VAST,
     github::nwfsc-assess/nwfscSurvey
