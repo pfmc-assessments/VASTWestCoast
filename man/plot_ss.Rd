@@ -34,7 +34,7 @@ generic specification.}
 
 \item{lab.spp}{A character string that will be pasted after the survey name
 for the main title for the figure. Typically, this is the species name.
-Scientific names can be passed using 
+Scientific names can be passed using
 \code{lab.spp = expression(italic("xxx"))} or
 \code{lab.spp = bquote(italic(.(xxx)))} if you want to evaluate the
 object \code{xxx}.}
