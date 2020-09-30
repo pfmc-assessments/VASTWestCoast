@@ -8,6 +8,7 @@ plot_index(
   dir,
   recursive = TRUE,
   area = NULL,
+  filter = NULL,
   keepyears = NULL,
   limit = NULL,
   legend_position = c(0.5, 0.05),
@@ -32,6 +33,14 @@ and words separated using \code{"_"} will be separated using spaces, e.g.,
 \code{"All_areas"} will become \code{"All areas"}. Only the first underscore
 is replaced.}
 
+\item{filter}{A character value used for regex matching of the file names.
+The default is \code{NULL}, which leads to all files being used. Regular
+expression matching can help you subset for a given distribution, e.g.,
+\code{filter = "gamma"}, or for a specific survey, e.g., \code{"Triennial"}.
+Note that folders can be separated with a forward or backwards slash depending
+on other arguments, but it is best to try \code{"gamma/|lognormal/"} if you only
+want files that are not sensitivity runs.}
+
 \item{keepyears}{A vector of years you want to plot.
 If \code{NULL}, which is the default, then all years are plotted.}
 
@@ -47,14 +56,18 @@ The default values keeps the legend near the lower-left corner.}
 be specified, else the file will be saved in the current directory.}
 }
 \value{
-A data frame of sourced \code{Table_for_SS3.csv} files that have
-been subset appropriately based on the input arguments. This data frame was
-used to generate the image that is returned to the screen and potentially
-saved to the disk.
+A ggplot object that has been augmented to include the data used for
+the plot. This data set is available using \code{[["dataforplot"]]} and was
+created from sourced \code{Table_for_SS3.csv} files that were
+subset appropriately based on the input arguments. The ggplot object is also
+saved to the disk if \code{!is.null(savefile) == TRUE}.
 }
 \description{
 Compare estimated indices and their confidence intervals on a single plot.
 Results from \code{Table_for_SS3.csv} files are searched for and loaded as
 objects, which are then plotted by model run and area
 using unique colors for each run-area combination.
+}
+\author{
+Kelli Faye Johnson
 }

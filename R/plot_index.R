@@ -19,6 +19,13 @@
 #' and words separated using \code{"_"} will be separated using spaces, e.g.,
 #' \code{"All_areas"} will become \code{"All areas"}. Only the first underscore
 #' is replaced.
+#' @param filter A character value used for regex matching of the file names.
+#' The default is \code{NULL}, which leads to all files being used. Regular
+#' expression matching can help you subset for a given distribution, e.g.,
+#' \code{filter = "gamma"}, or for a specific survey, e.g., \code{"Triennial"}.
+#' Note that folders can be separated with a forward or backwards slash depending
+#' on other arguments, but it is best to try \code{"gamma/|lognormal/"} if you only
+#' want files that are not sensitivity runs.
 #' @param keepyears A vector of years you want to plot.
 #' If \code{NULL}, which is the default, then all years are plotted.
 #' @param limit A upper limit of the vertical axis, which is forced. The default is
@@ -29,23 +36,27 @@
 #' The default values keeps the legend near the lower-left corner.
 #' @template savefile
 #'
-#' @return A data frame of sourced \code{Table_for_SS3.csv} files that have
-#' been subset appropriately based on the input arguments. This data frame was
-#' used to generate the image that is returned to the screen and potentially
-#' saved to the disk.
+#' @return A ggplot object that has been augmented to include the data used for
+#' the plot. This data set is available using \code{[["dataforplot"]]} and was
+#' created from sourced \code{Table_for_SS3.csv} files that were
+#' subset appropriately based on the input arguments. The ggplot object is also
+#' saved to the disk if \code{!is.null(savefile) == TRUE}.
 #'
+#' @author Kelli Faye Johnson
 #' @export
 #' @import ggplot2
 #'
-plot_index <- function(dir, recursive = TRUE, area = NULL,
+plot_index <- function(dir, recursive = TRUE, area = NULL, filter = NULL,
   keepyears = NULL, limit = NULL, legend_position = c(0.5, 0.05),
   savefile = NULL) {
-  options(device = "x11")
 
   #get the index information that is saved to the disk
   dir <- normalizePath(dir, mustWork = TRUE)
   files <- dir(dir, pattern = "Table_for_SS3", full.names = TRUE,
     recursive = recursive)
+  if (!is.null(filter)) {
+    files <- files[grepl(filter, files, perl = TRUE)]
+  }
   if (length(files) == 0) {
     stop("No Table_for_SS3 files were found in ", dir)
   }
@@ -64,13 +75,16 @@ plot_index <- function(dir, recursive = TRUE, area = NULL,
     data <- data[data[, "Fleet"] %in% area, ]
   }
   data[, "Area"] <- ifelse(is.na(data[, "Fleet"]), "unknown",
-    as.character(data[, "Fleet"]))
-  data[, "Area"] <- gsub("([a-zA-Z0-9]+)_([a-zA-Z0-9]+)", "\\1 \\2",
-    data[, "Area"])
+    convert_strata4plot(data[,"Fleet"]))
+  data[, "folder"] <- gsub("_", " - ", data[, "folder"])
 
   #plot the information using ggplot
   ylims <- c(NA,
     ifelse(is.null(limit), max(data[["upp"]], na.rm = TRUE) * 1.02, limit))
+  if (length(levels(interaction(data$folder,data$Area))) > 11) {
+    warning("Use filter to limit the number of model run and area combinations,",
+      "\n currently you have more than 11.", call. = FALSE, immediate. = TRUE)
+  }
   g <- ggplot(data, aes(.data[["Year"]], .data[["Estimate_metric_tons"]])) +
     geom_ribbon(data = data,
       aes(ymin = .data[["low"]], ymax = .data[["upp"]],
@@ -80,13 +94,13 @@ plot_index <- function(dir, recursive = TRUE, area = NULL,
     ylab("Index (mt)") +
     ylim(ylims) +
     geom_line(lwd = 1.5,
-      aes(col = interaction(as.factor(.data[["folder"]]), .data[["Area"]], sep = " -- "))) +
+      aes(col = interaction(as.factor(.data[["folder"]]), .data[["Area"]], sep = " : "))) +
     theme_bw() +
     scale_colour_brewer(palette="Spectral", name = "", guide = "legend") +
     scale_fill_brewer(palette="Spectral", name = "") +
     guides(
       colour = guide_legend(
-        title = "Colors for combinations of\nmodel run and areas within model run"),
+        title = "Combinations of\nmodel run and areas within model run"),
       fill = FALSE) +
     theme(
       legend.key = element_rect(colour = NA, fill = NA),
@@ -94,12 +108,10 @@ plot_index <- function(dir, recursive = TRUE, area = NULL,
     legend.background = element_rect(fill = "transparent", colour = NA),
     legend.box.background = element_rect(fill = "transparent", colour = NA),
       legend.position = legend_position)
-  grDevices::dev.new()
-  print(g)
+
   if (!is.null(savefile)) {
-    savefile <- normalizePath(savefile)
     ggsave(plot = g, filename = normalizePath(savefile))
   }
-
-  invisible(data)
+  g[["dataforplot"]] <- data
+  return(g)
 }
