@@ -77,7 +77,7 @@ plot_ss <- function(file.in = "Table_for_SS3.csv", savefile,
   graphics::mtext(side = 2, "Index (mt)", cex = cex.lab, line = 2.5)
   graphics::mtext(side = 3, text = lab.spp,
     font = 2, cex = cex.lab, line = 0.25)
-  graphics::mtext(side = 3, text = lab.survey,
+  graphics::mtext(side = 3, text = stext,
     font = 2, cex = cex.lab, line = -1.75)
 
   for (b in seq_along(strat)) {
