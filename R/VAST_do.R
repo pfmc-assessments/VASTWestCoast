@@ -128,7 +128,9 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     Year_Set = out$year_labels, Years2Include = out$years_to_plot,
     strata_names = out$settings$strata.limits$STRATA
   ))
-  rsessioninfo <- summary_nwfsc(obj = out$tmb_list$Obj,
+  rsessioninfo <- summary_session(
+    savefile = file.path(conditiondir, "VASTWestCoast_session.txt"))
+  modelinfo <- summary_nwfsc(obj = out$tmb_list$Obj,
     parameter_estimates = out$parameter_estimates,
     savedir = conditiondir)
   plot_ss(file.in = file.path(conditiondir, "Table_for_SS3.csv"),
