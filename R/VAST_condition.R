@@ -98,7 +98,7 @@ VAST_condition <- function(conditiondir, settings, spp,
     check <- VAST_do(
       Database = Database,
       conditiondir = paste(conditiondir, "shallow", sep = "_"),
-      settings = settings,
+      settings = shallsettings,
       compiledir = compiledir)
 
     #### No NWFSC suvey in 2004
