@@ -77,7 +77,7 @@ plot_index <- function(dir, recursive = TRUE, area = NULL,
         fill = interaction(as.factor(.data[["folder"]]), .data[["Area"]], sep = " -- ")),
       alpha = 0.2,
       show.legend = FALSE) +
-    ylab("Abundance (mt)") +
+    ylab("Index (mt)") +
     ylim(ylims) +
     geom_line(lwd = 1.5,
       aes(col = interaction(as.factor(.data[["folder"]]), .data[["Area"]], sep = " -- "))) +
