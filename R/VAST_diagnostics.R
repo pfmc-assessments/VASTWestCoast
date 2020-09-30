@@ -31,6 +31,7 @@ VAST_diagnostics <- function(dir = getwd()) {
   datafile <- dir(dir, pattern = "DatabaseSave.RData", full.names = TRUE)
   if (length(savedfile) == 0) return(NULL)
   base::load(savedfile)
+  if ("simpleError" %in% class(out)) return(NULL)
 
   # Check convergence
   cat(file = file.path(dir, "convergence_gradient.txt"),
