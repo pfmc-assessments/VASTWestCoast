@@ -63,4 +63,6 @@ VAST_spp <- function(dir, species,
 
   ignore <- clean_unload(searchfor = species)
 
+  return()
+
 }
