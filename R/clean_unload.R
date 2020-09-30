@@ -14,5 +14,5 @@ clean_unload <- function(searchfor = "VAST") {
   remove <- gsub("\\.dll", "", grep(searchfor, filenames, value = TRUE))
   if (length(remove) < 1) return(NULL)
   ignore <- lapply(remove, function(x) dyn.unload(TMB::dynlib(x)))
-  return(filenames)
+  return(list(removed = remove, available = filenames))
 }

@@ -61,6 +61,6 @@ VAST_spp <- function(dir, species,
     VAST_diagnostics(modeldir)
   }}
 
-  clean_unload(searchfor = species)
+  ignore <- clean_unload(searchfor = species)
 
 }
