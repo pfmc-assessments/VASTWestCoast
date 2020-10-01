@@ -26,8 +26,8 @@ VAST_spp <- function(dir, species,
 
   #### Get species, survey, and strata info
   info <- nwfscSurvey::GetSpp.fn(species)
-  surveys <- grep("Tri|Combo|N.+Slope",
-    nwfscSurvey::createMatrix()[, 1], value = TRUE)
+  surveys <- rev(grep("Tri|Combo|N.+Slope",
+    nwfscSurvey::createMatrix()[, 1], value = TRUE))
   strata.limits <- convert_strata4vast(overridedepth = TRUE,
     strata = nwfscSurvey::GetStrata.fn(info[, "strata"])
   )
@@ -39,8 +39,8 @@ VAST_spp <- function(dir, species,
   check <- clean_unload(searchfor = "VAST", keep = species)
 
   ####
-  for (obs in dist) {
   for (survey in surveys) {
+  for (obs in dist) {
     obs_model <- switch(obs,
       lognormal = c(1, 0),
       gamma = c(2, 0)
