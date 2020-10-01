@@ -4,13 +4,22 @@
 \alias{clean_unload}
 \title{Unload VAST dll}
 \usage{
-clean_unload(searchfor = "VAST")
+clean_unload(searchfor = "VAST", keep = "VASTisCOOL")
 }
 \arguments{
-\item{searchfor}{A file name of the dll to search for.}
+\item{searchfor}{A file name of the dll to search for.
+The files that are found will be removed from the loaded libraries.}
+
+\item{keep}{A file name (or partial name) of the dll to search
+for that you want to keep. For example, multiple libraries may
+be loaded for VAST but you might only want to keep a certain one.
+Put that certain one here, or some pattern that will match in a
+regular expression search.}
 }
 \value{
-The name(s) of the unloaded libraries are returned.
+The name(s) of the unloaded libraries are returned as
+the first element of the list and the second element is all
+dlls that were found.
 }
 \description{
 Unload a dll library with the VAST name.

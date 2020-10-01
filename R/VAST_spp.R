@@ -35,6 +35,9 @@ VAST_spp <- function(dir, species,
   compiledir <- file.path(sppdir, "VASTcompiled")
   dir.create(sppdir, recursive = TRUE, showWarnings = FALSE)
 
+  #### Check that VAST dll is not already loaded in a different directory
+  check <- clean_unload(searchfor = "VAST", keep = species)
+
   ####
   for (obs in dist) {
   for (survey in surveys) {
