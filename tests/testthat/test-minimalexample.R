@@ -18,11 +18,11 @@ Sim_Settings <- list(
     shallow_border = rep(55, 3),
     middle_border = rep(183, 3),
     deep_border = rep(1280, 3)),
-  "Passcondition" = TRUE)
+  "Passcondition" = TRUE,
+  "fine_scale" = TRUE)
 
 test_that("Testing database is saved in VAST_condition", {
   skip_on_cran()
-  Sim_Settings[["nknots"]] <- 100
   data("Database", package = "VASTWestCoast")
   test <- VAST_condition(
     conditiondir = temp_path,
@@ -32,13 +32,12 @@ test_that("Testing database is saved in VAST_condition", {
   e1 <- new.env()
   base::load(file = "Save.RData", envir = e1)
   newnames <- ls(envir = e1)
-  expect_true(all(newnames %in%
-    c("conditiondir", "Database", "info", "out", "maps", "settings",
-      "spp", "survey")),
+  expect_true(all(c("conditiondir", "Database", "info", "out", "settings",
+      "spp", "survey") %in% newnames),
     info = "names in the file saved after conditioning changed")
   expect_equivalent(
     get("out", envir = e1)$parameter_estimates$AIC,
-    62733.02,
+    59641,
     tolerance = 1e-5, info = "checking the AIC of the sablefish run")
   dyn.unload(TMB::dynlib(gsub("\\.dll", "", getLoadedDLLs()[[
     grep(get("out", envir = e1)$settings$Version,
