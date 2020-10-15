@@ -29,7 +29,7 @@
 #' column is the label and the second column is the caption.
 
 plot_ss <- function(file.in = "Table_for_SS3.csv", savefile,
-  lab.survey = "survey", lab.spp = "",
+  lab.survey = "survey ", lab.spp = "",
   do.smooth = TRUE) {
 
   #### Get data
@@ -37,7 +37,7 @@ plot_ss <- function(file.in = "Table_for_SS3.csv", savefile,
   dat <- utils::read.csv(file.in, header = TRUE)
   dat <- dat[dat[, "Estimate_metric_tons"] != 0, ]
   if (lab.survey == "WCGBTS") lab.survey <- "NWFSC.Combo"
-  stext <- nwfscSurvey::GetSurveyAbb.fn(lab.survey)
+  stext <- nwfscSurvey::GetSurveyAbb.fn(lab.survey, na.return = lab.survey)
   strat <- unique(dat$Fleet)
   years <- unique(dat$Year)
 
