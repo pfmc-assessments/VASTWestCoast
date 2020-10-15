@@ -31,7 +31,7 @@ get_settings <- function(settings = NULL, verbose = FALSE) {
     "Passcondition" = FALSE,
     "field" = NULL,
     "rho" = NULL,
-    "fine_scale" = FALSE,
+    "fine_scale" = TRUE,
     "overdispersion" = NULL)
   need <- !names(Settings_all) %in% names(settings)
   if (verbose) {
