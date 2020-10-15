@@ -137,7 +137,7 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     lab.survey = survey,
     lab.spp = bquote(italic(.(spp_sci))))
 
-  save(list = ls(all = TRUE), file = file.path(conditiondir, "Save.RData"))
+  save(list = ls(all.names = TRUE), file = file.path(conditiondir, "Save.RData"))
   save(Database, file = file.path(conditiondir, "DatabaseSave.RData"))
 
   return(NULL)
