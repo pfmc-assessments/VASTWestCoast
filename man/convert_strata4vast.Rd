@@ -13,7 +13,7 @@ convert_strata4vast(
 }
 \arguments{
 \item{strata}{A data frame generated using
-\code{\link[nwfscSurvey]{getStrata.fn}()}.}
+\code{\link[nwfscSurvey]{GetStrata.fn}()}.}
 
 \item{overridedepth}{A logical value specifying if \code{mindepth} and
 \code{maxdepth} should be used instead of the depths that are available
@@ -41,13 +41,13 @@ Strata can overlap and need not be unique.
 }
 }
 \description{
-Convert strata defined using \code{\link[nwfscSurvey]{getStrata.fn}()}
+Convert strata defined using \code{\link[nwfscSurvey]{GetStrata.fn}()}
 to strata that will work with VAST. Results will be more consistent using
 these defined strata rather than All_Areas, which predicts to the entire
 extrapolation grid.
 }
 \examples{
-convert_strata4vast(nwfscSurvey::getStrata.fn("sablefish"))
+convert_strata4vast(nwfscSurvey::GetStrata.fn("sablefish"))
 
 }
 \author{
