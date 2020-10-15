@@ -39,6 +39,19 @@ test_that("Testing database is saved in VAST_condition", {
     get("out", envir = e1)$parameter_estimates$AIC,
     59641,
     tolerance = 1e-5, info = "checking the AIC of the sablefish run")
+  expect_equivalent(get("out", envir = e1)$spatial_list$n_x, Sim_Settings$nknots)
+  expect_equivalent(get("out", envir = e1)$years_to_plot, 1:16)
+  expect_equivalent(get("out", envir = e1)$year_labels, 2003:2018)
+  expect_equivalent(sum(grepl("beta",
+    get("out", envir = e1)$parameter_estimates$diagnostics$Param)), 16*2)
+  expect_equivalent(sum(grepl("H_input",
+    get("out", envir = e1)$parameter_estimates$diagnostics$Param)), 2)
+  expect_equivalent(sum(grepl("kappa",
+    get("out", envir = e1)$parameter_estimates$diagnostics$Param)), 2)
+  expect_equivalent(sum(grepl("_eta|epsilon|kappa",
+    get("out", envir = e1)$parameter_estimates$diagnostics$Param)), 6)
+  expect_equivalent(sum(grepl("Sigma",
+    get("out", envir = e1)$parameter_estimates$diagnostics$Param)), 1)
   dyn.unload(TMB::dynlib(gsub("\\.dll", "", getLoadedDLLs()[[
     grep(get("out", envir = e1)$settings$Version,
       names(getLoadedDLLs()))]][["path"]])))
