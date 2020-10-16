@@ -31,7 +31,8 @@ VAST_spp <- function(dir, species,
   strata.limits <- convert_strata4vast(overridedepth = TRUE,
     strata = nwfscSurvey::GetStrata.fn(info[, "strata"])
   )
-  sppdir <- file.path(normalizePath(dir, mustWork = FALSE), species, "data")
+  sppdir <- file.path(normalizePath(dir, mustWork = FALSE),
+    info[, "common_name"], "data")
   compiledir <- file.path(sppdir, "VASTcompiled")
   dir.create(sppdir, recursive = TRUE, showWarnings = FALSE)
 
