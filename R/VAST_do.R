@@ -118,9 +118,11 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     return(out)
   }
 
-  maps <- suppressWarnings(FishStatsUtils::plot_results(settings = info, fit = out,
+  maps <- tryCatch(suppressWarnings(FishStatsUtils::plot_results(settings = info, fit = out,
     working_dir = file.path(conditiondir, .Platform$file.sep),
-    check_residuals = TRUE))
+    check_residuals = TRUE)),
+    error = function(e) e)
+
   index <- suppressWarnings(FishStatsUtils::plot_biomass_index(
     DirName = file.path(conditiondir, .Platform$file.sep),
     TmbData = out$data_list, Sdreport = out$parameter_estimates$SD,
