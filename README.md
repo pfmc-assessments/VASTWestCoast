@@ -4,17 +4,18 @@ The Northwest Fisheries Science Center (NWFSC) uses
 [VAST](https://github.com/James-Thorson-NOAA/VAST)
 to generate indicies of abundance from survey data.
 This package, VASTWestCoast, acts as a wrapper for VAST,
-where the input argument values are specific to those needed for the NWFSC.
+where the input arguments are specific to those needed for the NWFSC.
 
 ## Getting Started
 
 ### Prerequisites
 1. Install [Rtools40](https://cran.r-project.org/bin/).
-2. Install devtools from CRAN `install.packages("devtools")`
+2. Have IT add c:\rtools40\usr\bin and c:\rtools40\mingw64\bin to your PATH
+3. Install devtools from CRAN `install.packages("devtools")`
 
 ### Installing
 Install issues are always troublesome, for which I am sorry.
-The best guidance I can give is to close all of your current R sessions and
+The best guidance I can give you is to close all of your current R sessions and
 open a new R session before trying to install any of the following packages.
 Lastly, use the internal check function to see if TMB is properly installed
 prior to running other VASTWestCoast functions.
@@ -25,7 +26,7 @@ remotes::install_github("nwfsc-assess/VASTWestCoast")
 check_TMB()
 ```
 
-## Documentation
+## Using VASTWestCoast
 Configuration of the VAST package is complex,
 and the intent of VASTWestCoast was to simplify and standardize
 the code needed to generate indices of abundance for species managed by the
@@ -39,6 +40,7 @@ Example scripts are available in
 
 The simplest way to run VAST is to use
 ```
+?VASTWestCoast::VAST_spp
 VAST_spp(dir = getwd(), species = "sablefish")
 ```
 where the species argument is the common name for the species of interest.
