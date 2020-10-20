@@ -26,23 +26,21 @@ plot_westcoast <- function (g, xlim = c(-127.15, -116.5), ylim = c(31.9, 49.5))
 {
 
    if(.Platform$OS.type == "windows") {
-   
-       world <- rnaturalearth::ne_countries(scale = "medium", 
-           returnclass = "sf")
-       if (missing(g)) {
-           g <- ggplot2::ggplot(data = world)
-       }
-       gg <- g + ggplot2::geom_sf(data = world) + ggplot2::coord_sf(xlim = xlim, 
-           ylim = ylim, expand = FALSE) + ggplot2::theme_bw() + 
-           ggplot2::labs(x = "", y = "")
-       return(gg)
-       
-    }  else {
-    
-      require(Imap) # https://github.com/John-R-Wallace-NOAA/Imap
-      Imap::imap(list(world.h.land, world.h.borders), col = 'black', poly = "grey90", longrange = xlim, latrange = ylim, bg = 'transparent', 
-          grid = TRUE, grid.col = 'grey92', xlab = "", ylab = "", axes = c(1,2), cex.axis = 0.7, aspect = 1.2, zoom = FALSE)
+       world <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf")
+   } else {
+      load('world.RData')
    }
-
+   
+   if (missing(g)) {
+       g <- ggplot2::ggplot(data = world)
+   }
+   
+   gg <- g + ggplot2::geom_sf(data = world) + ggplot2::coord_sf(xlim = xlim, 
+       ylim = ylim, expand = FALSE) + ggplot2::theme_bw() + 
+       ggplot2::labs(x = "", y = "")
+       
+   return(gg)
 }
+
+
 
