@@ -8,6 +8,7 @@
 #' change in sampled depths in the Triennial Survey. A value of
 #' \code{vline = NULL} will remove the line from the plot.
 #'
+#' @export
 #' @author Kelli Faye Johnson
 #' @return A ggplot object.
 #' @examples

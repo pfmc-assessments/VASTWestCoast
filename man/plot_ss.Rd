@@ -7,7 +7,7 @@
 plot_ss(
   file.in = "Table_for_SS3.csv",
   savefile,
-  lab.survey = "survey",
+  lab.survey = "survey ",
   lab.spp = "",
   do.smooth = TRUE
 )

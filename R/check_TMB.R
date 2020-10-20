@@ -26,7 +26,7 @@ check_TMB <- function() {
 
   wd <- getwd()
   on.exit(setwd(wd), add = TRUE)
-  setwd(pkgload::system.file("examples", package = "TMB"))
+  setwd(system.file("examples", package = "TMB"))
   test <- TMB::compile("simple.cpp")
   return(test)
 }

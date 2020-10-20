@@ -25,7 +25,7 @@ column of the grid provided by \pkg{VAST}.
 \examples{
 test <- convert_survey4vast(c("Triennial", "NWFSC.Combo"))
 \dontshow{
-expect_true(all(c("propInTriennial", "propInWCGBTS") == test))
+testthat::expect_true(all(c("propInTriennial", "propInWCGBTS") == test))
 }
 }
 \author{

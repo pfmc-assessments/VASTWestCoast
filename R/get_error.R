@@ -37,7 +37,8 @@
 get_error <- function(conditiondir, envir = parent.frame()) {
   rdataobjfn <- dir(conditiondir, pattern = "Save\\.RData", full.names = TRUE)
   load(rdataobjfn, envir = envir)
-  browseURL("https://raw.githubusercontent.com/nwfsc-assess/VASTWestCoast/master/R/VAST_spp.R")
+  utils::browseURL(
+    "https://raw.githubusercontent.com/nwfsc-assess/VASTWestCoast/master/R/VAST_spp.R")
   message("Please follow the steps below:\n",
     "(1) Manipulate the object named settings,\n",
     "(2) Re-run 'VAST_mesh',\n",
