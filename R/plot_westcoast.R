@@ -24,21 +24,18 @@
 #'
 plot_westcoast <- function (g, xlim = c(-127.15, -116.5), ylim = c(31.9, 49.5)) 
 {
-
-   if(.Platform$OS.type == "windows") {
-       world <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf")
-   } else {
-       load(paste0(find.package('VASTWestCoast'), "/data/world_CRS_4326.RData"))
-   }
-   
-   if (missing(g)) {
-       g <- ggplot2::ggplot(data = world)
-   }
-   
-   gg <- g + ggplot2::geom_sf(data = world) + ggplot2::coord_sf(xlim = xlim, 
-       ylim = ylim, expand = FALSE) + ggplot2::theme_bw() + 
-       ggplot2::labs(x = "", y = "")
-       
-   return(gg)
+    if (.Platform$OS.type == "windows") {
+        world <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf")
+    }
+    else {
+        load(paste0(find.package("VASTWestCoast"), "/data/world_hires_CRS_4326.RData"))
+    }
+    if (missing(g)) {
+        g <- ggplot2::ggplot(data = world)
+    }
+    gg <- g + ggplot2::geom_sf(data = world) + ggplot2::coord_sf(xlim = xlim, 
+        ylim = ylim, expand = FALSE) + ggplot2::theme_bw() + 
+        ggplot2::labs(x = "", y = "")
+    return(gg)
 }
 
