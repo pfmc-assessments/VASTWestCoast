@@ -28,7 +28,8 @@ plot_westcoast <- function (g, xlim = c(-127.15, -116.5), ylim = c(31.9, 49.5))
         world <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf")
     }
     else {
-        load(paste0(find.package("VASTWestCoast"), "/data/world_hires_CRS_4326.RData"))
+        load(paste0(find.package("VASTWestCoast"), "/data/world_hires.RData"))
+        sf::st_crs(world) = 4326
     }
     if (missing(g)) {
         g <- ggplot2::ggplot(data = world)
