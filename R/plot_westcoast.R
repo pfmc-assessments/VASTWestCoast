@@ -28,9 +28,7 @@ plot_westcoast <- function (g, xlim = c(-127.15, -116.5), ylim = c(31.9, 49.5))
    if(.Platform$OS.type == "windows") {
        world <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf")
    } else {
-      require(sf)
-      load('world.RData')
-      sf::st_crs(world) = 4326
+       load(paste0(find.package('VASTWestCoast'), "/data/world_CRS_4326.RData"))
    }
    
    if (missing(g)) {
@@ -43,6 +41,4 @@ plot_westcoast <- function (g, xlim = c(-127.15, -116.5), ylim = c(31.9, 49.5))
        
    return(gg)
 }
-
-
 
