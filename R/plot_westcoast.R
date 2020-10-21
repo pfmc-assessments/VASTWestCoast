@@ -29,6 +29,7 @@ plot_westcoast <- function (g, xlim = c(-127.15, -116.5), ylim = c(31.9, 49.5))
     }
     else {
         load(paste0(find.package("VASTWestCoast"), "/data/world_hires.RData"))
+        # Avoid warning: st_crs<- : replacing crs does not reproject data; use st_transform for that 
         oldOpt <- options(warn = -1)
         sf::st_crs(world) = 4326
         options(oldOpt)
