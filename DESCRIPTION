@@ -18,6 +18,7 @@ Imports:
     rnaturalearthdata,
     nwfscSurvey,
     pander,
+    pkgbuild,
     stats,
     TMB,
     TMBhelper,

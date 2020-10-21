@@ -15,7 +15,19 @@ where the input arguments are specific to those needed for the NWFSC.
 
 ### Installing
 Install issues are always troublesome, for which I am sorry.
-The best guidance I can give you is to close all of your current R sessions and
+To minimize the risk of github issuing you a time out, please run the following
+code if you do not already have a token.
+```
+usethis::browse_github_pat()
+usethis::edit_r_environ()
+```
+A file will open and you should place
+```
+`GITHUB_PAT='placeyournewtokenhere'`.
+```
+in it and then save it.
+
+Next, the best guidance I can give you is to close all of your current R sessions and
 open a new R session before trying to install any of the following packages.
 Lastly, use the internal check function to see if TMB is properly installed
 prior to running other VASTWestCoast functions.
@@ -23,6 +35,8 @@ prior to running other VASTWestCoast functions.
 remotes::install_github("James-Thorson-NOAA/FishStatsUtils")
 remotes::install_github("James-Thorson-NOAA/VAST")
 remotes::install_github("nwfsc-assess/VASTWestCoast")
+library(VASTWestCoast)
+check_rtools()
 check_TMB()
 ```
 

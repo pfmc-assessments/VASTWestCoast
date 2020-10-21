@@ -23,10 +23,20 @@ Rtools40. Most importantly, you can see the location of where
 your computer is trying to find make files. If you have already run this
 function on your computer, then you should see
 \code{"make: Nothing to be done for 'all'"}.
+If the installation of TMB has failed, then you will see
+\code{"Error in TMB::compile(...)"}.
+The most likely culprit for it failing is a faulty installation of
+rtools, specifically rtools40 for R version 4.0 and greater.
 }
 \examples{
+# Hope for a 0
 check_TMB()
+# If you get something other than 0, run
+check_rtools()
 
+}
+\seealso{
+\code{\link{check_rtools}} for checking the installation of rtools.
 }
 \author{
 Kelli Faye Johnson
