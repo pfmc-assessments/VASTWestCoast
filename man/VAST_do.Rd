@@ -57,6 +57,17 @@ specific to the US West Coast. Many parameters are still customizable,
 but many parameters are also set in the background based on the sampling
 protocols and data availability that are specific to each survey.
 }
+\examples{
+\dontrun{
+# Use the default settings to run the model for WCGBTS - sablefish
+settings <- get_settings()
+surveyspp <- get_spp(settings$Species)
+Database <- get_data(survey = surveyspp["survey"], species = surveyspp["species"])
+check <- VAST_do(Database = Database, settings = settings,
+  conditiondir = getwd(), compiledir = getwd())
+}
+
+}
 \author{
 Kelli Faye Johnson
 }

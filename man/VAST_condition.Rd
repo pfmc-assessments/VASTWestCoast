@@ -102,6 +102,19 @@ presume that many US West Coast users will want to change this using the
 \code{settings} argument.
 }
 
+\examples{
+\dontrun{
+# Use the default settings to run the model for WCGBTS - sablefish
+VAST_condition(conditiondir = getwd(), settings = get_settings(),
+  spp = settings$Species, sensitivity = FALSE)
+}
+
+}
+\seealso{
+See \code{\link{get_settings}()} for a list of default settings. Anything not
+included in your own list supplied to the settings argument will be taken from this
+default list.
+}
 \author{
 Kelli Faye Johnson
 }

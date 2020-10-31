@@ -32,6 +32,16 @@
 #' \code{VAST_do}. All R objects are saved in a file called \code{"Save.RData"}
 #' within \code{conditiondir}.
 #'
+#' @examples
+#' \dontrun{
+#' # Use the default settings to run the model for WCGBTS - sablefish
+#' settings <- get_settings()
+#' surveyspp <- get_spp(settings$Species)
+#' Database <- get_data(survey = surveyspp["survey"], species = surveyspp["species"])
+#' check <- VAST_do(Database = Database, settings = settings,
+#'   conditiondir = getwd(), compiledir = getwd())
+#' }
+#'
 VAST_do <- function(Database, settings, conditiondir, compiledir,
   region = c("user", "california_current")) {
 

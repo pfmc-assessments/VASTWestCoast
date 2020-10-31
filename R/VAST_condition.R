@@ -29,13 +29,23 @@
 #' such that no data will be downloaded. todo: document the columns that are needed.
 #' @param sensitivity logical; run sensitivity analyses specific to a given survey.
 #' For example, the Triennial survey can be split into two separate surveys and limited
-#' to 366 m depth. 
+#' to 366 m depth.
 #' @template compiledir
-#' 
+#'
 #' @return Nothing is returned by the function, but the function saves two \code{.RData}
 #' structures to the disk in the \code{conditiondir}.
 #' @author Kelli Faye Johnson
 #' @export
+#' @seealso See \code{\link{get_settings}()} for a list of default settings. Anything not
+#' included in your own list supplied to the settings argument will be taken from this
+#' default list.
+#'
+#' @examples
+#' \dontrun{
+#' # Use the default settings to run the model for WCGBTS - sablefish
+#' VAST_condition(conditiondir = getwd(), settings = get_settings(),
+#'   spp = settings$Species, sensitivity = FALSE)
+#' }
 #'
 VAST_condition <- function(conditiondir, settings, spp,
   overdispersion, data = NULL,
