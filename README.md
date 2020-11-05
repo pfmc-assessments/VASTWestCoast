@@ -10,26 +10,19 @@ where the input arguments are specific to those needed for the NWFSC.
 
 ### Prerequisites
 1. Install [Rtools40](https://cran.r-project.org/bin/).
-2. Have IT add c:\rtools40\usr\bin and c:\rtools40\mingw64\bin to your PATH
-3. Install devtools from CRAN `install.packages("devtools")`
+2. Have IT add c:\rtools40\usr\bin and c:\rtools40\mingw64\bin to your PATH.
+3. Install devtools from CRAN `install.packages("devtools")`.
+4. Check to see if you have a github token `usethis::github_token()` or `gh::gh_whoami()`,
+and if you do not have a token, then generate a token `usethis::browse_github_pat()`
+and copy and paste it into the followinig text `GITHUB_PAT='placeyournewtokenhere'`
+which you will put in your `.Renviron` file found here `usethis::edit_r_environ()`.
+This step allows you to request more packages from github before being issued a time out.
 
 ### Installing
 Install issues are always troublesome, for which I am sorry.
-To minimize the risk of github issuing you a time out, please run the following
-code if you do not already have a token.
-```
-usethis::browse_github_pat()
-usethis::edit_r_environ()
-```
-A file will open and you should place
-```
-`GITHUB_PAT='placeyournewtokenhere'`.
-```
-in it and then save it.
-
-Next, the best guidance I can give you is to close all of your current R sessions and
+The best guidance I can give you is to close all of your current R sessions and
 open a new R session before trying to install any of the following packages.
-Lastly, use the internal check function to see if TMB is properly installed
+Lastly, use the internal check functions to see if TMB is properly installed
 prior to running other VASTWestCoast functions.
 ```
 remotes::install_github("James-Thorson-NOAA/FishStatsUtils")
