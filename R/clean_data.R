@@ -31,10 +31,13 @@ clean_data <- function(data) {
   }
   if (!is.factor(data[, "Sci"])) data[, "Sci"] <- as.factor(data[, "Sci"])
 
-  # Clean Triennial
+  # Clean Triennial & AFSC Slope
   if ("Project" %in% cols) {
     if (unique(data[, "Project"]) == "Triennial") {
       data <- data[!data[, "Year"] %in% 1977, ]
+    }
+    if (unique(data[, "Project"]) == "AFSC.Slope") {
+      data <- data[!data[, "Year"] > 1996, ]
     }
   }
   if (!all(grepl("_[0-9]{4}", as.character(data[, "Vessel"])))) {
