@@ -13,14 +13,17 @@ VAST_do(
 )
 }
 \arguments{
-\item{Database}{A data base entered and returned from or just returned
-from \code{\link{get_data}()}.}
+\item{Database}{A data base returned from \code{\link{get_data}()}.
+Users can also supply their own database as long as it has the same
+column names as the one returned from \code{\link{get_data}()}.}
 
-\item{settings}{A list of settings used to run the spatiotemporal model.
-The full list of settings can be seen by running
+\item{settings}{A list of settings used to run the
+index-standardization model.
+The full list of settings is available with
 \code{\link{get_settings}()}, and
-any settings that are not included in the list supplied to \code{settings}
-will be added using the default values seen \code{get_settings()}.}
+any default settings that are not included in the user-supplied list
+that is passed to to \code{settings}
+will be added using the default values in the master list.}
 
 \item{conditiondir}{A directory, either a full or relative path,
 that will be used to save the results.
@@ -43,7 +46,9 @@ If the default value of \code{"user"} is used, then \code{VAST_do} calls
 \code{california_current_grid} that is used if
 \code{region = "california_current"}. The default removes all grid cells
 that fall in depths shallower than 35 m (including those on land) and
-grid cells within the Cowcod Conservation Areas.}
+grid cells within the Cowcod Conservation Areas. Furthermore, it will only
+predict to the strata that are included in the stratifications rather than
+the entire area.}
 }
 \value{
 Nothing is returned from the function, but many items are saved
@@ -52,7 +57,7 @@ to the disk, largely by other helper functions that are called by
 within \code{conditiondir}.
 }
 \description{
-Major workhorse to run a VAST model using data and settings that are
+Run a VAST model using data and settings that are
 specific to the US West Coast. Many parameters are still customizable,
 but many parameters are also set in the background based on the sampling
 protocols and data availability that are specific to each survey.
