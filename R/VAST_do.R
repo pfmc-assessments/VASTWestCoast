@@ -85,6 +85,10 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     knot_method = "samples", #default is "grid"
     n_categories = length(unique(subdata$Sci))
   )
+  catchability_data <- NULL
+  if (settings[["Passcondition"]]) {
+    catchability_data <- subdata[, "Pass", drop = FALSE]
+  }
   out <- tryCatch(FishStatsUtils::fit_model(
     settings = info,
     Lat_i = subdata[, "Lat"],
@@ -98,11 +102,7 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     # Xconfig_zcp = ,
     # X_gtp = ,
     # X_itp = ,
-    catchabilitydata = if (settings[["Passcondition"]]) {
-        as.matrix(subdata[, "Pass", drop = FALSE])
-      } else {
-        NULL
-      },
+    catchability_data = catchability_data,
     #newtonsteps = 1, #default
     extrapolation_args = c(info["zone"], info["Region"], info["strata.limits"],
       surveyname = convert_survey4vast(survey),
