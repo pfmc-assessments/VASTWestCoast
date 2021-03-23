@@ -108,6 +108,8 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     # X_gtp = ,
     # X_itp = ,
     # Density covariates
+    Q1_formula = ~ Pass,
+    Q2_formula = ~ Pass,
     catchability_data = catchability_data,
     #newtonsteps = 1, #default
     extrapolation_args = c(info["zone"], info["Region"], info["strata.limits"],
