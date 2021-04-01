@@ -60,8 +60,8 @@ plot_ss <- function(file.in = "Table_for_SS3.csv", savefile,
       "\nPlease contact the maintainer(s) to request additional",
       "\nfunctionality here or limit the number of strata in the csv.")
   }
-  if ("north" %in% strat && length(strat) == 3) {
-    colors = c("black", "red", "blue")
+  if ("north" %in% tolower(strat) && length(strat) == 3) {
+    colors <- c("black", "blue", "red")
   }
 
   grDevices::png(filename = savefile,
