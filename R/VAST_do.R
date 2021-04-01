@@ -67,7 +67,6 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
       min(settings[["strata"]][,"south_border"]),
       max(settings[["strata"]][,"north_border"])))
   subdata <- local$mesh$data.inner
-
   info <- FishStatsUtils::make_settings(
     n_x = settings[["nknots"]],
     Region = region,
@@ -154,7 +153,11 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
   modelinfo <- summary_nwfsc(obj = out$tmb_list$Obj,
     parameter_estimates = out$parameter_estimates,
     savedir = conditiondir)
-  plot_ss(file.in = file.path(conditiondir, "Table_for_SS3.csv"),
+  fileindex <- file.path(conditiondir, "Table_for_SS3.csv")
+  indexdata <- read.csv(fileindex)
+  indexdata[,"Year"] <- out$year_labels[indexdata[,"Year"]]
+  write.csv(x = indexdata, file = fileindex, row.names = FALSE)
+  plot_ss(file.in = fileindex,
     lab.survey = survey,
     lab.spp = bquote(italic(.(spp_sci))))
 
