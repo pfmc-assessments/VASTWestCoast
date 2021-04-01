@@ -12,7 +12,7 @@ Sim_Settings <- list(
   "ObsModelcondition" = c(2, 0),
   "nknots" = 500,
   "overdispersion" = NULL,
-  "strata" = data.frame("STRATA" = c("All_areas", "North", "South"),
+  "strata" = data.frame("STRATA" = c("All_areas", "South", "North"),
     north_border = c(49, 36, 49),
     south_border = c(32, 32, 36),
     shallow_border = rep(55, 3),
