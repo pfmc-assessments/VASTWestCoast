@@ -92,7 +92,8 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
   )
   catchability_data <- NULL
   if (settings[["Passcondition"]]) {
-    catchability_data <- subdata[, "Pass", drop = FALSE]
+    passrange <- range(subdata[, "Pass"])
+    catchability_data <- subdata[, "Pass", drop = FALSE] - mean(passrange)
   }
   out <- tryCatch(FishStatsUtils::fit_model(
     settings = info,
