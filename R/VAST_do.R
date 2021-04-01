@@ -90,6 +90,10 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     knot_method = "samples", #default is "grid"
     n_categories = length(unique(subdata$Sci))
   )
+  anisotropic_mesh <- NULL
+  if (info["Region"] == "user") {
+    anisotropic_mesh <- local[["mesh"]]
+  }
   catchability_data <- NULL
   if (settings[["Passcondition"]]) {
     passrange <- range(subdata[, "Pass"])
@@ -120,11 +124,7 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
       randomseed = 1,
       nstart = 100,
       iter.max = 1e3,
-      anisotropic_mesh = if (info["Region"] == "user") {
-        local[["mesh"]]
-      } else {
-        NULL
-      },
+      anisotropic_mesh = anisotropic_mesh,
       Kmeans = NULL,
       fine_scale = info[["fine_scale"]]),
     # optimize_args = ,
