@@ -11,15 +11,17 @@
 #' saved to the disk from VAST_diagnostics
 #' 
 VAST_diagnostics <- function(dir = getwd()) {
+
   # Load the saved file
-  savedfile <- dir(dir, pattern = "^Save.RData", full.names = TRUE)
-  datafile <- dir(dir, pattern = "DatabaseSave.RData", full.names = TRUE)
+  # Use master dir b/c loading the saved files overwrites dir
+  masterdir <- dir
+  savedfile <- dir(masterdir, pattern = "^Save.RData", full.names = TRUE)
   if (length(savedfile) == 0) return(NULL)
   base::load(savedfile)
   if ("simpleError" %in% class(out)) return(NULL)
 
   # Check convergence
-  cat(file = file.path(dir, "convergence_gradient.txt"),
+  cat(file = file.path(masterdir, "convergence_gradient.txt"),
     pander::pandoc.table.return(
       out$parameter_estimates$diagnostics[,
         c("Param","Lower","MLE","Upper","final_gradient")]))
