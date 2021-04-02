@@ -1,48 +1,44 @@
-#' Run \pkg{VAST} Models for a Species Sampled by West Coast Surveys
+#' Run \pkg{VAST} models for a species sampled by west coast surveys
 #'
-#' \code{VAST_spp()} is the highest-level function in \pkg{VASTWestCoast}.
+#' [VAST_spp] is the highest-level function in `VASTWestCoast`.
 #' This function runs \pkg{VAST} for each available data set in the
-#' \href{https://www.webapp.nwfsc.noaa.gov/data}{NWFSC data warehouse}
-#' and is a wrapper for \code{\link{VAST_condition}()}; so it
+#' [NWFSC data warehouse](https://www.webapp.nwfsc.noaa.gov/data)
+#' and is a wrapper for [VAST_condition()]; the function
 #' can take hours to run.
 #'
 #' @details
-#' \code{VAST_spp()} is the highest-level function available in VASTWestCoast.
+#' [VAST_spp()] is the highest-level function available in `VASTWestCoast`.
 #' It will run combinations of data sets and model configurations that are
 #' seen as standard for a given species.
-#' The input argument \code{dist} is the only argument available to the user to
+#' The input argument `dist` is the only argument available to the user to
 #' change which models are run. If you require more user functionality, e.g.,
 #' want to run just a single model or a single survey please see
-#' \code{\link{VAST_do}()} or \code{\link{VAST_condition}()}, respectively.
+#' [VAST_do()] or [VAST_condition()], respectively.
 #' By default, a model with a gamma distribution for positive catch rates and a
 #' model with a lognormal distribution for positive catch rates are both run.
-#' Though this can be changed by altering \code{dist}.
+#' Though this can be changed by altering `dist`.
 #'
-#' Resulting folders that are saved to the disk are structured heirarchically
-#' based on the species name. Inside the main folder, specified by \code{dir},
+#' Resulting folders saved to the disk are structured hierarchically
+#' based on the species name. Inside the main folder, in `dir`,
 #' will be a folder called data that contains one folder for each VAST run.
 #' VAST runs are named according to the survey that collected the data and the
 #' distribution used for positive catch rates.
 #' This structure is thought to match that used by most assessment authors for
 #' a single-species stock assessment.
-#' All R objects are saved in \code{'Save.RData'}
+#' All R objects are saved in `'Save.RData'`
 #' so you can access them to rerun a model or manipulate the output.
 #'
 #' This function, as well as others within VASTWestCoast, rely heavily on
 #' \pkg{nwfscSurvey} to find out more information about the species
 #' of interest, get the necessary data, and set various inputs to VAST.
-#' \itemize{
-#' \item Find surveys of interest in the data warehouse.
-#' \code{VAST_spp()} runs models in the following order:
-#' \itemize{
-#'   \item NWFSC Groundfish Slope Survey,
-#'   \item NWFSC West Coast Groundfish Bottom Trawl Survey,
-#'   \item AFSC Slope Survey, and
-#'   \item Triennial Survey.
-#' }
-#' \item Find the strata for the species.
-#' \item Run \code{\link{VAST_condition}()} for each survey x distribution combo.
-#' }
+#' * Find surveys of interest in the data warehouse.
+#' [VAST_spp()] runs models in the following order:
+#'   * NWFSC Groundfish Slope Survey,
+#'   * NWFSC West Coast Groundfish Bottom Trawl Survey,
+#'   * AFSC Slope Survey, and
+#'   * Triennial Survey.
+#' * Find the strata for the species.
+#' * Run [VAST_condition()] for each survey x distribution combo.
 #'
 #' @param dir An existing directory where you want the new folder that is created
 #' by \code{VAST_spp} to be saved. Here, \code{VAST_spp} will create a folder with
@@ -63,10 +59,10 @@
 #' information (e.g., plots and RData files) to the disk for viewing, further
 #' research, or inclusion in reports.
 #' @seealso
-#' See \code{\link{VAST_condition}()} and \code{\link{VAST_do}()}, in that
+#' See [VAST_condition()] and [VAST_do()], in that
 #' order, for how to run VAST for a survey or a single VAST model, respectively.
 #' 
-#' See \code{\link{check_rtools}()} and \code{\link{check_TMB}()} if you cannot
+#' See [check_rtools()] and [check_TMB()] if you cannot
 #' get this function to run because, more than likely, rtools or TMB are improperly
 #' installed. This is mainly relevant for those new to R 4.0+.
 #'

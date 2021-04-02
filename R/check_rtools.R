@@ -1,4 +1,4 @@
-#' Check Rtools Is Installed Properly
+#' Check Rtools is installed properly
 #'
 #' Check that Rtools is properly installed on your machine such that
 #' packages and code within packages can be compiled.
@@ -15,9 +15,9 @@
 #' @returns Various summaries are printed to the screen to help you troubleshoot
 #' your installation of Rtools. If you make it to the end of this function
 #' successfully, then a value of 0 will be returned and you should be
-#' able to then run \code{\link{check_TMB}()} to see if TMB is properly
+#' able to then run [check_TMB()] to see if TMB is properly
 #' installed for your system.
-#' @seealso \code{\link{check_TMB}()} to see if TMB is properly installed
+#' @seealso [check_TMB()] to see if TMB is properly installed
 #' and has access to rtools.
 #' @examples
 #' # Hope for a 0

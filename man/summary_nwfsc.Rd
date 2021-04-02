@@ -18,13 +18,13 @@ be in csv format.}
 \value{
 Tagged list containing objects for running a VAST model
 \describe{
-  \item{TableA}{Table of settings}
-  \item{TableB}{Table of estimated parameters}
-  \item{TableC}{Table of MLE of fixed effects}
+\item{TableA}{Table of settings}
+\item{TableB}{Table of estimated parameters}
+\item{TableC}{Table of MLE of fixed effects}
 }
 }
 \description{
-Generate output tables requested by the Pacific Fisheries 
+Generate output tables requested by the Pacific Fisheries
 Management Council Science and Statistical Committee
 }
 \author{

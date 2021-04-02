@@ -2,7 +2,7 @@
 % Please edit documentation in R/VAST_condition.R
 \name{VAST_condition}
 \alias{VAST_condition}
-\title{Estimate Parameters by Fitting VAST to Empirical Data}
+\title{Estimate parameters by fitting VAST to empirical data}
 \usage{
 VAST_condition(
   conditiondir,
@@ -20,7 +20,7 @@ that will be used to save the results.
 The directory will be created recursively if it does not already exist.}
 
 \item{settings}{A list of settings used to run the spatiotemporal model. The full
-list of necessary settings can be seen by running \code{\link{get_settings}()}, and
+list of necessary settings can be seen by running \code{\link[=get_settings]{get_settings()}}, and
 any settings that are not included in the list supplied to this argument
 will be added at their default values.}
 
@@ -80,17 +80,14 @@ This file path is tranfered to the \code{CompileDir} within
 \code{\link[VAST]{make_model}()}.}
 }
 \value{
-Nothing is returned by the function, but the function saves two \code{.RData}
-structures to the disk in the \code{conditiondir}.
+Nothing is returned by the function, but the function saves \code{.RData}
+files to the disk in \code{conditiondir}.
 }
 \description{
-Fits data loaded in your R session
-or data that is downloaded from the 
-Northwest Fisheries Science Center datawarehouse
-to a \code{\link[VAST]{make_model}} using
-\code{\link[TMBhelper]{fit_tmb}}.
-For more details on how the VAST model
-is configured see the sections below.
+Fits data loaded in your R session or data that is downloaded from the
+Northwest Fisheries Science Center data warehouse
+to a \link[VAST:make_model]{VAST::make_model} using \link[TMBhelper:fit_tmb]{TMBhelper::fit_tmb}.
+See the sections below for more details on how the model is configured.
 }
 \section{Pass}{
 
@@ -111,7 +108,7 @@ VAST_condition(conditiondir = getwd(), settings = get_settings(),
 
 }
 \seealso{
-See \code{\link{get_settings}()} for a list of default settings. Anything not
+See \code{\link[=get_settings]{get_settings()}} for a list of default settings. Anything not
 included in your own list supplied to the settings argument will be taken from this
 default list.
 }

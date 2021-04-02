@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_inputgrid.R
 \name{get_inputgrid}
 \alias{get_inputgrid}
-\title{Get the Input Grid for a Given Survey}
+\title{Get the input grid for a given survey}
 \usage{
 get_inputgrid(survey, range.depth = c(-35, -Inf), range.lat = c(-Inf, Inf))
 }
@@ -52,7 +52,7 @@ denoted by positive values in the \code{Cowcod} column and grid cells
 with a depth less than 35 m are removed from the prediction area
 for all surveys. The remaining grid cells are chosen for inclusion in
 the predicted area based on the \code{"prop..."} column that is relevant
-to the survey of interest. See \code{\link{convert_survey4vast}()} for
+to the survey of interest. See \code{\link[=convert_survey4vast]{convert_survey4vast()}} for
 column names for a given survey.
 }
 \author{

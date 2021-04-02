@@ -1,12 +1,9 @@
-#' Estimate Parameters by Fitting VAST to Empirical Data
+#' Estimate parameters by fitting VAST to empirical data
 #'
-#' Fits data loaded in your R session
-#' or data that is downloaded from the 
-#' Northwest Fisheries Science Center datawarehouse
-#' to a \code{\link[VAST]{make_model}} using
-#' \code{\link[TMBhelper]{fit_tmb}}.
-#' For more details on how the VAST model
-#' is configured see the sections below.
+#' Fits data loaded in your R session or data that is downloaded from the
+#' Northwest Fisheries Science Center data warehouse
+#' to a [VAST::make_model] using [TMBhelper::fit_tmb].
+#' See the sections below for more details on how the model is configured.
 #'
 #' @section Pass:
 #' The US West Coast has operated using two passes of the survey area, where
@@ -14,16 +11,16 @@
 #' happens temporally and this migration will affect spatial density, then you
 #' should include pass as a covariate. The default is to ignore pass, but I
 #' presume that many US West Coast users will want to change this using the
-#' \code{settings} argument.
+#' `settings` argument.
 #'
 #' @template conditiondir
 #' @param settings A list of settings used to run the spatiotemporal model. The full
-#' list of necessary settings can be seen by running \code{\link{get_settings}()}, and
+#' list of necessary settings can be seen by running [get_settings()], and
 #' any settings that are not included in the list supplied to this argument
-#' will be added at their default values. 
+#' will be added at their default values.
 #' @param spp A character value that includes the survey acronym and the species name
 #' in latin with all words separated by an underscore.
-#' For example, \code{"WCGBTS_Sebastes_crameri"}.
+#' For example, `"WCGBTS_Sebastes_crameri"`.
 #' @template overdispersion
 #' @param data A data frame that can be passed to the conditioning function
 #' such that no data will be downloaded. todo: document the columns that are needed.
@@ -32,11 +29,11 @@
 #' to 366 m depth.
 #' @template compiledir
 #'
-#' @return Nothing is returned by the function, but the function saves two \code{.RData}
-#' structures to the disk in the \code{conditiondir}.
+#' @return Nothing is returned by the function, but the function saves `.RData`
+#' files to the disk in `conditiondir`.
 #' @author Kelli Faye Johnson
 #' @export
-#' @seealso See \code{\link{get_settings}()} for a list of default settings. Anything not
+#' @seealso See [get_settings()] for a list of default settings. Anything not
 #' included in your own list supplied to the settings argument will be taken from this
 #' default list.
 #'

@@ -15,7 +15,7 @@ not be universal.}
 }
 \description{
 Get a triangulation mesh based on the same settings that are used for the
-[example](https://github.com/kaskr/adcomp/blob/master/tmb_examples/spde_mesh.R)
+\href{https://github.com/kaskr/adcomp/blob/master/tmb_examples/spde_mesh.R}{example}
 in Template Model Builder (TMB).
 This function acts as a way to offer documentation and comparison to other
 ways to create meshes and is not actually used within the package.

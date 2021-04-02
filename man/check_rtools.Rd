@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_rtools.R
 \name{check_rtools}
 \alias{check_rtools}
-\title{Check Rtools Is Installed Properly}
+\title{Check Rtools is installed properly}
 \usage{
 check_rtools()
 }
@@ -10,7 +10,7 @@ check_rtools()
 Various summaries are printed to the screen to help you troubleshoot
 your installation of Rtools. If you make it to the end of this function
 successfully, then a value of 0 will be returned and you should be
-able to then run \code{\link{check_TMB}()} to see if TMB is properly
+able to then run \code{\link[=check_TMB]{check_TMB()}} to see if TMB is properly
 installed for your system.
 }
 \description{
@@ -29,7 +29,7 @@ https://cran.r-project.org/bin/windows/Rtools/
 check_rtools()
 }
 \seealso{
-\code{\link{check_TMB}()} to see if TMB is properly installed
+\code{\link[=check_TMB]{check_TMB()}} to see if TMB is properly installed
 and has access to rtools.
 }
 \author{

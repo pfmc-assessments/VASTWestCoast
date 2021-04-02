@@ -2,17 +2,19 @@
 % Please edit documentation in R/plot.inputgrid.R
 \name{plot.inputgrid}
 \alias{plot.inputgrid}
-\title{Plot Inputgrid}
+\title{Plot input grid}
 \usage{
 \method{plot}{inputgrid}(data, savedir = getwd(), lab.survey = "survey")
 }
 \arguments{
-\item{data}{A data frame returned from \code{\link{get_inputgrid}}
+\item{data}{A data frame returned from \link{get_inputgrid}
 that includes the following columns:
-Latitude, available as \code{"Lat"};
-Longitude, available as \code{"Lon"};
-Area, available as \code{"Area_km2"}; and
-Depth in meters.}
+\itemize{
+\item Latitude, available as \code{"Lat"};
+\item Longitude, available as \code{"Lon"};
+\item Area, available as \code{"Area_km2"}; and
+\item Depth in meters.
+}}
 
 \item{savedir}{A file path to the directory where the results will be saved.
 The default is the current working directory.
@@ -33,7 +35,7 @@ generic specification.}
 \value{
 A figure 9 inches long (roughly fitting on a single page)
 is saved to the disk, along with a caption. The files are saved
-using the name VASTWestCoast_mesh.[ext]. The \pkg{ggplot2} object
+using the name VASTWestCoast_mesh.xxx. The \pkg{ggplot2} object
 is returned for future manipulation.
 }
 \description{

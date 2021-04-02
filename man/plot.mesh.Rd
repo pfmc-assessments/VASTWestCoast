@@ -2,12 +2,12 @@
 % Please edit documentation in R/plot.mesh.R
 \name{plot.mesh}
 \alias{plot.mesh}
-\title{Plot Mesh}
+\title{Plot mesh}
 \usage{
 \method{plot}{mesh}(mesh, savedir = getwd(), lab.survey = "survey")
 }
 \arguments{
-\item{mesh}{An \pkg{INLA} mesh resulting from \code{\link{get_mesh}()}.}
+\item{mesh}{An \pkg{INLA} mesh resulting from \code{\link[=get_mesh]{get_mesh()}}.}
 
 \item{savedir}{A file path to the directory where the results will be saved.
 The default is the current working directory.
@@ -28,15 +28,15 @@ generic specification.}
 \value{
 A figure nine inches long (roughly fitting on a single page)
 is saved to the disk, along with a caption. The files are saved
-using the name VASTWestCoast_mesh.[ext]. The \pkg{ggplot2} is also
+using the name VASTWestCoast_mesh.xxx. The \pkg{ggplot2} is also
 returned for future manipulation.
 }
 \description{
-Plot a mesh created from the \code{\link{get_mesh}} that is saved in
+Plot a mesh created from the \link{get_mesh} that is saved in
 the specified directory as \code{VASTWestCoast_mesh}.
 }
 \seealso{
-See \code{\link[INLA]{plot.inla.mesh}()} for regular base R
+See \code{\link[INLA:plot.inla.mesh]{INLA::plot.inla.mesh()}} for regular base R
 methods for plotting meshes, which can be called using
 \code{plot(meshobject)}.
 }

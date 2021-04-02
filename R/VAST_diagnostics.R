@@ -1,15 +1,15 @@
-#' Run Diagnostic Plots for VASTWestCoast Output
+#' Run diagnostic plots for VASTWestCoast output
 #' 
 #' @param dir The directory where the output from 
-#' \code{\link{VAST_condition}} is saved. Can be a relative
+#' [VAST_condition] is saved. Can be a relative
 #' or an absolute path.
 #' 
 #' @export
 #' @author Kelli Faye Johnson
 #' 
-#' @return todo: Make a list of the tables and figures that are 
-#' saved to the disk from VAST_diagnostics
-#' 
+#' @return Nothing is returned.
+#' * convergence_gradient.txt: Parameter estimates
+#'
 VAST_diagnostics <- function(dir = getwd()) {
 
   # Load the saved file

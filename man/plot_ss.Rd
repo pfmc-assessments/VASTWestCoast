@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_ss.R
 \name{plot_ss}
 \alias{plot_ss}
-\title{Plot Index From SS3 Table}
+\title{Plot index from SS table}
 \usage{
 plot_ss(
   file.in = "Table_for_SS3.csv",
@@ -15,7 +15,7 @@ plot_ss(
 \arguments{
 \item{file.in}{A file path pointing to the \code{"Table_for_SS3.csv"} file
 that has the results you wish to plot. The path can be relative or absolute.
-This file is generated while running \code{\link{VAST_condition}()}.}
+This file is generated while running \code{\link[=VAST_condition]{VAST_condition()}}.}
 
 \item{savefile}{The file name that you want the results saved to. A full path can
 be specified, else the file will be saved in the current directory.}
@@ -48,7 +48,7 @@ A 10 by 7 inch png is saved to the disk showing a time series of the
 estimated index of abundance from a single model run. If there are more than
 one strata, all strata are plotted, but the summary strata is always
 plotted in black and will be the only line with confidence intervals.
-Estimates are in metric tonnes, as labelled.
+Estimates are in metric tonnes, as labeled.
 Years with estimates of zero are excluded from the figure.
 A caption with a Latex label is also written to a csv file, where the first
 column is the label and the second column is the caption.

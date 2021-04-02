@@ -2,7 +2,7 @@
 % Please edit documentation in R/convert_survey4vast.R
 \name{convert_survey4vast}
 \alias{convert_survey4vast}
-\title{Convert Survey Name to VAST Column Name}
+\title{Convert survey name to VAST column name}
 \usage{
 convert_survey4vast(survey)
 }
@@ -19,7 +19,7 @@ don't pertain to a survey will return \code{"propInWCGBTS"}.
 }
 \description{
 Convert a character string that specifies the survey name in terms
-of \pkg{nwfscSurvey} to that used in the \code{\link{get_inputgrid}}
+of \pkg{nwfscSurvey} to that used in the \link{get_inputgrid}
 column of the grid provided by \pkg{VAST}.
 }
 \examples{

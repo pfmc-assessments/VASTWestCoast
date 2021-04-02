@@ -1,20 +1,20 @@
-#' Plot Mesh
+#' Plot mesh
 #'
-#' Plot a mesh created from the \code{\link{get_mesh}} that is saved in
-#' the specified directory as \code{VASTWestCoast_mesh}.
+#' Plot a mesh created from the [get_mesh] that is saved in
+#' the specified directory as `VASTWestCoast_mesh`.
 #'
-#' @param mesh An \pkg{INLA} mesh resulting from \code{\link{get_mesh}()}.
+#' @param mesh An \pkg{INLA} mesh resulting from [get_mesh()].
 #' @template savedir
 #' @template lab.survey
 #'
 #' @author Kelli Faye Johnson
 #' @return A figure nine inches long (roughly fitting on a single page)
 #' is saved to the disk, along with a caption. The files are saved
-#' using the name VASTWestCoast_mesh.[ext]. The \pkg{ggplot2} is also
+#' using the name VASTWestCoast_mesh.xxx. The \pkg{ggplot2} is also
 #' returned for future manipulation.
-#' @seealso See \code{\link[INLA]{plot.inla.mesh}()} for regular base R
+#' @seealso See [INLA::plot.inla.mesh()] for regular base R
 #' methods for plotting meshes, which can be called using
-#' \code{plot(meshobject)}.
+#' `plot(meshobject)`.
 
 plot.mesh <- function(mesh, savedir = getwd(),
   lab.survey = "survey") {

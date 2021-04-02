@@ -2,21 +2,24 @@
 % Please edit documentation in R/VAST_diagnostics.R
 \name{VAST_diagnostics}
 \alias{VAST_diagnostics}
-\title{Run Diagnostic Plots for VASTWestCoast Output}
+\title{Run diagnostic plots for VASTWestCoast output}
 \usage{
 VAST_diagnostics(dir = getwd())
 }
 \arguments{
-\item{dir}{The directory where the output from 
-\code{\link{VAST_condition}} is saved. Can be a relative
+\item{dir}{The directory where the output from
+\link{VAST_condition} is saved. Can be a relative
 or an absolute path.}
 }
 \value{
-todo: Make a list of the tables and figures that are 
-saved to the disk from VAST_diagnostics
+Nothing is returned.
+\itemize{
+\item convergence_gradient.txt: Parameter estimates
+\item VASTWestCoast_QQ.png: Quantile-Quantile plot
+}
 }
 \description{
-Run Diagnostic Plots for VASTWestCoast Output
+Run diagnostic plots for VASTWestCoast output
 }
 \author{
 Kelli Faye Johnson

@@ -1,30 +1,30 @@
-#' Shortened Code for \code{\link[FishStatsUtils:fit_model]{VAST}}
+#' Shortened code for [FishStatsUtils::fit_model]
 #'
 #' Run a VAST model using data and settings that are
 #' specific to the US West Coast. Many parameters are still customizable,
 #' but many parameters are also set in the background based on the sampling
 #' protocols and data availability that are specific to each survey.
 #'
-#' @param Database A data base returned from \code{\link{get_data}()}.
+#' @param Database A data base returned from [get_data()].
 #' Users can also supply their own database as long as it has the same
-#' column names as the one returned from \code{\link{get_data}()}.
+#' column names as the one returned from [get_data()].
 #' @param settings A list of settings used to run the
 #' index-standardization model.
 #' The full list of settings is available with
-#' \code{\link{get_settings}()}, and
+#' [get_settings()], and
 #' any default settings that are not included in the user-supplied list
-#' that is passed to to \code{settings}
+#' that is passed to to `settings`
 #' will be added using the default values in the master list.
 #' @template conditiondir
 #' @template compiledir
 #' @param region A single character value specifying the region of interest.
 #' This value will be passed to
-#' \code{\link[FishStatsUtils]{make_extrapolation_info}()}, where the region
+#' [FishStatsUtils::make_extrapolation_info()], where the region
 #' defines the background data set that is used to create the prediction grid.
-#' If the default value of \code{"user"} is used, then \code{VAST_do} calls
-#' \code{\link{get_inputgrid}} to define a corrected version of the
-#' \code{california_current_grid} that is used if
-#' \code{region = "california_current"}. The default removes all grid cells
+#' If the default value of `"user"` is used, then [VAST_do] calls
+#' [get_inputgrid] to define a corrected version of the
+#' `california_current_grid` that is used if
+#' `region = "california_current"`. The default removes all grid cells
 #' that fall in depths shallower than 35 m (including those on land) and
 #' grid cells within the Cowcod Conservation Areas. Furthermore, it will only
 #' predict to the strata that are included in the stratifications rather than
@@ -34,8 +34,8 @@
 #' @export
 #' @return Nothing is returned from the function, but many items are saved
 #' to the disk, largely by other helper functions that are called by
-#' \code{VAST_do}. All R objects are saved in a file called \code{"Save.RData"}
-#' within \code{conditiondir}.
+#' [VAST_do]. All R objects are saved in a file called `"Save.RData"`
+#' within `conditiondir`.
 #'
 #' @examples
 #' \dontrun{
@@ -154,9 +154,9 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     parameter_estimates = out$parameter_estimates,
     savedir = conditiondir)
   fileindex <- file.path(conditiondir, "Table_for_SS3.csv")
-  indexdata <- read.csv(fileindex)
+  indexdata <- utils::read.csv(fileindex)
   indexdata[,"Year"] <- out$year_labels[indexdata[,"Year"]]
-  write.csv(x = indexdata, file = fileindex, row.names = FALSE)
+  utils::write.csv(x = indexdata, file = fileindex, row.names = FALSE)
   plot_ss(file.in = fileindex,
     lab.survey = survey,
     lab.spp = bquote(italic(.(spp_sci))))

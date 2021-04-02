@@ -1,27 +1,27 @@
-#' Get R Objects from Model with Error
+#' Get R objects from model with error
 #'
-#' Load two \code{RData} objects, one with the error message
+#' Load two `RData` objects, one with the error message
 #' and one with the R objects used to produce the model.
 #'
 #' @details
 #' This function will replace all objects in your current environment with
-#' those found using \code{load} if any names overlap. As recommended in
-#' \code{?load}, it is safer to use the \code{envir =} parameter to load
-#' into a different environment or use \code{attach} as a wrapper for
-#' \code{load()}. We leave this up to the user and use a default of loading
+#' those found using [base::load] if any names overlap. As recommended in
+#' `?load`, it is safer to use the `envir =` parameter to load
+#' into a different environment or use `attach` as a wrapper for
+#' [base::load()]. We leave this up to the user and use a default of loading
 #' everything into the current environment. We recommend running
-#' \code{ls()} prior to running this function so you can see
+#' `ls()` prior to running this function so you can see
 #' which objects are new and which were previously in your environment.
 #'
 #' @template conditiondir
 #' @param envir The environment where the data should be loaded.
-#' The default, \code{parent.frame()} will load all objects to your current
+#' The default, `parent.frame()` will load all objects to your current
 #' environment.
 #' @export
 #' @author Kelli Faye Johnson
-#' @return Several R objects are loaded into the specified \code{envir},
+#' @return Several R objects are loaded into the specified `envir`,
 #' including the model results, which is called 'out'. Additionally, a web
-#' browser is opened navigating users to the code of \code{\link{VAST_do}}
+#' browser is opened navigating users to the code of [VAST_do]
 #' to facilitate rapid rerunning of the model using the loaded objects.
 #'
 #' @examples

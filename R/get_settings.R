@@ -1,17 +1,17 @@
-#' Add Default Settings To User List
+#' Add default settings to user list
 #'
 #' Get default settings for VASTWestCoast where users do not have
-#' to input a single value, but if they do, then \code{get_settings}
+#' to input a single value, but if they do, then `get_settings`
 #' will only add those values that are not already included in the list.
 #'
 #' @param settings A list of the current settings where each object in the
 #' list must be named. Names that are in the stored list but not the list
 #' provided in this argument will be added to the value returned.
-#' The default value of \code{NULL} leads to a full list being returned.
+#' The default value of `NULL` leads to a full list being returned.
 #' @template verbose
 #'
 #' @return A list of setting for running a conditioning model or a simulation
-#' with \code{\link{VAST}}.
+#' with [VAST].
 #'
 #' @author Kelli Faye Johnson
 #' @export
@@ -88,10 +88,10 @@ get_settings <- function(settings = NULL, verbose = FALSE) {
 #' @param par A vector of values that do not need to be named.
 #' If a single value is provided, it will be repeated for each needed value.
 #' @param default A vector of default values that will be used if
-#' \code{par = NULL}. The names from this vector are always copied
+#' `par = NULL`. The names from this vector are always copied
 #' over to the vector that is returned, so name them well.
-#' @return A vector of values the same length as \code{default} and with the
-#' same names as those given to \code{default}.
+#' @return A vector of values the same length as `default` and with the
+#' same names as those given to `default`.
 get_settings_single <- function(par, default) {
   if (is.null(par)) {
     return(default)

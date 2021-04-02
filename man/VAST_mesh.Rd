@@ -2,7 +2,7 @@
 % Please edit documentation in R/VAST_mesh.R
 \name{VAST_mesh}
 \alias{VAST_mesh}
-\title{Create Grid and Mesh for VASTWestCoast}
+\title{Create grid and mesh for VASTWestCoast}
 \usage{
 VAST_mesh(
   data,
@@ -15,8 +15,8 @@ VAST_mesh(
 }
 \arguments{
 \item{data}{A data frame extracted from the NWFSC data warehouse using
-\code{\link{get_data}}. These points will be used as starting locations
-for the knot locations in the final mesh. Loations do not need to be
+\link{get_data}. These points will be used as starting locations
+for the knot locations in the final mesh. Locations do not need to be
 positive tows, and all tow locations can be included, which is the default.}
 
 \item{survey}{A character value supplying the survey name.
@@ -67,8 +67,8 @@ Create the input grid and the mesh based on the survey and
 format all objects as needed for VASTWestCoast.
 }
 \seealso{
-See \code{\link{get_inputgrid}}, \code{\link{get_mesh}},
-\code{\link{plot.inputgrid}}, and \code{\link{plot.mesh}}.
+See \link{get_inputgrid}, \link{get_mesh},
+\link{plot.inputgrid}, and \link{plot.mesh}.
 }
 \author{
 Kelli Faye Johnson

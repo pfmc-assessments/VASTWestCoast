@@ -2,7 +2,7 @@
 % Please edit documentation in R/VAST_do.R
 \name{VAST_do}
 \alias{VAST_do}
-\title{Shortened Code for \code{\link[FishStatsUtils:fit_model]{VAST}}}
+\title{Shortened code for \link[FishStatsUtils:fit_model]{FishStatsUtils::fit_model}}
 \usage{
 VAST_do(
   Database,
@@ -13,14 +13,14 @@ VAST_do(
 )
 }
 \arguments{
-\item{Database}{A data base returned from \code{\link{get_data}()}.
+\item{Database}{A data base returned from \code{\link[=get_data]{get_data()}}.
 Users can also supply their own database as long as it has the same
-column names as the one returned from \code{\link{get_data}()}.}
+column names as the one returned from \code{\link[=get_data]{get_data()}}.}
 
 \item{settings}{A list of settings used to run the
 index-standardization model.
 The full list of settings is available with
-\code{\link{get_settings}()}, and
+\code{\link[=get_settings]{get_settings()}}, and
 any default settings that are not included in the user-supplied list
 that is passed to to \code{settings}
 will be added using the default values in the master list.}
@@ -39,10 +39,10 @@ This file path is tranfered to the \code{CompileDir} within
 
 \item{region}{A single character value specifying the region of interest.
 This value will be passed to
-\code{\link[FishStatsUtils]{make_extrapolation_info}()}, where the region
+\code{\link[FishStatsUtils:make_extrapolation_info]{FishStatsUtils::make_extrapolation_info()}}, where the region
 defines the background data set that is used to create the prediction grid.
-If the default value of \code{"user"} is used, then \code{VAST_do} calls
-\code{\link{get_inputgrid}} to define a corrected version of the
+If the default value of \code{"user"} is used, then \link{VAST_do} calls
+\link{get_inputgrid} to define a corrected version of the
 \code{california_current_grid} that is used if
 \code{region = "california_current"}. The default removes all grid cells
 that fall in depths shallower than 35 m (including those on land) and
@@ -53,7 +53,7 @@ the entire area.}
 \value{
 Nothing is returned from the function, but many items are saved
 to the disk, largely by other helper functions that are called by
-\code{VAST_do}. All R objects are saved in a file called \code{"Save.RData"}
+\link{VAST_do}. All R objects are saved in a file called \code{"Save.RData"}
 within \code{conditiondir}.
 }
 \description{

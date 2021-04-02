@@ -19,7 +19,7 @@ A vector with two entries, survey specifies the survey
 name and species provides a normalized scientific name.
 }
 \description{
-Separate a single character string into three words to 
+Separate a single character string into three words to
 determine the survey and scientific name for the species
 of interest.
 }

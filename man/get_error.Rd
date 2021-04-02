@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_error.R
 \name{get_error}
 \alias{get_error}
-\title{Get R Objects from Model with Error}
+\title{Get R objects from model with error}
 \usage{
 get_error(conditiondir, envir = parent.frame())
 }
@@ -18,7 +18,7 @@ environment.}
 \value{
 Several R objects are loaded into the specified \code{envir},
 including the model results, which is called 'out'. Additionally, a web
-browser is opened navigating users to the code of \code{\link{VAST_do}}
+browser is opened navigating users to the code of \link{VAST_do}
 to facilitate rapid rerunning of the model using the loaded objects.
 }
 \description{
@@ -27,10 +27,10 @@ and one with the R objects used to produce the model.
 }
 \details{
 This function will replace all objects in your current environment with
-those found using \code{load} if any names overlap. As recommended in
-\code{?load}, it is safer to use the \code{envir =} parameter to load
+those found using \link[base:load]{base::load} if any names overlap. As recommended in
+\code{?load}, it is safer to use the \verb{envir =} parameter to load
 into a different environment or use \code{attach} as a wrapper for
-\code{load()}. We leave this up to the user and use a default of loading
+\code{\link[base:load]{base::load()}}. We leave this up to the user and use a default of loading
 everything into the current environment. We recommend running
 \code{ls()} prior to running this function so you can see
 which objects are new and which were previously in your environment.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/VAST_spp.R
 \name{VAST_spp}
 \alias{VAST_spp}
-\title{Run \pkg{VAST} Models for a Species Sampled by West Coast Surveys}
+\title{Run \pkg{VAST} models for a species sampled by west coast surveys}
 \usage{
 VAST_spp(dir, species, dist = c("lognormal", "gamma"))
 }
@@ -28,26 +28,26 @@ information (e.g., plots and RData files) to the disk for viewing, further
 research, or inclusion in reports.
 }
 \description{
-\code{VAST_spp()} is the highest-level function in \pkg{VASTWestCoast}.
+\link{VAST_spp} is the highest-level function in \code{VASTWestCoast}.
 This function runs \pkg{VAST} for each available data set in the
 \href{https://www.webapp.nwfsc.noaa.gov/data}{NWFSC data warehouse}
-and is a wrapper for \code{\link{VAST_condition}()}; so it
+and is a wrapper for \code{\link[=VAST_condition]{VAST_condition()}}; the function
 can take hours to run.
 }
 \details{
-\code{VAST_spp()} is the highest-level function available in VASTWestCoast.
+\code{\link[=VAST_spp]{VAST_spp()}} is the highest-level function available in \code{VASTWestCoast}.
 It will run combinations of data sets and model configurations that are
 seen as standard for a given species.
 The input argument \code{dist} is the only argument available to the user to
 change which models are run. If you require more user functionality, e.g.,
 want to run just a single model or a single survey please see
-\code{\link{VAST_do}()} or \code{\link{VAST_condition}()}, respectively.
+\code{\link[=VAST_do]{VAST_do()}} or \code{\link[=VAST_condition]{VAST_condition()}}, respectively.
 By default, a model with a gamma distribution for positive catch rates and a
 model with a lognormal distribution for positive catch rates are both run.
 Though this can be changed by altering \code{dist}.
 
-Resulting folders that are saved to the disk are structured heirarchically
-based on the species name. Inside the main folder, specified by \code{dir},
+Resulting folders saved to the disk are structured hierarchically
+based on the species name. Inside the main folder, in \code{dir},
 will be a folder called data that contains one folder for each VAST run.
 VAST runs are named according to the survey that collected the data and the
 distribution used for positive catch rates.
@@ -61,15 +61,15 @@ This function, as well as others within VASTWestCoast, rely heavily on
 of interest, get the necessary data, and set various inputs to VAST.
 \itemize{
 \item Find surveys of interest in the data warehouse.
-\code{VAST_spp()} runs models in the following order:
+\code{\link[=VAST_spp]{VAST_spp()}} runs models in the following order:
 \itemize{
-  \item NWFSC Groundfish Slope Survey,
-  \item NWFSC West Coast Groundfish Bottom Trawl Survey,
-  \item AFSC Slope Survey, and
-  \item Triennial Survey.
+\item NWFSC Groundfish Slope Survey,
+\item NWFSC West Coast Groundfish Bottom Trawl Survey,
+\item AFSC Slope Survey, and
+\item Triennial Survey.
 }
 \item Find the strata for the species.
-\item Run \code{\link{VAST_condition}()} for each survey x distribution combo.
+\item Run \code{\link[=VAST_condition]{VAST_condition()}} for each survey x distribution combo.
 }
 }
 \examples{
@@ -92,10 +92,10 @@ grep("skate", sppnames[, "common"], value = TRUE)
 
 }
 \seealso{
-See \code{\link{VAST_condition}()} and \code{\link{VAST_do}()}, in that
+See \code{\link[=VAST_condition]{VAST_condition()}} and \code{\link[=VAST_do]{VAST_do()}}, in that
 order, for how to run VAST for a survey or a single VAST model, respectively.
 
-See \code{\link{check_rtools}()} and \code{\link{check_TMB}()} if you cannot
+See \code{\link[=check_rtools]{check_rtools()}} and \code{\link[=check_TMB]{check_TMB()}} if you cannot
 get this function to run because, more than likely, rtools or TMB are improperly
 installed. This is mainly relevant for those new to R 4.0+.
 }

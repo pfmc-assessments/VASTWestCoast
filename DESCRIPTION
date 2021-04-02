@@ -1,5 +1,5 @@
 Package: VASTWestCoast
-Version: 1.1.5
+Version: 1.1.6
 Title: Estimation and simulation with VAST for the US West Coast
 Author: Kelli Faye Johnson <kelli.johnson@noaa.gov>
 Maintainer: Kelli Faye Johnson <kelli.johnson@noaa.gov>
@@ -12,6 +12,7 @@ Imports:
     INLA,
     FishStatsUtils,
     ggplot2,
+    graphics,
     grDevices,
     knitr,
     rnaturalearth,
@@ -19,11 +20,13 @@ Imports:
     nwfscSurvey,
     pander,
     pkgbuild,
+    sp,
     stats,
     TMB,
     TMBhelper,
     ThorsonUtilities,
-    tweedie
+    tweedie,
+    utils
 Suggests:
     devtools,
     roxygen2,
@@ -32,6 +35,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 URL:
 VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Additional_repositories: https://inla.r-inla-download.org/R/stable
 Remotes: 

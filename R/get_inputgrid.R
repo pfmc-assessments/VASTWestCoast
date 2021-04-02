@@ -1,14 +1,14 @@
-#' Get the Input Grid for a Given Survey
+#' Get the input grid for a given survey
 #'
 #' Define the input grid for a given survey, where positive values for
 #' each coordinate pair define the area in square kilometers to predict to.
 #'
 #' @details Grid cells within the cowcod conservation area
-#' denoted by positive values in the \code{Cowcod} column and grid cells
+#' denoted by positive values in the `Cowcod` column and grid cells
 #' with a depth less than 35 m are removed from the prediction area
 #' for all surveys. The remaining grid cells are chosen for inclusion in
-#' the predicted area based on the \code{"prop..."} column that is relevant
-#' to the survey of interest. See \code{\link{convert_survey4vast}()} for
+#' the predicted area based on the `"prop..."` column that is relevant
+#' to the survey of interest. See [convert_survey4vast()] for
 #' column names for a given survey.
 #' @template survey
 #' @template range.depth

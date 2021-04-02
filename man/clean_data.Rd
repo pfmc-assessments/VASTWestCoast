@@ -7,13 +7,13 @@
 clean_data(data)
 }
 \arguments{
-\item{data}{A data frame that you want to use for a 
+\item{data}{A data frame that you want to use for a
 VAST model.}
 }
 \description{
 Many specific column names are needed for VAST but the data
 are downloaded from several repositories, thus making cleaning
-the data a necessary step before running VAST. This function 
+the data a necessary step before running VAST. This function
 attempts to standardize the columns to work with VAST.
 }
 \details{

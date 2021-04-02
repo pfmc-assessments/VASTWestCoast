@@ -1,20 +1,20 @@
-#' Plot Inputgrid
+#' Plot input grid
 #'
 #' Plot a map of the grid cells used in the prediction of VAST results.
 #'
-#' @param data A data frame returned from \code{\link{get_inputgrid}}
+#' @param data A data frame returned from [get_inputgrid]
 #' that includes the following columns:
-#' Latitude, available as \code{"Lat"};
-#' Longitude, available as \code{"Lon"};
-#' Area, available as \code{"Area_km2"}; and
-#' Depth in meters.
+#' * Latitude, available as `"Lat"`;
+#' * Longitude, available as `"Lon"`;
+#' * Area, available as `"Area_km2"`; and
+#' * Depth in meters.
 #' @template savedir
 #' @template lab.survey
 #'
 #' @author Kelli Faye Johnson
 #' @return A figure 9 inches long (roughly fitting on a single page)
 #' is saved to the disk, along with a caption. The files are saved
-#' using the name VASTWestCoast_mesh.[ext]. The \pkg{ggplot2} object
+#' using the name VASTWestCoast_mesh.xxx. The \pkg{ggplot2} object
 #' is returned for future manipulation.
 
 plot.inputgrid <- function(data, savedir = getwd(),

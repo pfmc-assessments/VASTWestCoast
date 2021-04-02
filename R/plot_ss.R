@@ -1,19 +1,19 @@
-#' Plot Index From SS3 Table
+#' Plot index from SS table
 #'
 #' Plot a single time series of estimated index values for the
-#' US West Coast using data in a \code{"Table_for_SS3.csv"} file.
+#' US West Coast using data in a `"Table_for_SS3.csv"` file.
 #'
-#' @param file.in A file path pointing to the \code{"Table_for_SS3.csv"} file
+#' @param file.in A file path pointing to the `"Table_for_SS3.csv"` file
 #' that has the results you wish to plot. The path can be relative or absolute.
-#' This file is generated while running \code{\link{VAST_condition}()}.
+#' This file is generated while running [VAST_condition()].
 #' @template savefile
 #' @template lab.survey
 #' @param lab.spp A character string that will be pasted after the survey name
 #' for the main title for the figure. Typically, this is the species name.
 #' Scientific names can be passed using
-#' \code{lab.spp = expression(italic("xxx"))} or
-#' \code{lab.spp = bquote(italic(.(xxx)))} if you want to evaluate the
-#' object \code{xxx}.
+#' `lab.spp = expression(italic("xxx"))` or
+#' `lab.spp = bquote(italic(.(xxx)))` if you want to evaluate the
+#' object `xxx`.
 #' @param do.smooth A logical value specifying whether or not a smoother should
 #' be added for the first strata, which is typically the strata that includes
 #' all areas.
@@ -23,7 +23,7 @@
 #' estimated index of abundance from a single model run. If there are more than
 #' one strata, all strata are plotted, but the summary strata is always
 #' plotted in black and will be the only line with confidence intervals.
-#' Estimates are in metric tonnes, as labelled.
+#' Estimates are in metric tonnes, as labeled.
 #' Years with estimates of zero are excluded from the figure.
 #' A caption with a Latex label is also written to a csv file, where the first
 #' column is the label and the second column is the caption.

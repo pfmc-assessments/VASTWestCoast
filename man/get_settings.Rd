@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_settings.R
 \name{get_settings}
 \alias{get_settings}
-\title{Add Default Settings To User List}
+\title{Add default settings to user list}
 \usage{
 get_settings(settings = NULL, verbose = FALSE)
 }
@@ -18,7 +18,7 @@ to nothing being printed.}
 }
 \value{
 A list of setting for running a conditioning model or a simulation
-with \code{\link{VAST}}.
+with \link{VAST}.
 }
 \description{
 Get default settings for VASTWestCoast where users do not have
