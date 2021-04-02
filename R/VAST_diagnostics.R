@@ -9,6 +9,7 @@
 #' 
 #' @return Nothing is returned.
 #' * convergence_gradient.txt: Parameter estimates
+#' * VASTWestCoast_QQ.png: Quantile-Quantile plot
 #'
 VAST_diagnostics <- function(dir = getwd()) {
 
@@ -19,6 +20,9 @@ VAST_diagnostics <- function(dir = getwd()) {
   if (length(savedfile) == 0) return(NULL)
   base::load(savedfile)
   if ("simpleError" %in% class(out)) return(NULL)
+
+  # Figures
+  plot_qq(outdir = masterdir, model = out)
 
   # Check convergence
   cat(file = file.path(masterdir, "convergence_gradient.txt"),
