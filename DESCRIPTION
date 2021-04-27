@@ -36,7 +36,7 @@ Encoding: UTF-8
 URL:
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Additional_repositories: https://inla.r-inla-download.org/R/stable
 Remotes: 
     github::kaskr/TMB_contrib_R/TMBhelper,
