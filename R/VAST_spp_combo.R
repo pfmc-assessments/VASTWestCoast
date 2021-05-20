@@ -85,7 +85,25 @@
 #' # Vector of all available skates
 #' grep("skate", sppnames[, "common"], value = TRUE)
 #' }
-#'VAST_spp_combo(dir=getwd(), species="sablefish", dist="lognormal", anisotropy = FALSE)
+#'
+#'# Run lognormal models
+# VAST_spp_combo(dir=getwd(), species="sablefish", dist="lognormal", anisotropy = FALSE)
+# # rename parameter estimates
+# file.rename(from="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates.Rdata",
+# to="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates_isotropic_noVessel.Rdata")
+# #VAST_spp_combo(dir=getwd(), species="sablefish", dist="lognormal", anisotropy = TRUE)
+# # rename parameter estimates
+# file.rename(from="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates.Rdata",
+# to="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates_anisotropic_noVessel.Rdata")
+# 
+# VAST_spp_combo(dir=getwd(), species="sablefish", dist="lognormal", anisotropy = FALSE,vessel_re=TRUE)
+# # rename parameter estimates
+# file.rename(from="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates.Rdata",
+# to="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates_isotropic_Vessel.Rdata")
+# #VAST_spp_combo(dir=getwd(), species="sablefish", dist="lognormal", anisotropy = TRUE,vessel_re=TRUE)
+# # rename parameter estimates
+# file.rename(from="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates.Rdata",
+# to="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates_anisotropic_Vessel.Rdata")
 VAST_spp_combo <- function(dir, species,
   dist = c("lognormal", "gamma"), anisotropy = FALSE, vessel_re = FALSE) {
 
