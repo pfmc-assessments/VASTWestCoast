@@ -105,17 +105,9 @@ VAST_spp_combo(dir=getwd(), species="sablefish", dist="lognormal", anisotropy = 
 # rename parameter estimates
 file.rename(from="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates.Rdata",
 to="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates_isotropic_noVessel.Rdata")
-VAST_spp_combo(dir=getwd(), species="sablefish", dist="lognormal", anisotropy = TRUE)
-# rename parameter estimates
-file.rename(from="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates.Rdata",
-to="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates_anisotropic_noVessel.Rdata")
 
-VAST_spp_combo(dir=getwd(), species="sablefish", dist="lognormal", anisotropy = FALSE,vessel_re=TRUE)
-# rename parameter estimates
-file.rename(from="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates.Rdata",
-to="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates_isotropic_Vessel.Rdata")
 VAST_spp_combo(dir=getwd(), species="sablefish", dist="lognormal", anisotropy = TRUE,vessel_re=TRUE)
-# rename parameter estimates
+rename parameter estimates
 file.rename(from="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates.Rdata",
 to="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates_anisotropic_Vessel.Rdata")
 }
