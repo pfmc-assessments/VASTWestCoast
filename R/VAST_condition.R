@@ -76,7 +76,7 @@ VAST_condition <- function(conditiondir, settings, spp,
     Database = Database,
     settings = settings,
     conditiondir = conditiondir,
-    compiledir = compiledir, anisotropy=anisotropy, anisotropy=anisotropy)
+    compiledir = compiledir, anisotropy=anisotropy)
 
   if (survey == "Triennial" & sensitivity) {
     #### early
@@ -86,14 +86,14 @@ VAST_condition <- function(conditiondir, settings, spp,
       Database = Database[Database[, "Year"] <  1993, ],
       conditiondir = paste(conditiondir, "early", sep = "_"),
       settings = settings,
-      compiledir = compiledir, anisotropy=anisotropy, anisotropy=anisotropy)
+      compiledir = compiledir, anisotropy=anisotropy)
 
     #### late
     check <- VAST_do(
       Database = Database[Database[, "Year"] >= 1994, ],
       conditiondir = paste(conditiondir, "late", sep = "_"),
       settings = settings,
-      compiledir = compiledir, anisotropy=anisotropy, anisotropy=anisotropy)
+      compiledir = compiledir, anisotropy=anisotropy)
 
     #todo: do a better job of integrating these two surveys into a single survey
 
