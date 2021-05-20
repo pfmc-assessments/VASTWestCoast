@@ -125,7 +125,7 @@ VAST_spp_combo <- function(dir, species,
       fine_scale = TRUE
     )
     # EW override overdispersion in VAST_condition
-    if(vessel_re==TRUE) {
+    if(vessel_re==FALSE) {
       settings$overdispersion <- c("eta1" = 0, "eta2" = 0)
     }
     
