@@ -9,7 +9,8 @@ VAST_do(
   settings,
   conditiondir,
   compiledir,
-  region = c("user", "california_current")
+  region = c("user", "california_current"),
+  anisotropy = FALSE
 )
 }
 \arguments{
@@ -49,6 +50,8 @@ that fall in depths shallower than 35 m (including those on land) and
 grid cells within the Cowcod Conservation Areas. Furthermore, it will only
 predict to the strata that are included in the stratifications rather than
 the entire area.}
+
+\item{anistropy}{Boolean, defaults to FALSE, whether to include anistropitc covariance}
 }
 \value{
 Nothing is returned from the function, but many items are saved

@@ -11,7 +11,8 @@ VAST_condition(
   overdispersion,
   data = NULL,
   sensitivity = TRUE,
-  compiledir = conditiondir
+  compiledir = conditiondir,
+  anisotropy = FALSE
 )
 }
 \arguments{
@@ -78,6 +79,8 @@ directory. A single file path can be used for multiple models allowing for
 the model to be only compiled once rather than multiple times.
 This file path is tranfered to the \code{CompileDir} within
 \code{\link[VAST]{make_model}()}.}
+
+\item{anistropy}{Boolean, defaults to FALSE, whether to include anistropitc covariance}
 }
 \value{
 Nothing is returned by the function, but the function saves \code{.RData}
