@@ -27,6 +27,8 @@
 #' @param sensitivity logical; run sensitivity analyses specific to a given survey.
 #' For example, the Triennial survey can be split into two separate surveys and limited
 #' to 366 m depth.
+#' @param anistropy Boolean, defaults to FALSE, whether to include anistropitc covariance
+
 #' @template compiledir
 #'
 #' @return Nothing is returned by the function, but the function saves `.RData`
@@ -46,7 +48,7 @@
 #'
 VAST_condition <- function(conditiondir, settings, spp,
   overdispersion, data = NULL,
-  sensitivity = TRUE, compiledir = conditiondir) {
+  sensitivity = TRUE, compiledir = conditiondir, anisotropy=FALSE) {
 
   if (!is.list(settings)) stop("settings must be a list")
   settings <- get_settings(settings)
@@ -74,7 +76,7 @@ VAST_condition <- function(conditiondir, settings, spp,
     Database = Database,
     settings = settings,
     conditiondir = conditiondir,
-    compiledir = compiledir)
+    compiledir = compiledir, anisotropy=anisotropy, anisotropy=anisotropy)
 
   if (survey == "Triennial" & sensitivity) {
     #### early
@@ -84,14 +86,14 @@ VAST_condition <- function(conditiondir, settings, spp,
       Database = Database[Database[, "Year"] <  1993, ],
       conditiondir = paste(conditiondir, "early", sep = "_"),
       settings = settings,
-      compiledir = compiledir)
+      compiledir = compiledir, anisotropy=anisotropy, anisotropy=anisotropy)
 
     #### late
     check <- VAST_do(
       Database = Database[Database[, "Year"] >= 1994, ],
       conditiondir = paste(conditiondir, "late", sep = "_"),
       settings = settings,
-      compiledir = compiledir)
+      compiledir = compiledir, anisotropy=anisotropy, anisotropy=anisotropy)
 
     #todo: do a better job of integrating these two surveys into a single survey
 
@@ -106,7 +108,7 @@ VAST_condition <- function(conditiondir, settings, spp,
       Database = Database,
       conditiondir = paste(conditiondir, "shallow", sep = "_"),
       settings = shallsettings,
-      compiledir = compiledir)
+      compiledir = compiledir, anisotropy=anisotropy)
 
     #### No NWFSC suvey in 2004
     # todo: decide if we should be running this one
@@ -118,7 +120,7 @@ VAST_condition <- function(conditiondir, settings, spp,
       Database = Database[Database[, "Year"] <  2004, ],
       conditiondir = paste(conditiondir, "noNWFSC", sep = "_"),
       settings = settings,
-      compiledir = compiledir)
+      compiledir = compiledir, anisotropy=anisotropy)
 
     #### Run AR(1) structure for Triennial b/c of missing years
     rhosettings <- settings
@@ -129,7 +131,7 @@ VAST_condition <- function(conditiondir, settings, spp,
       Database = Database,
       conditiondir = paste(conditiondir, "ar4", sep = "_"),
       settings = rhosettings,
-      compiledir = compiledir)
+      compiledir = compiledir, anisotropy=anisotropy)
     # Only run random walk if AR(1) structure cannot be estimated
     # i.e., parameter is more than likely going to one
     if (any(grepl("simpleError", class(check)))) {
@@ -138,7 +140,7 @@ VAST_condition <- function(conditiondir, settings, spp,
         Database = Database,
         conditiondir = paste(conditiondir, "ar2", sep = "_"),
         settings = rhosettings,
-        compiledir = compiledir)
+        compiledir = compiledir, anisotropy=anisotropy)
     }
   }
 

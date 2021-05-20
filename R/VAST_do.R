@@ -29,6 +29,8 @@
 #' grid cells within the Cowcod Conservation Areas. Furthermore, it will only
 #' predict to the strata that are included in the stratifications rather than
 #' the entire area.
+#' @param anistropy Boolean, defaults to FALSE, whether to include anistropitc covariance
+
 #'
 #' @author Kelli Faye Johnson
 #' @export
@@ -48,7 +50,7 @@
 #' }
 #'
 VAST_do <- function(Database, settings, conditiondir, compiledir,
-  region = c("user", "california_current")) {
+  region = c("user", "california_current"), anisotropy = FALSE) {
 
   region <- match.arg(region, several.ok = FALSE)
   spp <- settings[["Species"]]
@@ -81,7 +83,7 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     bias.correct = TRUE,
     #calculate derived quantities of interest, no harm
     #Options = ,#default is more than original VASTWestCoast
-    #use_anisotropy = TRUE, #default
+    use_anisotropy = anisotropy, #default
     Version = settings[["version"]],
     #treat_nonencounter_as_zero = TRUE, #default
     #VamConfig = c(Method = 0, Rank = 0, Timing = 0), #default
@@ -112,15 +114,16 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     # X_gtp = ,
     # X_itp = ,
     # Density covariates
-    Q1_formula = ~ Pass,
-    Q2_formula = ~ Pass,
+    Q1_formula = ~ 0,
+    Q2_formula = ~ 0,
+    newtonsteps = 0,
     catchability_data = catchability_data,
     #newtonsteps = 1, #default
     extrapolation_args = c(info["zone"], info["Region"], info["strata.limits"],
       surveyname = convert_survey4vast(survey),
       input_grid = list(local[["inputgrid"]])),
     spatial_args = list(
-      randomseed = 1,
+      randomseed = 123,
       nstart = 100,
       iter.max = 1e3,
       anisotropic_mesh = anisotropic_mesh,
