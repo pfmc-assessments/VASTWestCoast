@@ -38,14 +38,14 @@ information (e.g., plots and RData files) to the disk for viewing, further
 research, or inclusion in reports.
 }
 \description{
-\link{VAST_spp} is the highest-level function in \code{VASTWestCoast}.
+\link{VAST_spp_combo} is the highest-level function in \code{VASTWestCoast}.
 This function runs \pkg{VAST} for each available data set in the
 \href{https://www.webapp.nwfsc.noaa.gov/data}{NWFSC data warehouse}
 and is a wrapper for \code{\link[=VAST_condition]{VAST_condition()}}; the function
 can take hours to run.
 }
 \details{
-\code{\link[=VAST_spp]{VAST_spp()}} is the highest-level function available in \code{VASTWestCoast}.
+\code{\link[=VAST_spp_combo]{VAST_spp_combo()}} is the highest-level function available in \code{VASTWestCoast}.
 It will run combinations of data sets and model configurations that are
 seen as standard for a given species.
 The input argument \code{dist} is the only argument available to the user to
@@ -85,21 +85,6 @@ of interest, get the necessary data, and set various inputs to VAST.
 \examples{
 \dontrun{
 
-# Run both lognormal and gamma for sablefish
-VAST_spp(dir = getwd(), species = "sablefish")
-
-# Run just the gamma for POP, either line below will work
-VAST_spp(dir = getwd(), species = "pacific_ocean_perch", dist = "gamma")
-VAST_spp(dir = getwd(), species = "Pacific ocean perch", dist = "gamma")
-
-# See a list of available species (takes a long time)
-sppnames <- nwfscSurvey::PullSpp.fn()
-# For Pacific ocean perch, you can use any of these options
-sppnames[grep("ocean perch", sppnames[, "common"]), ]
-# Vector of all available skates
-grep("skate", sppnames[, "common"], value = TRUE)
-}
-
 # Run lognormal models
 VAST_spp_combo(dir=getwd(), species="sablefish", dist="lognormal", anisotropy = FALSE)
 # rename parameter estimates
@@ -110,6 +95,7 @@ VAST_spp_combo(dir=getwd(), species="sablefish", dist="lognormal", anisotropy = 
 rename parameter estimates
 file.rename(from="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates.Rdata",
 to="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates_anisotropic_Vessel.Rdata")
+}
 }
 \seealso{
 See \code{\link[=VAST_condition]{VAST_condition()}} and \code{\link[=VAST_do]{VAST_do()}}, in that

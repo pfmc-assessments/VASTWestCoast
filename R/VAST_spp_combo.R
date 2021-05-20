@@ -1,13 +1,13 @@
 #' Run \pkg{VAST} models for a species sampled by west coast surveys
 #'
-#' [VAST_spp] is the highest-level function in `VASTWestCoast`.
+#' [VAST_spp_combo] is the highest-level function in `VASTWestCoast`.
 #' This function runs \pkg{VAST} for each available data set in the
 #' [NWFSC data warehouse](https://www.webapp.nwfsc.noaa.gov/data)
 #' and is a wrapper for [VAST_condition()]; the function
 #' can take hours to run.
 #'
 #' @details
-#' [VAST_spp()] is the highest-level function available in `VASTWestCoast`.
+#' [VAST_spp_combo()] is the highest-level function available in `VASTWestCoast`.
 #' It will run combinations of data sets and model configurations that are
 #' seen as standard for a given species.
 #' The input argument `dist` is the only argument available to the user to
@@ -71,21 +71,6 @@
 #' @examples
 #' \dontrun{
 #'
-#' # Run both lognormal and gamma for sablefish
-#' VAST_spp(dir = getwd(), species = "sablefish")
-#'
-#' # Run just the gamma for POP, either line below will work
-#' VAST_spp(dir = getwd(), species = "pacific_ocean_perch", dist = "gamma")
-#' VAST_spp(dir = getwd(), species = "Pacific ocean perch", dist = "gamma")
-#'
-#' # See a list of available species (takes a long time)
-#' sppnames <- nwfscSurvey::PullSpp.fn()
-#' # For Pacific ocean perch, you can use any of these options
-#' sppnames[grep("ocean perch", sppnames[, "common"]), ]
-#' # Vector of all available skates
-#' grep("skate", sppnames[, "common"], value = TRUE)
-#' }
-#'
 #'# Run lognormal models
 #' VAST_spp_combo(dir=getwd(), species="sablefish", dist="lognormal", anisotropy = FALSE)
 #' # rename parameter estimates
@@ -104,6 +89,7 @@
 #' rename parameter estimates
 #' file.rename(from="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates.Rdata",
 #' to="sablefish/data/NWFSC.Combo_lognormal/parameter_estimates_anisotropic_Vessel.Rdata")
+#' }
 VAST_spp_combo <- function(dir, species,
   dist = c("lognormal", "gamma"), anisotropy = FALSE, vessel_re = FALSE) {
 
