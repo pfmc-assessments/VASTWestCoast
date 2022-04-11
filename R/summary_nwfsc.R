@@ -42,7 +42,8 @@ summary_nwfsc <- function(obj, parameter_estimates, savedir = NULL) {
     "Poisson-link", 
     switch(as.character(obj$env$data$ObsModel[1]),
       "1" = "Lognormal",
-      "2" = "Gamma")))
+      "2" = "Gamma",
+      "10" = "Tweedie")))
   TableA[6, ] <- c("Spatial effect for encounter probability", 
     ifelse(obj$env$data$FieldConfig[1, 2] < 0, "No", "Yes"))
   TableA[7, ] <- c("Spatio-temporal effect for encounter probability", 
