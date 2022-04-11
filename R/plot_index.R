@@ -52,7 +52,7 @@ plot_index <- function(dir, recursive = TRUE, area = NULL, filter = NULL,
 
   #get the index information that is saved to the disk
   dir <- normalizePath(dir, mustWork = TRUE)
-  files <- dir(dir, pattern = "Table_for_SS3", full.names = TRUE,
+  files <- dir(dir, pattern = "Index", full.names = TRUE,
     recursive = recursive)
   if (!is.null(filter)) {
     files <- files[grepl(filter, files, perl = TRUE)]
@@ -66,11 +66,11 @@ plot_index <- function(dir, recursive = TRUE, area = NULL, filter = NULL,
     basename(dirname(files)), SIMPLIFY = FALSE))
 
   #subset data and calculate confidence intervals
-  if (is.null(keepyears)) keepyears <- unique(data[, "Year"])
-  data <- data[data[, "Year"] %in% keepyears, ]
+  if (is.null(keepyears)) keepyears <- unique(data[, "Time"])
+  data <- data[data[, "Time"] %in% keepyears, ]
   data <- data[data[, "Estimate_metric_tons"] != 0, ]
-  data[, "low"] <- data[, "Estimate_metric_tons"] - 1.96 * data[, "SD_mt"]
-  data[, "upp"] <- data[, "Estimate_metric_tons"] + 1.96 * data[, "SD_mt"]
+  data[, "low"] <- data[, "Estimate"] - 1.96 * data[, "Std. Error for Estimate"]
+  data[, "upp"] <- data[, "Estimate"] + 1.96 * data[, "Std. Error for Estimate"]
   if (!is.null(area[1])) {
     data <- data[data[, "Fleet"] %in% area, ]
   }
