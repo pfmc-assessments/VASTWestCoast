@@ -28,40 +28,39 @@
 #' A caption with a Latex label is also written to a csv file, where the first
 #' column is the label and the second column is the caption.
 
-plot_ss <- function(file.in = "Table_for_SS3.csv", savefile,
+plot_ss <- function(file.in = "Index.csv", savefile,
   lab.survey = "survey ", lab.spp = "",
   do.smooth = TRUE) {
 
   #### Get data
   file.in <- normalizePath(file.in)
   dat <- utils::read.csv(file.in, header = TRUE)
-  dat <- dat[dat[, "Estimate_metric_tons"] != 0, ]
+  dat <- dat[dat[, "Estimate"] != 0, ]
   if (lab.survey == "WCGBTS") lab.survey <- "NWFSC.Combo"
   stext <- nwfscSurvey::GetSurveyAbb.fn(lab.survey, na.return = lab.survey)
-  strat <- unique(dat$Fleet)
-  years <- unique(dat$Year)
+  strat <- unique(dat$Stratum)
+  years <- unique(dat$Time)
 
   #### Make savefile name and directory
   if (missing(savefile)) {
     savefile <- file.path(dirname(file.in),
-      paste0("VASTWestCoast_Index_", max(dat$Year), ".png"))
+      paste0("VASTWestCoast_Index_", max(dat$Time), ".png"))
   }
   savefile <- normalizePath(savefile, mustWork = FALSE)
   dir.create(dirname(savefile), recursive = TRUE, showWarnings = FALSE)
 
-  colors <- c("black",  "blue", "darkorchid1", "red")
+  colors <- c("black",  "red", "darkorchid1", "blue")
   pch.vec <- c(21, 22, 23, 24)
   cex.vec <- c(1.6, 1.4, 1.4, 1.4)
   cex.lab  <- 2.1
   cex.axis <- 1.6
-  colors <- c("black",  "blue", "darkorchid1", "red")
   if (length(strat) > 4) {
     stop("plot_ss is not designed to work with more than 4 strata.",
       "\nPlease contact the maintainer(s) to request additional",
       "\nfunctionality here or limit the number of strata in the csv.")
   }
   if ("north" %in% tolower(strat) && length(strat) == 3) {
-    colors <- c("black", "blue", "red")
+    colors <- c("black", "red", "blue")
   }
 
   grDevices::png(filename = savefile,
@@ -70,7 +69,7 @@ plot_ss <- function(file.in = "Table_for_SS3.csv", savefile,
   
   plot(0, type = "n",
     xlim = range(years),
-    ylim = c(0, 1.5 * max(dat$Estimate_metric_tons)),
+    ylim = c(0, 1.5 * max(dat$Estimate)),
     xlab = "", ylab = "", yaxs = "i",
     main = "", cex.axis = cex.axis)
   graphics::mtext(side = 1 , "Year", cex = cex.lab, line = 3)
@@ -81,16 +80,16 @@ plot_ss <- function(file.in = "Table_for_SS3.csv", savefile,
     font = 2, cex = cex.lab, line = -1.75)
 
   for (b in seq_along(strat)) {
-    ind <- dat$Fleet == strat[b]
-    est <- dat[ind, "Estimate_metric_tons"]
-    sd  <- dat[ind, "SD_log"]
+    ind <- dat$Stratum == strat[b]
+    est <- dat[ind, "Estimate"]
+    sd  <- dat[ind, "Std..Error.for.ln.Estimate."]
     hi <- stats::qlnorm(0.975, meanlog = log(est), sdlog = sd)
     lo <- stats::qlnorm(0.025, meanlog = log(est), sdlog = sd)
     if (b == 1) {
       graphics::arrows(x0 = years, y0 = lo, x1 = years, y1 = hi, angle = 90, code = 3,
         length = 0.01, col = "grey")
       if (do.smooth == TRUE) {
-        pred <- stats::loess(Estimate_metric_tons ~ Year, dat[ind,])
+        pred <- stats::loess(Estimate ~ Time, dat[ind,])
         graphics::lines(years, stats::predict(pred), lty = 2, col = "snow4")
       }
     }
