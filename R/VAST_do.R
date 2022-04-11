@@ -73,7 +73,7 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     purpose = "index2",
     fine_scale = settings[["fine_scale"]],
     strata.limits = settings[["strata"]],
-    #zone = NA, #default
+    zone = settings[["zone"]], #default
     FieldConfig = settings[["FieldConfig"]],
     RhoConfig = settings[["RhoConfig"]],
     OverdispersionConfig = settings[["overdispersion"]],
@@ -81,7 +81,7 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     bias.correct = TRUE,
     #calculate derived quantities of interest, no harm
     #Options = ,#default is more than original VASTWestCoast
-    #use_anisotropy = TRUE, #default
+    #use_anisotropy = settings[["use_anistrophy"]], #default
     Version = settings[["version"]],
     #treat_nonencounter_as_zero = TRUE, #default
     #VamConfig = c(Method = 0, Rank = 0, Timing = 0), #default
@@ -135,6 +135,7 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     save(list = ls(all.names = TRUE), file = file.path(conditiondir, "Save.RData"))
     return(out)
   }
+  save(list = ls(all.names = TRUE), file = file.path(conditiondir, "Save.RData"))
 
   maps <- tryCatch(suppressWarnings(FishStatsUtils::plot_results(settings = info, fit = out,
     working_dir = file.path(conditiondir, .Platform$file.sep),
@@ -142,10 +143,13 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     error = function(e) e)
 
   index <- suppressWarnings(FishStatsUtils::plot_biomass_index(
+    fit = out,
     DirName = file.path(conditiondir, .Platform$file.sep),
-    TmbData = out$data_list, Sdreport = out$parameter_estimates$SD,
+    TmbData = out$data_list, 
+    Sdreport = out$parameter_estimates$SD,
     use_biascorr = TRUE,
-    Year_Set = out$year_labels, Years2Include = out$years_to_plot,
+    year_labels = out$year_labels, 
+    years_to_plot = out$years_to_plot,
     strata_names = out$settings$strata.limits$STRATA
   ))
   rsessioninfo <- summary_session(
@@ -153,10 +157,10 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
   modelinfo <- summary_nwfsc(obj = out$tmb_list$Obj,
     parameter_estimates = out$parameter_estimates,
     savedir = conditiondir)
-  fileindex <- file.path(conditiondir, "Table_for_SS3.csv")
+  fileindex <- file.path(conditiondir, "Index.csv")
   indexdata <- utils::read.csv(fileindex)
-  indexdata[,"Year"] <- out$year_labels[indexdata[,"Year"]]
-  utils::write.csv(x = indexdata, file = fileindex, row.names = FALSE)
+  #indexdata[,"Time"] <- out$year_labels[indexdata[,"Time"]]
+  #utils::write.csv(x = indexdata, file = fileindex, row.names = FALSE)
   plot_ss(file.in = fileindex,
     lab.survey = survey,
     lab.spp = bquote(italic(.(spp_sci))))
