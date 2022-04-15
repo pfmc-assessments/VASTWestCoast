@@ -143,6 +143,7 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     error = function(e) e)
 
   index <- suppressWarnings(FishStatsUtils::plot_biomass_index(
+    fit = out,
     DirName = file.path(conditiondir, .Platform$file.sep),
     TmbData = out$data_list, Sdreport = out$parameter_estimates$SD,
     use_biascorr = TRUE,
