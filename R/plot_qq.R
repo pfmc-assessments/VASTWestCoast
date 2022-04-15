@@ -42,6 +42,10 @@ plot_qq <- function(outdir, model) {
             ),
           MoreArgs = list(shape = 1 / (sigmaM^2))))
   }
+  if (model[["data_list"]][["ObsModel_ez"]][1] == 10) {
+    message("QQ plot is not yet implemented for the Tweedie distribution. See #45.")
+    return(invisible())
+  }
 
   grDevices::png(file.path(outdir, "VASTWestCoast_QQ.png"), height = 18, width = 18, units = "cm",
     res = 300)
