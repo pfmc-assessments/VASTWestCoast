@@ -130,7 +130,8 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     model_args = list(CompileDir = compiledir),
     silent = TRUE,
     run_model = TRUE), error = function(e) e)
-  if ("simpleError" %in% class(out)) {
+  if ("simpleError" %in% class(out) |
+      is.null(out$parameter_estimates$SD)) {
     save(out, file = file.path(conditiondir, "Error.RData"))
     save(list = ls(all.names = TRUE), file = file.path(conditiondir, "Save.RData"))
     return(out)
