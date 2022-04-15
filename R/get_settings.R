@@ -32,7 +32,9 @@ get_settings <- function(settings = NULL, verbose = FALSE) {
     "field" = NULL,
     "rho" = NULL,
     "fine_scale" = TRUE,
-    "overdispersion" = NULL)
+    "overdispersion" = NULL,
+    "use_anisotropy" = TRUE
+    )
   need <- !names(Settings_all) %in% names(settings)
   if (verbose) {
     message("Adding the following objects to settings:\n",

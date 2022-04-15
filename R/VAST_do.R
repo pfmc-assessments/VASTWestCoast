@@ -83,7 +83,7 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     bias.correct = TRUE,
     #calculate derived quantities of interest, no harm
     #Options = ,#default is more than original VASTWestCoast
-    #use_anisotropy = TRUE, #default
+    use_anisotropy = settings[["use_anisotropy"]],
     Version = settings[["version"]],
     #treat_nonencounter_as_zero = TRUE, #default
     #VamConfig = c(Method = 0, Rank = 0, Timing = 0), #default
