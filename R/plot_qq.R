@@ -24,20 +24,20 @@ plot_qq <- function(outdir, model) {
   n_e <- model[["data_list"]][["n_c"]]
   e_i <- model[["data_list"]][["n_e"]]
   sigmaM <- (rep(1, n_e) %o% model[["Report"]][["SigmaM"]])[1, 1, 1]
-  Which <- which(model[["data_list"]][["b_i"]] > 0)
+  Which <- which(as.vector(model[["data_list"]][["b_i"]]) > 0)
 
   if (model[["data_list"]][["ObsModel_ez"]][1] == 1) {
     Qvals <- na.omit(mapply(plnorm,
-          q = model[["data_list"]][["b_i"]][Which],
-          meanlog = log(model[["data_list"]][["a_i"]][Which] * exp(model[["Report"]][["P2_iz"]][Which])) -
+          q = as.vector(model[["data_list"]][["b_i"]])[Which],
+          meanlog = log(as.vector(model[["data_list"]][["a_i"]])[Which] * exp(model[["Report"]][["P2_iz"]][Which])) -
                     (sigmaM^2) / 2,
           MoreArgs = list(sdlog = sigmaM)))
   }
   if (model[["data_list"]][["ObsModel_ez"]][1] == 2) {
     Qvals <- na.omit(mapply(pgamma,
-          q = model[["data_list"]][["b_i"]][Which],
+          q = as.vector(model[["data_list"]][["b_i"]])[Which],
           scale = (sigmaM^2) *
-            (model[["data_list"]][["a_i"]][Which] *
+            (as.vector(model[["data_list"]][["a_i"]])[Which] *
             exp(model[["Report"]][["P2_iz"]][Which])
             ),
           MoreArgs = list(shape = 1 / (sigmaM^2))))
