@@ -156,8 +156,14 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     parameter_estimates = out$parameter_estimates,
     savedir = conditiondir)
   fileindex <- file.path(conditiondir, "Table_for_SS3.csv")
-  indexdata <- utils::read.csv(fileindex)
-  indexdata[,"Year"] <- out$year_labels[indexdata[,"Year"]]
+  indexdata <- data.frame(
+    Year = out$year_labels[index[["Table"]][, "Time"]],
+    Unit = index[["Table"]][, "Units"],
+    Fleet = index[["Table"]][, "Stratum"],
+    Estimate_metric_tons = index[["Table"]][, "Estimate"],
+    SD_log = index[["Table"]][, "Std. Error for Estimate"],
+    SD_mt = index[["Table"]][, "Std. Error for ln(Estimate)"]
+  )
   utils::write.csv(x = indexdata, file = fileindex, row.names = FALSE)
   plot_ss(file.in = fileindex,
     lab.survey = survey,
