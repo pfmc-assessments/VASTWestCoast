@@ -74,6 +74,8 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     fine_scale = settings[["fine_scale"]],
     strata.limits = settings[["strata"]],
     #zone = NA, #default
+    # automatically detecting zone in `FishStatsUtils::make_extrapolation_info()`
+    # DO NOT allow users to control just use default
     FieldConfig = settings[["FieldConfig"]],
     RhoConfig = settings[["RhoConfig"]],
     OverdispersionConfig = settings[["overdispersion"]],
