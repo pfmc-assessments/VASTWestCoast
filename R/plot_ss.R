@@ -49,19 +49,19 @@ plot_ss <- function(file.in = "Table_for_SS3.csv", savefile,
   savefile <- normalizePath(savefile, mustWork = FALSE)
   dir.create(dirname(savefile), recursive = TRUE, showWarnings = FALSE)
 
-  colors <- c("black",  "blue", "darkorchid1", "red")
+  colors <- c("black",  "red", "darkorchid1", "blue")
   pch.vec <- c(21, 22, 23, 24)
   cex.vec <- c(1.6, 1.4, 1.4, 1.4)
   cex.lab  <- 2.1
   cex.axis <- 1.6
-  colors <- c("black",  "blue", "darkorchid1", "red")
+
   if (length(strat) > 4) {
     stop("plot_ss is not designed to work with more than 4 strata.",
       "\nPlease contact the maintainer(s) to request additional",
       "\nfunctionality here or limit the number of strata in the csv.")
   }
   if ("north" %in% tolower(strat) && length(strat) == 3) {
-    colors <- c("black", "blue", "red")
+    colors <- c("black", "red", "blue")
   }
 
   grDevices::png(filename = savefile,
