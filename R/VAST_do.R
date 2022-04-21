@@ -162,9 +162,10 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     Year = out$year_labels[index[["Table"]][, "Time"]],
     Unit = index[["Table"]][, "Units"],
     Fleet = index[["Table"]][, "Stratum"],
-    Estimate_metric_tons = index[["Table"]][, "Estimate"],
-    SD_log = index[["Table"]][, "Std. Error for Estimate"],
-    SD_mt = index[["Table"]][, "Std. Error for ln(Estimate)"]
+    # Go from kg to mt to keep backwards compatibility with VASTWestCoast
+    Estimate_metric_tons = index[["Table"]][, "Estimate"] / 1000,
+    SD_log = index[["Table"]][, "Std. Error for ln(Estimate)"],
+    SD_mt = index[["Table"]][, "Std. Error for Estimate"] / 1000
   )
   utils::write.csv(x = indexdata, file = fileindex, row.names = FALSE)
   plot_ss(file.in = fileindex,
