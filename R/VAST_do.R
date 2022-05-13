@@ -160,7 +160,8 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
   fileindex <- file.path(conditiondir, "Table_for_SS3.csv")
   indexdata <- data.frame(
     Year = out$year_labels[index[["Table"]][, "Time"]],
-    Unit = index[["Table"]][, "Units"],
+    # Change units to mt since converting from kg to mt below
+    Unit = "mt",
     Fleet = index[["Table"]][, "Stratum"],
     # Go from kg to mt to keep backwards compatibility with VASTWestCoast
     Estimate_metric_tons = index[["Table"]][, "Estimate"] / 1000,
