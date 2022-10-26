@@ -22,7 +22,7 @@ if (!any(installed.packages()[, 1] %in% "pander"))
      install.packages("pander")
 
 if (!any(installed.packages()[, 1] %in% "nwfscDeltaGLM"))
-     devtools::install_github("nwfsc-assess/nwfscDeltaGLM")
+     devtools::install_github("pfmc-assessments/nwfscDeltaGLM")
 
 require(TMB)
 require(VAST)

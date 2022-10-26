@@ -1,4 +1,4 @@
-devtools::install_github("nwfsc-assess/VASTWestCoast")
+devtools::install_github("pfmc-assessments/VASTWestCoast")
 library(VASTWestCoast)
 Sim_Settings <- list(
   "Species" = "WCGBTS_Anoplopoma_fimbria",

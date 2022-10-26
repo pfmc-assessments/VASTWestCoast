@@ -27,7 +27,7 @@ prior to running other VASTWestCoast functions.
 ```
 remotes::install_github("James-Thorson-NOAA/FishStatsUtils")
 remotes::install_github("James-Thorson-NOAA/VAST")
-remotes::install_github("nwfsc-assess/VASTWestCoast")
+remotes::install_github("pfmc-assessments/VASTWestCoast")
 library(VASTWestCoast)
 check_rtools()
 check_TMB()
@@ -43,7 +43,7 @@ are set behind the scenes to ensure their consistency.
 For example, all results are corrected for retransformation bias to account for
 nonlinear transformation of random effects (Thorson and Kristensen, 2016).
 Example scripts are available in
-[/inst/examples](https://github.com/nwfsc-assess/VASTWestCoast/tree/master/inst/examples).
+[/inst/examples](https://github.com/pfmc-assessments/VASTWestCoast/tree/master/inst/examples).
 
 The simplest way to run VAST is to use
 ```

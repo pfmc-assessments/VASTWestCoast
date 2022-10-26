@@ -1,6 +1,6 @@
 devtools::install_github("James-Thorson/VAST")
 devtools::install_github("James-Thorson/FishStatsUtils")
-devtools::install_github("nwfsc-assess/VASTWestCoast")
+devtools::install_github("pfmc-assessments/VASTWestCoast")
 library(VASTWestCoast)
 # This example only works if you load your own data into
 # an object called VAST_fields
