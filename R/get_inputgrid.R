@@ -14,7 +14,7 @@
 #' @template range.depth
 #' @template range.lat
 #'
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @export
 #' @return A data frame of grid points with associated metadata for each
 #' box. The data frame is an augmented version of the california current

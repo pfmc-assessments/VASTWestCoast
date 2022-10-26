@@ -8,7 +8,7 @@
 #'
 #' @return A list with information about the current R session. Also,
 #' the same list is written to a text file and an \code{RData} file.
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @export
 #' @examples
 #' info <- summary_session()

@@ -30,5 +30,5 @@ get_settings(list("nknots" = 300))
 names(get_settings(c("yes" = 2), verbose = TRUE))
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

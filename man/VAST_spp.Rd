@@ -100,5 +100,5 @@ get this function to run because, more than likely, rtools or TMB are improperly
 installed. This is mainly relevant for those new to R 4.0+.
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

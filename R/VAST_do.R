@@ -30,7 +30,7 @@
 #' predict to the strata that are included in the stratifications rather than
 #' the entire area.
 #'
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @export
 #' @return Nothing is returned from the function, but many items are saved
 #' to the disk, largely by other helper functions that are called by

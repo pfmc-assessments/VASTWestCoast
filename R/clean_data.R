@@ -14,7 +14,7 @@
 #' VAST model.
 #' 
 #' @export
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 clean_data <- function(data) {
   cols <- colnames(data)
   colnames(data) <- gsub("year", "Year", colnames(data))

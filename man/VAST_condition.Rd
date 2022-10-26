@@ -113,5 +113,5 @@ included in your own list supplied to the settings argument will be taken from t
 default list.
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

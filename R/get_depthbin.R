@@ -9,7 +9,7 @@
 #' \code{vline = NULL} will remove the line from the plot.
 #'
 #' @export
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @return A ggplot object.
 #' @examples
 #' get_depthbin(Database)

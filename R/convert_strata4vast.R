@@ -20,7 +20,7 @@
 #' All \code{NA} values will be replaced with \code{maxdepth}.
 #'
 #' @export
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @return A data frame with one row per strata.
 #' Strata can overlap and need not be unique.
 #' \itemize{

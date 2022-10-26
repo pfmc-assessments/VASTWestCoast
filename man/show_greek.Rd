@@ -24,5 +24,5 @@ framework because it is often hard to remember what part of the model
 each letter represents.
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

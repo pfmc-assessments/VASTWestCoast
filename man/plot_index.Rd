@@ -69,5 +69,5 @@ objects, which are then plotted by model run and area
 using unique colors for each run-area combination.
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

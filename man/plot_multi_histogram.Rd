@@ -25,5 +25,5 @@ density lines are included, where the colors coincide and are
 labelled in the margin.
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

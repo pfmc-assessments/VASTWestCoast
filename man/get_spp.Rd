@@ -28,5 +28,5 @@ get_spp(input = "Triennial_Anoplopoma_fimbria")
 
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

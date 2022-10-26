@@ -36,5 +36,5 @@ for (ii in unique(tri$Common_name)) {
 
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

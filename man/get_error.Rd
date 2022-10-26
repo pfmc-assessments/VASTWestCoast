@@ -47,5 +47,5 @@ get("out", envir = env1)
 rm(env1)
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

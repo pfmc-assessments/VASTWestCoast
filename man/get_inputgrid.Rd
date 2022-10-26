@@ -56,5 +56,5 @@ to the survey of interest. See \code{\link[=convert_survey4vast]{convert_survey4
 column names for a given survey.
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

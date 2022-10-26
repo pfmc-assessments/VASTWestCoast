@@ -20,5 +20,5 @@ underscores to spaces and two-letter lower-case words to two-letter
 upper-case words are performed for you.
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

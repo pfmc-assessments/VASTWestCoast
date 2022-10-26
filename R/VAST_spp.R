@@ -53,7 +53,7 @@
 #' Please contact the package maintainer if you wish to use other distributions
 #' because names other than those listed will not work.
 #'
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @export
 #' @return Nothing is returned from this function. Called functions save
 #' information (e.g., plots and RData files) to the disk for viewing, further

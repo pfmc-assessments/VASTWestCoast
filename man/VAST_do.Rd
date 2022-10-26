@@ -74,5 +74,5 @@ check <- VAST_do(Database = Database, settings = settings,
 
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

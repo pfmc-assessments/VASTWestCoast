@@ -14,7 +14,7 @@
 #'
 #' @seealso Users will not typically interact with this function, but will instead
 #' benefit from it being called in [VAST_diagnostics].
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @export
 
 plot_qq <- function(outdir, model) {

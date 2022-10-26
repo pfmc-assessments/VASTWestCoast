@@ -71,5 +71,5 @@ See \link{get_inputgrid}, \link{get_mesh},
 \link{plot.inputgrid}, and \link{plot.mesh}.
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

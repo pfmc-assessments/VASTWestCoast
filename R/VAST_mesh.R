@@ -13,7 +13,7 @@
 #' @template range.depth
 #' @template range.lat
 #'
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @export
 #' @return A list with two elements is returned, the first is a input grid
 #' for `"extrapolation_args"` and the second is an anisotropic

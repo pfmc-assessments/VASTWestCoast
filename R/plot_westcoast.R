@@ -17,7 +17,7 @@
 #' The default values focus the resulting map on the area between the Candian-
 #' US and US-Mexico borders. Units are in decimal degrees.
 #'
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @export
 #' @return A ggplot2 object providing a map of the US West Coast. The map is
 #' returned visibly to provide easy printing capabilities.

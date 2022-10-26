@@ -11,7 +11,7 @@
 #' @param col.label A character value specifying the column of \code{df}
 #' that will be used for the colors or indivdual lines.
 #'
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @return A ggplot object.
 #'
 plot_multi_histogram <- function(df, col.feature, col.label) {

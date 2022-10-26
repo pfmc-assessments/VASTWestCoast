@@ -42,7 +42,7 @@
 #' subset appropriately based on the input arguments. The ggplot object is also
 #' saved to the disk if \code{!is.null(savefile) == TRUE}.
 #'
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @export
 #' @import ggplot2
 #'

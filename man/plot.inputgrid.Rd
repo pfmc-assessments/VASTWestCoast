@@ -42,5 +42,5 @@ is returned for future manipulation.
 Plot a map of the grid cells used in the prediction of VAST results.
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

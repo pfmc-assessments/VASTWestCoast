@@ -41,5 +41,5 @@ methods for plotting meshes, which can be called using
 \code{plot(meshobject)}.
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

@@ -29,5 +29,5 @@ testthat::expect_true(all(c("propInTriennial", "propInWCGBTS") == test))
 }
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

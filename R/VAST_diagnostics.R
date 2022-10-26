@@ -5,7 +5,7 @@
 #' or an absolute path.
 #' 
 #' @export
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' 
 #' @return Nothing is returned.
 #' * convergence_gradient.txt: Parameter estimates

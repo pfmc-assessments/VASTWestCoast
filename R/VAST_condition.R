@@ -31,7 +31,7 @@
 #'
 #' @return Nothing is returned by the function, but the function saves `.RData`
 #' files to the disk in `conditiondir`.
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @export
 #' @seealso See [get_settings()] for a list of default settings. Anything not
 #' included in your own list supplied to the settings argument will be taken from this

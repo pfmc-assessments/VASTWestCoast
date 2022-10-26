@@ -13,7 +13,7 @@
 #' @return A list of setting for running a conditioning model or a simulation
 #' with [VAST].
 #'
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @export
 #'
 #' @examples

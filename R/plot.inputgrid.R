@@ -11,7 +11,7 @@
 #' @template savedir
 #' @template lab.survey
 #'
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @return A figure 9 inches long (roughly fitting on a single page)
 #' is saved to the disk, along with a caption. The files are saved
 #' using the name VASTWestCoast_mesh.xxx. The \pkg{ggplot2} object

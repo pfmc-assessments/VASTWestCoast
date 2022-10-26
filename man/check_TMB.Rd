@@ -39,5 +39,5 @@ check_rtools()
 \link{check_rtools} for checking the installation of Rtools.
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

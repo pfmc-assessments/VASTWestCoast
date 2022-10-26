@@ -11,7 +11,7 @@
 #' regular expression search.
 #'
 #' @export
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @return The name(s) of the unloaded libraries are returned as
 #' the first element of the list and the second element is all
 #' dlls that were found.

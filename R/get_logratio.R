@@ -10,7 +10,7 @@
 #' data <- data.frame("first" = rlnorm(10), "second" = rlnorm(10))
 #' ratios <- get_logratio(data)
 #'
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @export
 #'
 get_logratio <- function(data) {

@@ -25,5 +25,5 @@ dlls that were found.
 Unload a dll library with the VAST name.
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

@@ -27,5 +27,5 @@ names(info)
 
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

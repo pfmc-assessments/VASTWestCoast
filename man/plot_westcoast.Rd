@@ -32,5 +32,5 @@ and tick marks are labeled as such; thus, no labels are provided for the
 axes themselves.
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

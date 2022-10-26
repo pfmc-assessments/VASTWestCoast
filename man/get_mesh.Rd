@@ -49,5 +49,5 @@ Create a mesh for the US West Coast. This method provides
 a work around for needing a kmeans file.
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

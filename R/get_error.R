@@ -18,7 +18,7 @@
 #' The default, `parent.frame()` will load all objects to your current
 #' environment.
 #' @export
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @return Several R objects are loaded into the specified `envir`,
 #' including the model results, which is called 'out'. Additionally, a web
 #' browser is opened navigating users to the code of [VAST_do]

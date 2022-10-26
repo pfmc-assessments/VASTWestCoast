@@ -10,7 +10,7 @@
 #' @param plot A logical value specifying if a plot should be generated.
 #' The default is to NOT plot the results.
 #'
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @export
 #' @return A data frame with two columns, the greek symbol in words and
 #' the description of what it means in the modeling framework.

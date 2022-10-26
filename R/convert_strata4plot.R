@@ -7,7 +7,7 @@
 #'
 #' @param text A vector of text strings that will be formatted.
 #'
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @return A vector of text strings the same length as \code{text} that
 #' have been formatted to use in a plot or in text.
 #'

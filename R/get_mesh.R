@@ -16,7 +16,7 @@
 #' @template numknots
 #'
 #' @export
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @return
 #' An \code{inla.mesh} list object created with
 #' \code{\link[INLA]{inla.mesh.create}()}.

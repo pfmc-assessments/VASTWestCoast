@@ -22,5 +22,5 @@ ratios <- get_logratio(data)
 
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

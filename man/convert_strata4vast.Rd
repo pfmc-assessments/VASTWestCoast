@@ -51,5 +51,5 @@ convert_strata4vast(nwfscSurvey::GetStrata.fn("sablefish"))
 
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

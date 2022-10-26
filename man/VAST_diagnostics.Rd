@@ -22,5 +22,5 @@ Nothing is returned.
 Run diagnostic plots for VASTWestCoast output
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

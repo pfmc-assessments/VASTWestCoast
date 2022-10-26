@@ -10,7 +10,7 @@
 #' A new version of Rtools is required for R releases > 4.0.0
 #' https://cran.r-project.org/bin/windows/Rtools/
 #'
-#' @author Chantel R. Wetzel, modified by Kelli Faye Johnson
+#' @author Chantel R. Wetzel, modified by Kelli F. Johnson
 #' @export
 #' @returns Various summaries are printed to the screen to help you troubleshoot
 #' your installation of Rtools. If you make it to the end of this function

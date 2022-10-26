@@ -33,5 +33,5 @@ check_rtools()
 and has access to rtools.
 }
 \author{
-Chantel R. Wetzel, modified by Kelli Faye Johnson
+Chantel R. Wetzel, modified by Kelli F. Johnson
 }

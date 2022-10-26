@@ -13,7 +13,7 @@
 #' @return A vector with two entries, survey specifies the survey
 #' name and species provides a normalized scientific name.
 #' 
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @importFrom nwfscSurvey createMatrix
 #' @export
 #' 

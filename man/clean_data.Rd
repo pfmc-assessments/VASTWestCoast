@@ -23,5 +23,5 @@ I used "AreaSwept_km2" = 0.01
 todo: ensure that there are no \code{NA} values, i.e., na.omit(data)
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

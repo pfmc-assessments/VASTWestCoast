@@ -26,5 +26,5 @@ Users will not typically interact with this function, but will instead
 benefit from it being called in \link{VAST_diagnostics}.
 }
 \author{
-Kelli Faye Johnson
+Kelli F. Johnson
 }

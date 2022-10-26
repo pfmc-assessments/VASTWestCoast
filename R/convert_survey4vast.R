@@ -6,7 +6,7 @@
 #' 
 #' @template survey
 #' @export
-#' @author Kelli Faye Johnson
+#' @author Kelli F. Johnson
 #' @return A vector of character values, one for each input value, that
 #' specifies the column of the grid data to use for the area sampled.
 #' The default is to return the NWFSC WCGBTS name, thus even values that
