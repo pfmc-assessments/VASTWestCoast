@@ -74,6 +74,8 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     fine_scale = settings[["fine_scale"]],
     strata.limits = settings[["strata"]],
     #zone = NA, #default
+    # automatically detecting zone in `FishStatsUtils::make_extrapolation_info()`
+    # DO NOT allow users to control just use default
     FieldConfig = settings[["FieldConfig"]],
     RhoConfig = settings[["RhoConfig"]],
     OverdispersionConfig = settings[["overdispersion"]],
@@ -81,7 +83,7 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     bias.correct = TRUE,
     #calculate derived quantities of interest, no harm
     #Options = ,#default is more than original VASTWestCoast
-    #use_anisotropy = TRUE, #default
+    use_anisotropy = settings[["use_anisotropy"]],
     Version = settings[["version"]],
     #treat_nonencounter_as_zero = TRUE, #default
     #VamConfig = c(Method = 0, Rank = 0, Timing = 0), #default
@@ -130,7 +132,8 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     model_args = list(CompileDir = compiledir),
     silent = TRUE,
     run_model = TRUE), error = function(e) e)
-  if ("simpleError" %in% class(out)) {
+  if ("simpleError" %in% class(out) |
+      is.null(out$parameter_estimates$SD)) {
     save(out, file = file.path(conditiondir, "Error.RData"))
     save(list = ls(all.names = TRUE), file = file.path(conditiondir, "Save.RData"))
     return(out)
@@ -142,6 +145,7 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     error = function(e) e)
 
   index <- suppressWarnings(FishStatsUtils::plot_biomass_index(
+    fit = out,
     DirName = file.path(conditiondir, .Platform$file.sep),
     TmbData = out$data_list, Sdreport = out$parameter_estimates$SD,
     use_biascorr = TRUE,
@@ -154,8 +158,16 @@ VAST_do <- function(Database, settings, conditiondir, compiledir,
     parameter_estimates = out$parameter_estimates,
     savedir = conditiondir)
   fileindex <- file.path(conditiondir, "Table_for_SS3.csv")
-  indexdata <- utils::read.csv(fileindex)
-  indexdata[,"Year"] <- out$year_labels[indexdata[,"Year"]]
+  indexdata <- data.frame(
+    Year = out$year_labels[index[["Table"]][, "Time"]],
+    # Change units to mt since converting from kg to mt below
+    Unit = "mt",
+    Fleet = index[["Table"]][, "Stratum"],
+    # Go from kg to mt to keep backwards compatibility with VASTWestCoast
+    Estimate_metric_tons = index[["Table"]][, "Estimate"] / 1000,
+    SD_log = index[["Table"]][, "Std. Error for ln(Estimate)"],
+    SD_mt = index[["Table"]][, "Std. Error for Estimate"] / 1000
+  )
   utils::write.csv(x = indexdata, file = fileindex, row.names = FALSE)
   plot_ss(file.in = fileindex,
     lab.survey = survey,

@@ -85,7 +85,7 @@
 #' }
 #'
 VAST_spp <- function(dir, species,
-  dist = c("lognormal", "gamma")) {
+  dist = c("lognormal", "gamma", "tweedie")) {
 
   #### Get species, survey, and strata info
   info <- nwfscSurvey::GetSpp.fn(species)
@@ -107,7 +107,8 @@ VAST_spp <- function(dir, species,
   for (obs in dist) {
     obs_model <- switch(obs,
       lognormal = c(1, 0),
-      gamma = c(2, 0)
+      gamma = c(2, 0),
+      tweedie = c(10, 2)
     )
     modeldir <- file.path(sppdir, paste(survey, obs, sep = "_"))
     settings <- list(

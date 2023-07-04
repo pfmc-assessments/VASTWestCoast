@@ -4,7 +4,7 @@
 \alias{VAST_spp}
 \title{Run \pkg{VAST} models for a species sampled by west coast surveys}
 \usage{
-VAST_spp(dir, species, dist = c("lognormal", "gamma"))
+VAST_spp(dir, species, dist = c("lognormal", "gamma", "tweedie"))
 }
 \arguments{
 \item{dir}{An existing directory where you want the new folder that is created

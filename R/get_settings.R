@@ -32,7 +32,9 @@ get_settings <- function(settings = NULL, verbose = FALSE) {
     "field" = NULL,
     "rho" = NULL,
     "fine_scale" = TRUE,
-    "overdispersion" = NULL)
+    "overdispersion" = NULL,
+    "use_anisotropy" = TRUE
+    )
   need <- !names(Settings_all) %in% names(settings)
   if (verbose) {
     message("Adding the following objects to settings:\n",
@@ -67,6 +69,11 @@ get_settings <- function(settings = NULL, verbose = FALSE) {
     default = c(Beta1 = 0, Beta2 = 0, Epsilon1 = 0, Epsilon2 = 0))
   Settings_all$FieldConfig <- get_settings_single(Settings_all$field,
     default = c(Omega1 = 1, Epsilon1 = 1, Omega2 = 1, Epsilon2 = 1))
+  if (Settings_all[["ObsModelcondition"]][1] == 10) {
+    # Following items are specific to the Tweedie distribution #43
+    Settings_all[["FieldConfig"]][c("Omega1", "Epsilon1")] <- 0
+    Settings_all[["RhoConfig"]][c("Beta1")] <- 3
+  }
 
   # Overdispersion
   if (is.null(Settings_all[["overdispersion"]])) {
